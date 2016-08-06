@@ -57,13 +57,13 @@ public class PickMe
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
                 case "1":
-                    Ride.handleRideReservation();
+                    ride.handleRideReservation();
                     break;
                 case "2":
-                    Ride.handleRideCancelation();
+                    ride.handleRideCancelation();
                     break;
                 case "3":
-                    Ride.handleRideTracking();
+                    ride.handleRideTracking();
                     break;
                 case "4":
                     break loop;
@@ -76,17 +76,17 @@ public class PickMe
 
     private static void handleMembership() {
         Scanner scanner = new Scanner(System.in);
-
+        Membership membership = new Membership();
         loop: while (true) {
-            Membership.printMembershipMenu();
+            membership.printMembershipMenu();
             String menuSelected = scanner.nextLine();
 
             switch (menuSelected.trim()) {
                 case "1":
-                    Membership.handleRiderSignup();
+                    membership.handleRiderSignup();
                     break;
                 case "2":
-                    Membership.handleDriverSignup();
+                    membership.handleDriverSignup();
                     break;
                 case "3":
                     break loop;
@@ -97,8 +97,6 @@ public class PickMe
         }
 
     }
-
-
 
     private static void printMainMenu() {
         System.out.println("[1] Membership");
