@@ -5,7 +5,7 @@ import org.sql2o.Sql2o;
 
 public class SQLConnection implements AutoCloseable {
 	String url = "jdbc:mysql://localhost:3306/";
-	String DB =  "cmpe202";//change it to cmpe202
+	String DB =  "pickme";//change it to cmpe202
     String userName = "cmpe202";
 	String password = "cmpe202";
 	String DB_URL = url+DB;
