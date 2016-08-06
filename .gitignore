@@ -49,16 +49,17 @@ local.properties
  .buildpath
 #
 # # sbteclipse plugin
- .target
+.target
 #
 # # Tern plugin
- .tern-project
+.tern-project
 #
 # # TeXlipse plugin
- .texlipse
+.texlipse
 #
 # # STS (Spring Tool Suite)
- .springBeans
+.springBeans
 #
 # # Code Recommenders
- .recommenders/
+.recommenders/
+target/
