@@ -3,8 +3,16 @@ package edu.sjsu.cmpe202.cli;
 import java.util.Scanner;
 
 /**
- * Command line parsing done using:  http://jcommander.org/
- * In-memory graph data structures are using: https://github.com/jgrapht/jgrapht
+ * PickMe is the name of our application for carpooling. It provides a menu based interface.
+ [1] Membership
+ [2] Ride
+ [3] Payment
+ [4] Notifications
+ [5] Quit
+
+ User can register as rider or driver, can reserve, cancel or track a carpool ride,
+ make or receive payments and check notifications sent by application to the user at
+ various stages.
  */
 public class PickMe
 {

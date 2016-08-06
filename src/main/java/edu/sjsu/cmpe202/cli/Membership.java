@@ -64,6 +64,8 @@ public class Membership {
         System.out.println("\t Signing up Driver:");
         handleMemberSignup();
         handleDriverLicence();
+        DBOperations.createDriver(this);
+        System.out.println("Rider created: " + this);
     }
 
     private void handleDriverLicence() {
