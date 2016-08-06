@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `cmpe202` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `cmpe202`;
+CREATE DATABASE  IF NOT EXISTS `pickme` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `pickme`;
 -- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
--- Host: localhost    Database: cmpe202
+-- Host: localhost    Database: pickme
 -- ------------------------------------------------------
 -- Server version	5.6.26-log
 
@@ -25,16 +25,17 @@ DROP TABLE IF EXISTS `carpool_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `carpool_details` (
-  `carpool_id` int(11) NOT NULL,
+  `pool_id` int(11) NOT NULL AUTO_INCREMENT,
   `vehicle_id` int(11) DEFAULT NULL,
   `driver_id` int(11) DEFAULT NULL,
-  `rider_count` int(11) DEFAULT NULL,
+  `passenger_count` int(11) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`carpool_id`),
-  KEY `vehic_id_idx` (`vehicle_id`),
+  `route` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`pool_id`),
+  KEY `vehicle_id_idx` (`vehicle_id`),
   KEY `driver_id_idx` (`driver_id`),
-  CONSTRAINT `driver_id` FOREIGN KEY (`driver_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `vehic_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`vehicle_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `driver_id` FOREIGN KEY (`driver_id`) REFERENCES `driver_details` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `vehicle_id` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`vehicle_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,6 +49,34 @@ LOCK TABLES `carpool_details` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `dispatcher`
+--
+
+DROP TABLE IF EXISTS `dispatcher`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dispatcher` (
+  `pool_id` int(11) NOT NULL,
+  `ride_id` int(11) NOT NULL,
+  `start_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`pool_id`,`ride_id`),
+  KEY `pool_id_idx` (`pool_id`),
+  KEY `ride_id_idx` (`ride_id`),
+  CONSTRAINT `pool_id` FOREIGN KEY (`pool_id`) REFERENCES `carpool_details` (`pool_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `ride_id` FOREIGN KEY (`ride_id`) REFERENCES `ride_details` (`ride_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dispatcher`
+--
+
+LOCK TABLES `dispatcher` WRITE;
+/*!40000 ALTER TABLE `dispatcher` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dispatcher` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `driver_details`
 --
 
@@ -55,13 +84,13 @@ DROP TABLE IF EXISTS `driver_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `driver_details` (
-  `driver_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `member_id` int(11) DEFAULT NULL,
   `license_number` varchar(45) DEFAULT NULL,
   `expiry_date` date DEFAULT NULL,
-  PRIMARY KEY (`driver_id`),
-  KEY `member_id_idx` (`member_id`),
-  CONSTRAINT `member_id` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`),
+  KEY `memb_id_idx` (`member_id`),
+  CONSTRAINT `memb_id` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -82,7 +111,7 @@ DROP TABLE IF EXISTS `location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `location` (
-  `location_id` int(11) NOT NULL,
+  `location_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -105,14 +134,13 @@ DROP TABLE IF EXISTS `member`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `member` (
-  `member_id` int(11) NOT NULL,
+  `member_id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(45) DEFAULT NULL,
   `last_name` varchar(45) DEFAULT NULL,
   `dob` date DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
   `contact` int(11) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `is_driver` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -127,14 +155,14 @@ LOCK TABLES `member` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `notifications`
+-- Table structure for table `notification`
 --
 
-DROP TABLE IF EXISTS `notifications`;
+DROP TABLE IF EXISTS `notification`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notifications` (
-  `notify_id` int(11) NOT NULL,
+CREATE TABLE `notification` (
+  `notify_id` int(11) NOT NULL AUTO_INCREMENT,
   `notifyuser_id` int(11) DEFAULT NULL,
   `message` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`notify_id`),
@@ -144,12 +172,12 @@ CREATE TABLE `notifications` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `notifications`
+-- Dumping data for table `notification`
 --
 
-LOCK TABLES `notifications` WRITE;
-/*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
-/*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -160,14 +188,14 @@ DROP TABLE IF EXISTS `payment_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `payment_details` (
-  `payment_id` int(11) NOT NULL,
-  `member_id` int(11) NOT NULL,
-  `card_number` int(11) DEFAULT NULL,
+  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) DEFAULT NULL,
+  `card_number` varchar(45) DEFAULT NULL,
   `card_type` varchar(45) DEFAULT NULL,
   `expiry_date` date DEFAULT NULL,
   PRIMARY KEY (`payment_id`),
-  KEY `member_id_idx` (`member_id`),
-  CONSTRAINT `memb_id` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `mem_id_idx` (`member_id`),
+  CONSTRAINT `mem_id` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -188,19 +216,18 @@ DROP TABLE IF EXISTS `ride_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ride_details` (
-  `ride_id` int(11) NOT NULL,
+  `ride_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
-  `ridecol` varchar(45) DEFAULT NULL,
   `source_id` int(11) DEFAULT NULL,
   `dest_id` int(11) DEFAULT NULL,
-  `create_date` datetime DEFAULT NULL,
-  `start_time` datetime DEFAULT NULL,
+  `create_date` date DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ride_id`),
-  KEY `rider_id_idx` (`user_id`),
+  KEY `user_id_idx` (`user_id`),
   KEY `source_id_idx` (`source_id`),
   KEY `dest_id_idx` (`dest_id`),
-  CONSTRAINT `dest_id` FOREIGN KEY (`dest_id`) REFERENCES `location` (`location_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `dest_id` FOREIGN KEY (`dest_id`) REFERENCES `location` (`location_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `source_id` FOREIGN KEY (`source_id`) REFERENCES `location` (`location_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -216,32 +243,31 @@ LOCK TABLES `ride_details` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `scheduler`
+-- Table structure for table `route_map`
 --
 
-DROP TABLE IF EXISTS `scheduler`;
+DROP TABLE IF EXISTS `route_map`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `scheduler` (
-  `scheduler_id` int(11) NOT NULL,
-  `carpool_id` int(11) DEFAULT NULL,
-  `ride_id` int(11) DEFAULT NULL,
-  `start_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`scheduler_id`),
-  KEY `carpool_id_idx` (`carpool_id`),
-  KEY `ride_id_idx` (`ride_id`),
-  CONSTRAINT `carpool_id` FOREIGN KEY (`carpool_id`) REFERENCES `carpool_details` (`carpool_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ride_id` FOREIGN KEY (`ride_id`) REFERENCES `ride_details` (`ride_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `route_map` (
+  `location_1` int(11) NOT NULL,
+  `location_2` int(11) NOT NULL,
+  `distance` int(11) DEFAULT NULL,
+  `time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`location_1`,`location_2`),
+  KEY `location_2_idx` (`location_2`),
+  CONSTRAINT `location_1` FOREIGN KEY (`location_1`) REFERENCES `location` (`location_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `location_2` FOREIGN KEY (`location_2`) REFERENCES `location` (`location_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `scheduler`
+-- Dumping data for table `route_map`
 --
 
-LOCK TABLES `scheduler` WRITE;
-/*!40000 ALTER TABLE `scheduler` DISABLE KEYS */;
-/*!40000 ALTER TABLE `scheduler` ENABLE KEYS */;
+LOCK TABLES `route_map` WRITE;
+/*!40000 ALTER TABLE `route_map` DISABLE KEYS */;
+/*!40000 ALTER TABLE `route_map` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -252,7 +278,7 @@ DROP TABLE IF EXISTS `vehicle`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vehicle` (
-  `vehicle_id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL AUTO_INCREMENT,
   `owner_id` int(11) DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
   `capacity` int(11) DEFAULT NULL,
@@ -280,4 +306,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-06 13:50:11
+-- Dump completed on 2016-08-06 16:02:29
