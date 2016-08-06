@@ -34,6 +34,12 @@
       <artifactId>jcommander</artifactId>
       <version>1.48</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.sql2o/sql2o -->
+	<dependency>
+	    <groupId>org.sql2o</groupId>
+	    <artifactId>sql2o</artifactId>
+	    <version>1.4.0</version>
+	</dependency> 
   </dependencies>
 
   <build>
