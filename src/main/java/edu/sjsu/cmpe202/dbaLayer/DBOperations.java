@@ -1,13 +1,11 @@
 package edu.sjsu.cmpe202.dbaLayer;
 
 import edu.sjsu.cmpe202.cli.Membership;
-
 import edu.sjsu.cmpe202.cli.Ride;
-import edu.sjsu.cmpe202.cli.Vehicle;
+import edu.sjsu.cmpe202.cli.VehicleRegistration;
+import org.sql2o.Connection;
 
 import java.util.List;
-
-import org.sql2o.Connection;
 
 
 public class DBOperations {
@@ -66,7 +64,7 @@ public class DBOperations {
 
     }
     
-    public static void createVehicle(Vehicle vehicle) {
+    public static void createVehicle(VehicleRegistration vehicle) {
     	
     	String vehicleinfo =
     			"INSERT INTO vehicle (owner_id,name,capacity)" +
@@ -91,14 +89,14 @@ public class DBOperations {
         }
     }
     
-    public static List<Vehicle> showVehiclesOfOwner(int OwnerID)
+    public static List<VehicleRegistration> showVehiclesOfOwner(int OwnerID)
     {
     	String vehicles = "SELECT * FROM vehicle where owner_id = :owner_id";
-    	List<Vehicle> vehiclers;
+    	List<VehicleRegistration> vehiclers;
     	try (Connection con = (new SQLConnection()).getConnection()) {
            vehiclers =  con.createQuery(vehicles)
                     .addParameter("owner_id",OwnerID)
-                    .executeAndFetch(Vehicle.class);
+                    .executeAndFetch(VehicleRegistration.class);
         }
     	
     	return vehiclers;

@@ -16,10 +16,4 @@ public class Member {
     private String address;
     private int contact;
     private String email;
-	public int getMemberId() {
-		return memberId;
-	}
-	public void setMemberId(int memberId) {
-		this.memberId = memberId;
-	}
 }

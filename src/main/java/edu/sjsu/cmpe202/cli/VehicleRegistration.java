@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 @Data
-public class Vehicle {
+public class VehicleRegistration {
 	
 	int vehicleID;
 	int ownerID;
@@ -15,9 +15,9 @@ public class Vehicle {
 	int capacity;
 	
     public static void printVehicleMenu() {
-        System.out.println("\t [1] Register Vehicle");
-        System.out.println("\t [2] Update Vehicle Details");
-        System.out.println("\t [3] Delete Vehicle Details");
+        System.out.println("\t [1] Register VehicleRegistration");
+        System.out.println("\t [2] Update VehicleRegistration Details");
+        System.out.println("\t [3] Delete VehicleRegistration Details");
 		System.out.println("\t [4] Go back to main menu");
     }
     
@@ -32,7 +32,7 @@ public class Vehicle {
         System.out.println("\t\t Capacity: ");
         capacity = scanner.nextInt();
         DBOperations.createVehicle(this);
-        System.out.println("\t\t Vehicle Registered: " + this);
+        System.out.println("\t\t VehicleRegistration Registered: " + this);
     }
     
     public void handleUpdateVehicleInfo() {
@@ -55,7 +55,7 @@ public class Vehicle {
     		ownerID = -1;
     		return;
     	}
-    	List<Vehicle> vehicles = DBOperations.showVehiclesOfOwner(ownerID);
+    	List<VehicleRegistration> vehicles = DBOperations.showVehiclesOfOwner(ownerID);
     	if(vehicles != null) {
     		System.out.println("\t\t Below are the vehciles of the Owner :" + ownerID);
             ShowVehicles(vehicles);
@@ -76,9 +76,9 @@ public class Vehicle {
 		return true; //assumes always user enters correct ID; Can be handled better with login session
 	}
 	
-	private void ShowVehicles(List<Vehicle> vehciles)
+	private void ShowVehicles(List<VehicleRegistration> vehciles)
 	{
-		for(Vehicle v:vehciles)
+		for(VehicleRegistration v:vehciles)
 		{
 			System.out.println("\t\t" + v.toString());
 		}
