@@ -5,10 +5,11 @@ import java.util.Scanner;
 /**
  * PickMe is the name of our application for carpooling. It provides a menu based interface.
  [1] Membership
- [2] Ride
- [3] Payment
- [4] Notifications
- [5] Quit
+ [2] Vehicle Registration
+ [3] Ride
+ [4] Payment
+ [5] Notifications
+ [6] Quit
 
  User can register as rider or driver, can reserve, cancel or track a carpool ride,
  make or receive payments and check notifications sent by application to the user at
@@ -28,16 +29,45 @@ public class PickMe
                     handleMembership();
                     break;
                 case "2":
-                    handleRides();
+                    handleVehicleRegistration();
                     break;
                 case "3":
-                    handlePayment();
+                    handleRides();
                     break;
                 case "4":
-                    handleNotifications();
+                    handlePayment();
                     break;
                 case "5":
+                    handleNotifications();
+                    break;
+                case "6":
                     System.exit(0);
+                default:
+                    System.out.println("ERROR: Unknown menu option. Please retry.");
+                    break;
+            }
+        }
+    }
+
+    private static void handleVehicleRegistration() {
+        Scanner scanner= new Scanner(System.in);
+        Vehicle vehicle = new Vehicle();
+
+        loop: while(true){
+            vehicle.printVehicleMenu();
+            String menuSelected = scanner.nextLine();
+            switch (menuSelected.trim()) {
+                case "1":
+                    vehicle.handleVehicleRegistration();
+                    break;
+                case "2":
+                    vehicle.handleUpdateVehicleInfo();
+                    break;
+                case "3":
+                    vehicle.handleDeleteVehicle();
+                    break;
+                case "4":
+                    break loop;
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");
                     break;
@@ -108,10 +138,11 @@ public class PickMe
 
     private static void printMainMenu() {
         System.out.println("[1] Membership");
-        System.out.println("[2] Ride");
-        System.out.println("[3] Payment");
-        System.out.println("[4] Notifications");
-        System.out.println("[5] Quit");
+        System.out.println("[2] Vehicle Registration");
+        System.out.println("[3] Ride");
+        System.out.println("[4] Payment");
+        System.out.println("[5] Notifications");
+        System.out.println("[6] Quit");
         System.out.println();
         System.out.println("Enter your choice: ");
     }

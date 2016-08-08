@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe202.dbaLayer;
 
 import edu.sjsu.cmpe202.cli.Membership;
+import edu.sjsu.cmpe202.cli.Vehicle;
 import org.sql2o.Connection;
 
 import java.util.List;
@@ -61,4 +62,16 @@ public class DBOperations {
 
     }
 
+    public static void createVehicle(Vehicle vehicle) {
+
+    }
+
+    public static List<Vehicle> showVehiclesOfOwner(int ownerID) {
+
+        return null;
+    }
+
+    public static void deleteVehicle(int vehicleID) {
+
+    }
 }

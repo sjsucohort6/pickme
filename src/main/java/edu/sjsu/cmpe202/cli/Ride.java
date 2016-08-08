@@ -10,7 +10,7 @@ public class Ride {
         System.out.println("\t [1] Reserve Ride ");
         System.out.println("\t [2] Cancel Ride");
         System.out.println("\t [3] Track Ride");
-        System.out.println("\t [3] Go back to main menu");
+        System.out.println("\t [4] Go back to main menu");
     }
 
     public void handleRideReservation() {
