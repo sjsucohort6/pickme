@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * PickMe is the name of our application for carpooling. It provides a menu based interface.
  [1] Membership
- [2] VehicleRegistration Registration
+ [2] Vehicle Registration
  [3] Ride
  [4] Payment
  [5] Notifications
@@ -138,7 +138,7 @@ public class PickMe
 
     private static void printMainMenu() {
         System.out.println("[1] Membership");
-        System.out.println("[2] VehicleRegistration Registration");
+        System.out.println("[2] Vehicle Registration");
         System.out.println("[3] Ride");
         System.out.println("[4] Payment");
         System.out.println("[5] Notifications");

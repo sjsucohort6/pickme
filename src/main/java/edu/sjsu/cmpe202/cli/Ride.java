@@ -27,7 +27,8 @@ public class Ride {
 
     public void handleRideReservation() {
     	Scanner scanner = new Scanner(System.in);
-        System.out.println("\t\t Rider ID: ");
+		String riderIdMsg = "\t\t Rider ID: ";
+		System.out.println(riderIdMsg);
         userid = scanner.nextInt();
         System.out.println("\t\t Pickup Location: ");
         sourceid = scanner.nextInt();

@@ -44,20 +44,12 @@ public class Membership {
         firstName = scanner.nextLine();
         System.out.println("\t\t Last Name: ");
         lastName = scanner.nextLine();
-        System.out.println("\t\t D.O.B (YYYY-MM-DD): ");
-        dob = scanner.nextLine();
-        while (!CommonValidations.isDateValid(dob)) {
-            System.out.println("\t\t D.O.B (YYYY-MM-DD): ");
-            dob = scanner.nextLine();
-        }
+        String dobMsg = "\t\t D.O.B (YYYY-MM-DD): ";
+        dob = Utilities.getDateStr(dobMsg);
         System.out.println("\t\t Address: ");
         address = scanner.nextLine();
-        System.out.println("\t\t Phone: ");
-        phone = scanner.nextLine();
-        while (!CommonValidations.isValidContact(phone)) {
-            System.out.println("\t\t Phone: ");
-            phone = scanner.nextLine();
-        }
+        String phoneMsg = "\t\t Phone: ";
+        phone = Utilities.getIntStr(phoneMsg);
         System.out.println("\t\t Email: ");
         email = scanner.nextLine();
     }
@@ -75,8 +67,8 @@ public class Membership {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\t\t Driver Licence: ");
         driverLicence = scanner.nextLine();
-        System.out.println("\t\t Expiration: ");
-        expiration = scanner.nextLine();
+        String expirationMsg = "\t\t Expiration (YYYY-MM-DD): ";
+        expiration = Utilities.getDateStr(expirationMsg);
     }
 
 }

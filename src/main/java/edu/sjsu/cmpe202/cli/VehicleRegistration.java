@@ -8,16 +8,14 @@ import java.util.Scanner;
 
 @Data
 public class VehicleRegistration {
-	
-	int vehicleID;
-	int ownerID;
+	String ownerID;
 	String registration; //vehicle registration number
-	int capacity;
+	String capacity;
 	
     public static void printVehicleMenu() {
-        System.out.println("\t [1] Register VehicleRegistration");
-        System.out.println("\t [2] Update VehicleRegistration Details");
-        System.out.println("\t [3] Delete VehicleRegistration Details");
+        System.out.println("\t [1] Register Vehicle");
+        System.out.println("\t [2] Update Vehicle Details");
+        System.out.println("\t [3] Delete Vehicle Details");
 		System.out.println("\t [4] Go back to main menu");
     }
     
@@ -25,44 +23,35 @@ public class VehicleRegistration {
 	
     public void handleVehicleRegistration() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\t\t Owner ID: ");
-        ownerID = scanner.nextInt();
+        String ownerIdMsg = "\t\t Owner ID: ";
+        ownerID = Utilities.getIntStr(ownerIdMsg);
         System.out.println("\t\t Registration ID: ");
         registration = scanner.nextLine();
-        System.out.println("\t\t Capacity: ");
-        capacity = scanner.nextInt();
+        String capacityMsg = "\t\t Capacity: ";
+        capacity = Utilities.getIntStr(capacityMsg);
         DBOperations.createVehicle(this);
-        System.out.println("\t\t VehicleRegistration Registered: " + this);
+        System.out.println("\t\t Vehicle Registered: " + this);
     }
-    
+
     public void handleUpdateVehicleInfo() {
     	Scanner scanner = new Scanner(System.in);
-    	System.out.println("\t\t Enter VehicleID");
-    	vehicleID = scanner.nextInt();
-    	if(!isVehicleValid())
-    	{
-    		System.out.println("\t\t Please provide correct ID");
-    		vehicleID = -1;
-    	}
+        String vehicleIdMsg = "\t\t Enter Vehicle Registration";
+        registration = scanner.nextLine();
     }
     
     public void handleDeleteVehicle() {
     	Scanner scanner = new Scanner(System.in);
-    	System.out.println("\t\t Enter the Owner ID: ");
-    	ownerID = scanner.nextInt();
-    	if(!isOwnerValid()) {
-    		System.out.println("\t\t Please provide correct ID");
-    		ownerID = -1;
-    		return;
-    	}
+        String ownerIdMsg = "\t\t Owner ID: ";
+        ownerID = Utilities.getIntStr(ownerIdMsg);
+
     	List<VehicleRegistration> vehicles = DBOperations.showVehiclesOfOwner(ownerID);
     	if(vehicles != null) {
     		System.out.println("\t\t Below are the vehciles of the Owner :" + ownerID);
             ShowVehicles(vehicles);
-            System.out.println("\t\t Enter the vehicle ID");
-            vehicleID = scanner.nextInt();
-    		DBOperations.deleteVehicle(vehicleID);
-    		System.out.println("\t\t Delete Vehilces with ID:" + vehicleID);
+            String vehicleIdMsg = "\t\t Enter the vehicle ID";
+            String vehicleId = Utilities.getIntStr(vehicleIdMsg);
+    		DBOperations.deleteVehicle(vehicleId);
+    		System.out.println("\t\t Deleted Vehilce with ID:" + vehicleId);
     	}
     	else
     		System.out.println("\t\t No vehicles found in our Database");

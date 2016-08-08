@@ -1,4 +1,4 @@
-package edu.sjsu.cmpe202.db.dto;
+package edu.sjsu.cmpe202.db.domain;
 
 import lombok.Data;
 
