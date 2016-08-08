@@ -44,6 +44,16 @@ public class Ride {
     }
 
     public void handleRideTracking() {
+    	Scanner scanner = new Scanner(System.in);
+    	System.out.println("\t\t Provide Ride ID: ");
+    	rideid = scanner.nextInt();
+    	if(rideid > 0) {
+    		Ride ride = DBOperations.getRideStatus(rideid);
+    		System.out.println("Status of the your Ride :" + ride.getRideid() +
+    				" is" + ride.getStatus());
+    	}
+    	else
+    		System.out.println("\t\t Please provide correct RideID");
 
     }
 
