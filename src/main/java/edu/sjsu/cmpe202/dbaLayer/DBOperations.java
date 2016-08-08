@@ -1,6 +1,10 @@
 package edu.sjsu.cmpe202.dbaLayer;
 
 import edu.sjsu.cmpe202.cli.Membership;
+import edu.sjsu.cmpe202.cli.Vehicle;
+
+import java.util.List;
+
 import org.sql2o.Connection;
 
 import java.util.List;
@@ -60,5 +64,45 @@ public class DBOperations {
         }
 
     }
+    
+    public static void createVehicle(Vehicle vehicle) {
+    	
+    	String vehicleinfo =
+    			"INSERT INTO vehicle (owner_id,firstname,capacity)" +
+    	                   "VALUES(:owner_id, :firstname, :capacity)";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            con.createQuery(vehicleinfo)
+                    .addParameter("owner_id",vehicle.getOwnerID())
+                    .addParameter("firstname", vehicle.getFirstname())
+                    .addParameter("capacity", vehicle.getCapacity())
+                    .executeUpdate();
+        }
+    	
+    }
+    
+    public static void deleteVehicle(int vehicleID)
+    {
+    	String deleteVehicle = " DELETE * from vehicle where vehicle_id = :vehicle_id" ;
+    	try (Connection con = (new SQLConnection()).getConnection()) {
+            con.createQuery(deleteVehicle)
+                    .addParameter("vehicle_id",vehicleID)
+                    .executeUpdate();
+        }
+    }
+    
+    public static List<Vehicle> showVehiclesOfOwner(int OwnerID)
+    {
+    	String vehicles = "SELECT * FROM vehicle where owner_id = :owner_id";
+    	List<Vehicle> vehiclers;
+    	try (Connection con = (new SQLConnection()).getConnection()) {
+           vehiclers =  con.createQuery(vehicles)
+                    .addParameter("owner_id",OwnerID)
+                    .executeAndFetch(Vehicle.class);
+        }
+    	
+    	return vehiclers;
+    }
+    
+    
 
 }
