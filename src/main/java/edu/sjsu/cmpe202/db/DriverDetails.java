@@ -1,4 +1,4 @@
-package edu.sjsu.cmpe202.dbaLayer;
+package edu.sjsu.cmpe202.db;
 
 import lombok.Data;
 

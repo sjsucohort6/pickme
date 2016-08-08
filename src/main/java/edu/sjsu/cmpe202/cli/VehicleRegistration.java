@@ -1,6 +1,6 @@
 package edu.sjsu.cmpe202.cli;
 
-import edu.sjsu.cmpe202.dbaLayer.DBOperations;
+import edu.sjsu.cmpe202.db.DBOperations;
 import lombok.Data;
 
 import java.util.List;

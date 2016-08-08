@@ -1,4 +1,4 @@
-package edu.sjsu.cmpe202.dbaLayer;
+package edu.sjsu.cmpe202.db;
 
 import edu.sjsu.cmpe202.cli.Membership;
 import edu.sjsu.cmpe202.cli.Ride;
