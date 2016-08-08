@@ -3,6 +3,7 @@ package edu.sjsu.cmpe202.db;
 import edu.sjsu.cmpe202.cli.Membership;
 import edu.sjsu.cmpe202.cli.Ride;
 import edu.sjsu.cmpe202.cli.VehicleRegistration;
+import edu.sjsu.cmpe202.db.dto.Member;
 import org.sql2o.Connection;
 
 import java.util.List;
