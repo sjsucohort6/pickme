@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe202.dbaLayer;
 
 import edu.sjsu.cmpe202.cli.Membership;
+import edu.sjsu.cmpe202.cli.Ride;
 import edu.sjsu.cmpe202.cli.Vehicle;
 
 import java.util.List;
@@ -103,6 +104,35 @@ public class DBOperations {
     	return vehiclers;
     }
     
+    
+    public static void addRideRequest(Ride ride)
+    {
+    	String rideRequest = " INSERT into ride_details(user_id,source_id,dest_id,create_date,start_date,status)"
+    			+ "VALUES(:user_id,:source_id,:dest_id,:create_date,:start_date,:status)";
+    	
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            con.createQuery(rideRequest)
+                    .addParameter("user_id",ride.getUserid())
+                    .addParameter("source_id", ride.getSourceid())
+                    .addParameter("dest_id",ride.getDestid())
+                    .addParameter("create_date", ride.getCreateDate())
+                    .addParameter("start_date", ride.getStartDate())
+                    .addParameter("status", ride.getStatus())
+                    .executeUpdate();
+        }
+
+    }
+    
+    public static void deleteRequestedRide(int ride_id)
+    {
+    	String cancelRide = "UPDATE ride_detailss set status = :status where ride_id = :ride_idparam";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            con.createQuery(cancelRide)
+                    .addParameter("ride_idparam",ride_id)
+                    .addParameter("status", "Cancelled")
+                    .executeUpdate();
+        }
+    }
     
 
 }
