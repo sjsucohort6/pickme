@@ -1,5 +1,7 @@
 package edu.sjsu.cmpe202.cli;
 
+import edu.sjsu.cmpe202.dbaLayer.Member;
+
 import java.util.Scanner;
 
 /**
@@ -51,6 +53,7 @@ public class PickMe
     }
 
     private static void handleNotifications() {
+
 
     }
 
