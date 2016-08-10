@@ -9,10 +9,10 @@ import java.util.Scanner;
 @Data
 public class Vehicle {
 	
-	int vehicleID;
-	int ownerID;
+	String vehicleID;
+	String MailID;
 	String registration; //vehicle registration number
-	int capacity;
+	String capacity;
 	
     public static void printVehicleMenu() {
         System.out.println("\t [1] Register Vehicle");
@@ -25,12 +25,12 @@ public class Vehicle {
 	
     public void handleVehicleRegistration() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\t\t Owner ID: ");
-        ownerID = scanner.nextInt();
+        System.out.println("\t\t Mail ID: ");
+        MailID = scanner.nextLine();
         System.out.println("\t\t Registration ID: ");
         registration = scanner.nextLine();
         System.out.println("\t\t Capacity: ");
-        capacity = scanner.nextInt();
+        capacity = scanner.nextLine();
         DBOperations.createVehicle(this);
         System.out.println("\t\t Vehicle Registered: " + this);
     }
@@ -38,29 +38,29 @@ public class Vehicle {
     public void handleUpdateVehicleInfo() {
     	Scanner scanner = new Scanner(System.in);
     	System.out.println("\t\t Enter VehicleID");
-    	vehicleID = scanner.nextInt();
+    	vehicleID = scanner.nextLine();
     	if(!isVehicleValid())
     	{
     		System.out.println("\t\t Please provide correct ID");
-    		vehicleID = -1;
+    		vehicleID = null;
     	}
     }
     
     public void handleDeleteVehicle() {
     	Scanner scanner = new Scanner(System.in);
     	System.out.println("\t\t Enter the Owner ID: ");
-    	ownerID = scanner.nextInt();
+    	MailID = scanner.nextLine();
     	if(!isOwnerValid()) {
     		System.out.println("\t\t Please provide correct ID");
-    		ownerID = -1;
+    		MailID = null;
     		return;
     	}
-    	List<Vehicle> vehicles = DBOperations.showVehiclesOfOwner(ownerID);
+    	List<Vehicle> vehicles = DBOperations.showVehiclesOfOwner(MailID);
     	if(vehicles != null) {
-    		System.out.println("\t\t Below are the vehciles of the Owner :" + ownerID);
+    		System.out.println("\t\t Below are the vehciles of the Owner :" + MailID);
             ShowVehicles(vehicles);
             System.out.println("\t\t Enter the vehicle ID");
-            vehicleID = scanner.nextInt();
+            vehicleID = scanner.nextLine();
     		DBOperations.deleteVehicle(vehicleID);
     		System.out.println("\t\t Delete Vehilces with ID:" + vehicleID);
     	}
@@ -82,6 +82,54 @@ public class Vehicle {
 		{
 			System.out.println("\t\t" + v.toString());
 		}
+	}
+
+
+
+	public String getRegistration() {
+		return registration;
+	}
+
+
+
+	public void setRegistration(String registration) {
+		this.registration = registration;
+	}
+
+
+
+	public String getVehicleID() {
+		return vehicleID;
+	}
+
+
+
+	public void setVehicleID(String vehicleID) {
+		this.vehicleID = vehicleID;
+	}
+
+
+
+	public String getOwnerID() {
+		return MailID;
+	}
+
+
+
+	public void setOwnerID(String ownerID) {
+		this.MailID = ownerID;
+	}
+
+
+
+	public String getCapacity() {
+		return capacity;
+	}
+
+
+
+	public void setCapacity(String capacity) {
+		this.capacity = capacity;
 	}
 
 }

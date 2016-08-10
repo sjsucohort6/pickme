@@ -10,12 +10,13 @@ import java.util.Scanner;
  */
 public class Ride {
 	
-	int rideid = 0;
-	int userid;
-	int sourceid;
-	int destid;
-	Date createDate;
-	Date startDate;
+	String rideid ;
+	String userid;
+	String sourceid;
+	String destid;
+	String createDate;
+	String startDate;
+	String pickupTime;
 	String status;
 
     public void printReserveRideMenu(){
@@ -28,13 +29,14 @@ public class Ride {
     public void handleRideReservation() {
     	Scanner scanner = new Scanner(System.in);
         System.out.println("\t\t Rider ID: ");
-        userid = scanner.nextInt();
+        userid = scanner.nextLine();
         System.out.println("\t\t Pickup Location: ");
-        sourceid = scanner.nextInt();
+        sourceid = scanner.nextLine();
         System.out.println("\t\t Destination Location: ");
-        destid = scanner.nextInt();
-        createDate = new Date();
+        destid = scanner.nextLine();
+        //createDate = new Date();
         System.out.println("\t\t Pick up Time(yyyy/MM/dd HH:mm:ss: ");
+        pickupTime = scanner.nextLine();
         //need code to add Date time.
         status = "Waiting";
         DBOperations.addRideRequest(this);
@@ -44,8 +46,8 @@ public class Ride {
     public void handleRideTracking() {
     	Scanner scanner = new Scanner(System.in);
     	System.out.println("\t\t Provide Ride ID: ");
-    	rideid = scanner.nextInt();
-    	if(rideid > 0) {
+    	rideid = scanner.nextLine();
+    	if(rideid != null) {
     		Ride ride = DBOperations.getRideStatus(rideid);
     		System.out.println("Status of the your Ride :" + ride.getRideid() +
     				" is" + ride.getStatus());
@@ -58,8 +60,8 @@ public class Ride {
     public void handleRideCancelation() {
     	Scanner scanner = new Scanner(System.in);
     	System.out.println("\t\t Provide Ride ID: ");
-    	rideid = scanner.nextInt();
-    	if(rideid > 0) {
+    	rideid = scanner.nextLine();
+    	if(rideid != null) {
     		DBOperations.deleteRequestedRide(rideid);
     		System.out.println("Your requested Ride is cancelled");
     	}
@@ -67,52 +69,60 @@ public class Ride {
     		System.out.println("\t\t Please provide correct RideID");
     }
 
-	public int getRideid() {
+	public String getRideid() {
 		return rideid;
 	}
 
-	public void setRideid(int rideid) {
+	public void setRideid(String rideid) {
 		this.rideid = rideid;
 	}
 
-	public int getUserid() {
+	public String getUserid() {
 		return userid;
 	}
 
-	public void setUserid(int userid) {
+	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
-	public int getSourceid() {
+	public String getSourceid() {
 		return sourceid;
 	}
 
-	public void setSourceid(int sourceid) {
+	public void setSourceid(String sourceid) {
 		this.sourceid = sourceid;
 	}
 
-	public int getDestid() {
+	public String getDestid() {
 		return destid;
 	}
 
-	public void setDestid(int destid) {
+	public void setDestid(String destid) {
 		this.destid = destid;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
+	}
+
+	public String getPickupTime() {
+		return pickupTime;
+	}
+
+	public void setPickupTime(String pickupTime) {
+		this.pickupTime = pickupTime;
 	}
 
 	public String getStatus() {

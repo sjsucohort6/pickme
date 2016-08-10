@@ -10,6 +10,7 @@ import java.util.List;
 import org.sql2o.Connection;
 
 
+
 public class DBOperations {
     public static void createRider(Membership membership) {
         String sql =
@@ -27,7 +28,7 @@ public class DBOperations {
                     .addParameter("is_driver", "N")
                     .executeUpdate();
         }
-
+        new SQLConnection().getConnection();
     }
 
     public static void createDriver(Membership membership) {
@@ -81,7 +82,7 @@ public class DBOperations {
     	
     }
     
-    public static void deleteVehicle(int vehicleID)
+    public static void deleteVehicle(String vehicleID)
     {
     	String deleteVehicle = " DELETE * from vehicle where vehicle_id = :vehicle_id" ;
     	try (Connection con = (new SQLConnection()).getConnection()) {
@@ -91,7 +92,7 @@ public class DBOperations {
         }
     }
     
-    public static List<Vehicle> showVehiclesOfOwner(int OwnerID)
+    public static List<Vehicle> showVehiclesOfOwner(String OwnerID)
     {
     	String vehicles = "SELECT * FROM vehicle where owner_id = :owner_id";
     	List<Vehicle> vehiclers;
@@ -123,7 +124,7 @@ public class DBOperations {
 
     }
     
-    public static void deleteRequestedRide(int ride_id)
+    public static void deleteRequestedRide(String ride_id)
     {
     	String cancelRide = "UPDATE ride_detailss set status = :status where ride_id = :ride_idparam";
         try (Connection con = (new SQLConnection()).getConnection()) {
@@ -134,7 +135,7 @@ public class DBOperations {
         }
     }
     
-    public static Ride getRideStatus(int ride_id)
+    public static Ride getRideStatus(String ride_id)
     {
     	String rideStatus = "Select * from ride_detailss where ride_id = :ride_idparam";
         try (Connection con = (new SQLConnection()).getConnection()) {

@@ -2,7 +2,6 @@ package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.dbaLayer.DBOperations;
 import lombok.Data;
-
 import java.util.Scanner;
 
 /**
