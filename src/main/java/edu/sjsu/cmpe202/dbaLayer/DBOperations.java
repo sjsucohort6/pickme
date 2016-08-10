@@ -1,9 +1,14 @@
 package edu.sjsu.cmpe202.dbaLayer;
 
 import edu.sjsu.cmpe202.cli.Membership;
-import org.sql2o.Connection;
+
+import edu.sjsu.cmpe202.cli.Ride;
+import edu.sjsu.cmpe202.cli.Vehicle;
 
 import java.util.List;
+
+import org.sql2o.Connection;
+
 
 public class DBOperations {
     public static void createRider(Membership membership) {
@@ -60,5 +65,85 @@ public class DBOperations {
         }
 
     }
+    
+    public static void createVehicle(Vehicle vehicle) {
+    	
+    	String vehicleinfo =
+    			"INSERT INTO vehicle (owner_id,name,capacity)" +
+    	                   "VALUES(:owner_id, :name, :capacity)";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            con.createQuery(vehicleinfo)
+                    .addParameter("owner_id",vehicle.getOwnerID())
+                    .addParameter("name", vehicle.getRegistration())
+                    .addParameter("capacity", vehicle.getCapacity())
+                    .executeUpdate();
+        }
+    	
+    }
+    
+    public static void deleteVehicle(int vehicleID)
+    {
+    	String deleteVehicle = " DELETE * from vehicle where vehicle_id = :vehicle_id" ;
+    	try (Connection con = (new SQLConnection()).getConnection()) {
+            con.createQuery(deleteVehicle)
+                    .addParameter("vehicle_id",vehicleID)
+                    .executeUpdate();
+        }
+    }
+    
+    public static List<Vehicle> showVehiclesOfOwner(int OwnerID)
+    {
+    	String vehicles = "SELECT * FROM vehicle where owner_id = :owner_id";
+    	List<Vehicle> vehiclers;
+    	try (Connection con = (new SQLConnection()).getConnection()) {
+           vehiclers =  con.createQuery(vehicles)
+                    .addParameter("owner_id",OwnerID)
+                    .executeAndFetch(Vehicle.class);
+        }
+    	
+    	return vehiclers;
+    }
+    
+    
+    public static void addRideRequest(Ride ride)
+    {
+    	String rideRequest = " INSERT into ride_details(user_id,source_id,dest_id,create_date,start_date,status)"
+    			+ "VALUES(:user_id,:source_id,:dest_id,:create_date,:start_date,:status)";
+    	
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            con.createQuery(rideRequest)
+                    .addParameter("user_id",ride.getUserid())
+                    .addParameter("source_id", ride.getSourceid())
+                    .addParameter("dest_id",ride.getDestid())
+                    .addParameter("create_date", ride.getCreateDate())
+                    .addParameter("start_date", ride.getStartDate())
+                    .addParameter("status", ride.getStatus())
+                    .executeUpdate();
+        }
+
+    }
+    
+    public static void deleteRequestedRide(int ride_id)
+    {
+    	String cancelRide = "UPDATE ride_detailss set status = :status where ride_id = :ride_idparam";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            con.createQuery(cancelRide)
+                    .addParameter("ride_idparam",ride_id)
+                    .addParameter("status", "Cancelled")
+                    .executeUpdate();
+        }
+    }
+    
+    public static Ride getRideStatus(int ride_id)
+    {
+    	String rideStatus = "Select * from ride_detailss where ride_id = :ride_idparam";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            Ride ride = (Ride) con.createQuery(rideStatus)
+                    .addParameter("ride_idparam",ride_id)
+                    .executeAndFetch(Ride.class);
+            return ride;
+        }
+    }
+
 
 }

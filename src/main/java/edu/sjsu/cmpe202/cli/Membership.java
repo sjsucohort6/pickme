@@ -1,12 +1,14 @@
 package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.dbaLayer.DBOperations;
+import lombok.Data;
 
 import java.util.Scanner;
 
 /**
  * @author rwatsh on 8/6/16.
  */
+@Data
 public class Membership {
 
     private String firstName;
@@ -16,6 +18,7 @@ public class Membership {
     private String phone;
     private String email;
 
+    // properties needed for driver only
     private String driverLicence;
     private String expiration;
 
@@ -65,7 +68,7 @@ public class Membership {
         handleMemberSignup();
         handleDriverLicence();
         DBOperations.createDriver(this);
-        System.out.println("Rider created: " + this);
+        System.out.println("Driver created: " + this);
     }
 
     private void handleDriverLicence() {
@@ -76,83 +79,4 @@ public class Membership {
         expiration = scanner.nextLine();
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDriverLicence() {
-        return driverLicence;
-    }
-
-    public void setDriverLicence(String driverLicence) {
-        this.driverLicence = driverLicence;
-    }
-
-    public String getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(String expiration) {
-        this.expiration = expiration;
-    }
-
-    @Override
-    public String toString() {
-        String none = "None";
-
-        return "Membership{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dob='" + dob + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", driverLicence='" + driverLicence != null ? driverLicence : none + '\'' +
-                ", expiration='" + expiration != null ? expiration : none + '\'' +
-                '}';
-    }
 }

@@ -1,37 +1,41 @@
 package edu.sjsu.cmpe202.cli;
 
+import edu.sjsu.cmpe202.dbaLayer.DBOperations;
+import lombok.Data;
+
 import java.util.List;
 import java.util.Scanner;
-import edu.sjsu.cmpe202.dbaLayer.DBOperations;
 
+@Data
 public class Vehicle {
 	
 	int vehicleID;
 	int ownerID;
-	String firstname; //vehicle registration number
+	String registration; //vehicle registration number
 	int capacity;
 	
     public static void printVehicleMenu() {
         System.out.println("\t [1] Register Vehicle");
         System.out.println("\t [2] Update Vehicle Details");
         System.out.println("\t [3] Delete Vehicle Details");
+		System.out.println("\t [4] Go back to main menu");
     }
     
     
 	
-    private void handleVehicleRegistration() {
+    public void handleVehicleRegistration() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\t\t Owner ID: ");
         ownerID = scanner.nextInt();
-        System.out.println("\t\t firstname: ");
-        firstname = scanner.nextLine();
+        System.out.println("\t\t Registration ID: ");
+        registration = scanner.nextLine();
         System.out.println("\t\t Capacity: ");
         capacity = scanner.nextInt();
         DBOperations.createVehicle(this);
         System.out.println("\t\t Vehicle Registered: " + this);
     }
     
-    private void handleUpdateVehicleInfo() {
+    public void handleUpdateVehicleInfo() {
     	Scanner scanner = new Scanner(System.in);
     	System.out.println("\t\t Enter VehicleID");
     	vehicleID = scanner.nextInt();
@@ -42,7 +46,7 @@ public class Vehicle {
     	}
     }
     
-    private void handleDeleteVehicle() {
+    public void handleDeleteVehicle() {
     	Scanner scanner = new Scanner(System.in);
     	System.out.println("\t\t Enter the Owner ID: ");
     	ownerID = scanner.nextInt();
@@ -64,31 +68,6 @@ public class Vehicle {
     		System.out.println("\t\t No vehicles found in our Database");
     }
 
-	public int getVehicleID() {
-		return vehicleID;
-	}
-	public void setVehicleID(int vehicleID) {
-		this.vehicleID = vehicleID;
-	}
-	public int getOwnerID() {
-		return ownerID;
-	}
-	public void setOwnerID(int ownerID) {
-		this.ownerID = ownerID;
-	}
-	public String getFirstname() {
-		return firstname;
-	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	public int getCapacity() {
-		return capacity;
-	}
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
-	
 	private boolean isOwnerValid() {
 		return true; //assumes always user enters correct ID; Can be handled better with login session
 	}
@@ -105,11 +84,4 @@ public class Vehicle {
 		}
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "Vehicle [vehicleID=" + vehicleID + ", ownerID=" + ownerID + ", firstname=" + firstname + ", capacity="
-				+ capacity + "]";
-	}
 }
