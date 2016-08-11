@@ -13,12 +13,16 @@ import java.util.Scanner;
 @Data
 public class Ride {
 	
-	int rideid = 0;
+
+	String rideid ;
 	String userid;
 	String sourceid;
 	String destid;
 	String createDate;
 	String startDate;
+
+	String pickupTime;
+
 	String status;
 
     public void printReserveRideMenu(){
@@ -30,16 +34,16 @@ public class Ride {
 
     public void handleRideReservation() {
     	Scanner scanner = new Scanner(System.in);
-		String riderIdMsg = "\t\t Rider ID: ";
-		userid = Utilities.getIntStr(riderIdMsg);
-		String pickupLocMsg = "\t\t Pickup Location: ";
-        sourceid = Utilities.getIntStr(pickupLocMsg);
-		String destLocMsg = "\t\t Destination Location: ";
-        destid = Utilities.getIntStr(destLocMsg);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        createDate = sdf.format(new Date());
-		String pickupTimeMsg = "\t\t Pick up Time (yyyy-MM-dd): ";
-		startDate = Utilities.getDateStr(pickupTimeMsg);
+
+        System.out.println("\t\t Rider ID: ");
+        userid = scanner.nextLine();
+        System.out.println("\t\t Pickup Location: ");
+        sourceid = scanner.nextLine();
+        System.out.println("\t\t Destination Location: ");
+        destid = scanner.nextLine();
+        //createDate = new Date();
+        System.out.println("\t\t Pick up Time(yyyy/MM/dd HH:mm:ss: ");
+        pickupTime = scanner.nextLine();
         //need code to add Date time.
         status = "Waiting";
         DBOperations.addRideRequest(this);
@@ -49,8 +53,8 @@ public class Ride {
     public void handleRideTracking() {
     	Scanner scanner = new Scanner(System.in);
     	System.out.println("\t\t Provide Ride ID: ");
-    	rideid = scanner.nextInt();
-    	if(rideid > 0) {
+    	rideid = scanner.nextLine();
+    	if(rideid != null) {
     		Ride ride = DBOperations.getRideStatus(rideid);
     		System.out.println("Status of the your Ride :" + ride.getRideid() +
     				" is" + ride.getStatus());
@@ -63,13 +67,14 @@ public class Ride {
     public void handleRideCancelation() {
     	Scanner scanner = new Scanner(System.in);
     	System.out.println("\t\t Provide Ride ID: ");
-    	rideid = scanner.nextInt();
-    	if(rideid > 0) {
+    	rideid = scanner.nextLine();
+    	if(rideid != null) {
     		DBOperations.deleteRequestedRide(rideid);
     		System.out.println("Your requested Ride is cancelled");
     	}
     	else
     		System.out.println("\t\t Please provide correct RideID");
     }
+
 
 }

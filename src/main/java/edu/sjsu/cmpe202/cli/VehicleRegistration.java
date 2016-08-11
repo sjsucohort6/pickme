@@ -9,6 +9,11 @@ import java.util.Scanner;
 @Data
 public class VehicleRegistration {
 	String ownerID;
+
+
+	String vehicleID;
+	String MailID;
+
 	String registration; //vehicle registration number
 	String capacity;
 	
@@ -23,12 +28,10 @@ public class VehicleRegistration {
 	
     public void handleVehicleRegistration() {
         Scanner scanner = new Scanner(System.in);
-        String ownerIdMsg = "\t\t Owner ID: ";
-        ownerID = Utilities.getIntStr(ownerIdMsg);
-        System.out.println("\t\t Registration ID: ");
-        registration = scanner.nextLine();
-        String capacityMsg = "\t\t Capacity: ";
-        capacity = Utilities.getIntStr(capacityMsg);
+
+        System.out.println("\t\t Mail ID: ");
+        MailID = scanner.nextLine();
+
         DBOperations.createVehicle(this);
         System.out.println("\t\t Vehicle Registered: " + this);
     }
@@ -37,6 +40,8 @@ public class VehicleRegistration {
     	Scanner scanner = new Scanner(System.in);
         String vehicleIdMsg = "\t\t Enter Vehicle Registration";
         registration = scanner.nextLine();
+
+
     }
     
     public void handleDeleteVehicle() {
@@ -45,13 +50,15 @@ public class VehicleRegistration {
         ownerID = Utilities.getIntStr(ownerIdMsg);
 
     	List<VehicleRegistration> vehicles = DBOperations.showVehiclesOfOwner(ownerID);
+
     	if(vehicles != null) {
-    		System.out.println("\t\t Below are the vehciles of the Owner :" + ownerID);
+    		System.out.println("\t\t Below are the vehciles of the Owner :" + MailID);
             ShowVehicles(vehicles);
-            String vehicleIdMsg = "\t\t Enter the vehicle ID";
-            String vehicleId = Utilities.getIntStr(vehicleIdMsg);
-    		DBOperations.deleteVehicle(vehicleId);
-    		System.out.println("\t\t Deleted Vehilce with ID:" + vehicleId);
+
+            System.out.println("\t\t Enter the vehicle ID");
+            vehicleID = scanner.nextLine();
+    		DBOperations.deleteVehicle(vehicleID);
+    		System.out.println("\t\t Delete Vehilces with ID:" + vehicleID);
     	}
     	else
     		System.out.println("\t\t No vehicles found in our Database");
@@ -71,6 +78,54 @@ public class VehicleRegistration {
 		{
 			System.out.println("\t\t" + v.toString());
 		}
+	}
+
+
+
+	public String getRegistration() {
+		return registration;
+	}
+
+
+
+	public void setRegistration(String registration) {
+		this.registration = registration;
+	}
+
+
+
+	public String getVehicleID() {
+		return vehicleID;
+	}
+
+
+
+	public void setVehicleID(String vehicleID) {
+		this.vehicleID = vehicleID;
+	}
+
+
+
+	public String getOwnerID() {
+		return MailID;
+	}
+
+
+
+	public void setOwnerID(String ownerID) {
+		this.MailID = ownerID;
+	}
+
+
+
+	public String getCapacity() {
+		return capacity;
+	}
+
+
+
+	public void setCapacity(String capacity) {
+		this.capacity = capacity;
 	}
 
 }

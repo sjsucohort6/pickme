@@ -111,13 +111,8 @@ DROP TABLE IF EXISTS `location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `location` (
-<<<<<<< HEAD
   `location_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-=======
-  `location_id` int(11) NOT NULL,
-  `firstName` varchar(45) DEFAULT NULL,
->>>>>>> topic_watsh_cmpe202
   PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -169,6 +164,7 @@ DROP TABLE IF EXISTS `notification`;
 CREATE TABLE `notification` (
   `notify_id` int(11) NOT NULL AUTO_INCREMENT,
   `notifyuser_id` int(11) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
   `message` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`notify_id`),
   KEY `notifyuser_id_idx` (`notifyuser_id`),
@@ -285,7 +281,7 @@ DROP TABLE IF EXISTS `vehicle`;
 CREATE TABLE `vehicle` (
   `vehicle_id` int(11) NOT NULL AUTO_INCREMENT,
   `owner_id` int(11) DEFAULT NULL,
-  `firstName` varchar(45) DEFAULT NULL,
+  `registration_id` int(11) DEFAULT NULL,
   `capacity` int(11) DEFAULT NULL,
   PRIMARY KEY (`vehicle_id`),
   KEY `owner_id_idx` (`owner_id`),
@@ -311,4 +307,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-06 16:02:29
+-- Dump completed on 2016-08-09 22:04:27

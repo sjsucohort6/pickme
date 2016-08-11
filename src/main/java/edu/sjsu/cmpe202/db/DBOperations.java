@@ -9,6 +9,7 @@ import org.sql2o.Connection;
 import java.util.List;
 
 
+
 public class DBOperations {
     public static void createRider(Membership membership) {
         String sql =
@@ -26,7 +27,7 @@ public class DBOperations {
                     .addParameter("is_driver", "N")
                     .executeUpdate();
         }
-
+        new SQLConnection().getConnection();
     }
 
     public static void createDriver(Membership membership) {
@@ -122,7 +123,7 @@ public class DBOperations {
 
     }
     
-    public static void deleteRequestedRide(int ride_id)
+    public static void deleteRequestedRide(String ride_id)
     {
     	String cancelRide = "UPDATE ride_detailss set status = :status where ride_id = :ride_idparam";
         try (Connection con = (new SQLConnection()).getConnection()) {
@@ -133,7 +134,7 @@ public class DBOperations {
         }
     }
     
-    public static Ride getRideStatus(int ride_id)
+    public static Ride getRideStatus(String ride_id)
     {
     	String rideStatus = "Select * from ride_detailss where ride_id = :ride_idparam";
         try (Connection con = (new SQLConnection()).getConnection()) {
