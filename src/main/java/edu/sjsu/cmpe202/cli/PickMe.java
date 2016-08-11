@@ -36,7 +36,7 @@ public class PickMe
                     break;
                 case "4":
                     handlePayment();
-                    break;
+                    break;:
                 case "5":
                     handleNotifications();
                     break;
