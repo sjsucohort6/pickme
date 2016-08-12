@@ -83,7 +83,22 @@ public class PickMe
     }
 
     private static void handleNotifications() {
+        Scanner scanner = new Scanner(System.in);
+        Notification notification = new Notification();
 
+        loop: while(true) {
+            notification.printNotificationMenu();
+            String menuSelected = scanner.nextLine();
+            switch ((menuSelected.trim())) {
+                case "1":
+                    notification.sendNotification();
+                    break;
+                case "2":
+                    break loop;
+                case "3":
+                    System.out.println("ERROR: Unknown menu option. Please retry.");
+            }
+        }
 
     }
 

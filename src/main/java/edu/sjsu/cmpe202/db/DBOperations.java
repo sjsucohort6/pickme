@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe202.db;
 
 import edu.sjsu.cmpe202.cli.Membership;
+import edu.sjsu.cmpe202.cli.Notification;
 import edu.sjsu.cmpe202.cli.Ride;
 import edu.sjsu.cmpe202.cli.VehicleRegistration;
 import edu.sjsu.cmpe202.db.domain.Member;
@@ -136,13 +137,17 @@ public class DBOperations {
     
     public static Ride getRideStatus(String ride_id)
     {
-    	String rideStatus = "Select * from ride_detailss where ride_id = :ride_idparam";
+    	String rideStatus = "Select * from ride_details where ride_id = :ride_idparam";
         try (Connection con = (new SQLConnection()).getConnection()) {
             Ride ride = (Ride) con.createQuery(rideStatus)
                     .addParameter("ride_idparam",ride_id)
                     .executeAndFetch(Ride.class);
             return ride;
         }
+    }
+
+    public static Notification sendNotification(Notification n) {
+
     }
 
 
