@@ -53,7 +53,7 @@ public class PickMe
 
     private static void handleVehicleRegistration() {
         Scanner scanner= new Scanner(System.in);
-        Vehicle vehicle = new Vehicle();
+        VehicleRegistration vehicle = new VehicleRegistration();
 
         loop: while(true){
             vehicle.printVehicleMenu();
