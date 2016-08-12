@@ -1,6 +1,6 @@
 package edu.sjsu.cmpe202.cli;
 
-import edu.sjsu.cmpe202.db.DBOperations;
+import edu.sjsu.cmpe202.db.dao.VehicleDao;
 import lombok.Data;
 
 import java.util.List;
@@ -11,8 +11,8 @@ public class VehicleRegistration {
 	String ownerID;
 
 
-	String vehicleID;
-	String MailID;
+	String vehicleId;
+	String mailId;
 
 	String registration; //vehicle registration number
 	String capacity;
@@ -30,9 +30,9 @@ public class VehicleRegistration {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\t\t Mail ID: ");
-        MailID = scanner.nextLine();
+        mailId = scanner.nextLine();
 
-        DBOperations.createVehicle(this);
+        VehicleDao.createVehicle(this);
         System.out.println("\t\t Vehicle Registered: " + this);
     }
 
@@ -49,16 +49,16 @@ public class VehicleRegistration {
         String ownerIdMsg = "\t\t Owner ID: ";
         ownerID = Utilities.getIntStr(ownerIdMsg);
 
-    	List<VehicleRegistration> vehicles = DBOperations.showVehiclesOfOwner(ownerID);
+    	List<VehicleRegistration> vehicles = VehicleDao.showVehiclesOfOwner(ownerID);
 
     	if(vehicles != null) {
-    		System.out.println("\t\t Below are the vehciles of the Owner :" + MailID);
+    		System.out.println("\t\t Below are the vehciles of the Owner :" + mailId);
             ShowVehicles(vehicles);
 
             System.out.println("\t\t Enter the vehicle ID");
-            vehicleID = scanner.nextLine();
-    		DBOperations.deleteVehicle(vehicleID);
-    		System.out.println("\t\t Delete Vehilces with ID:" + vehicleID);
+            vehicleId = scanner.nextLine();
+    		VehicleDao.deleteVehicle(vehicleId);
+    		System.out.println("\t\t Delete Vehilces with ID:" + vehicleId);
     	}
     	else
     		System.out.println("\t\t No vehicles found in our Database");
@@ -79,53 +79,4 @@ public class VehicleRegistration {
 			System.out.println("\t\t" + v.toString());
 		}
 	}
-
-
-
-	public String getRegistration() {
-		return registration;
-	}
-
-
-
-	public void setRegistration(String registration) {
-		this.registration = registration;
-	}
-
-
-
-	public String getVehicleID() {
-		return vehicleID;
-	}
-
-
-
-	public void setVehicleID(String vehicleID) {
-		this.vehicleID = vehicleID;
-	}
-
-
-
-	public String getOwnerID() {
-		return MailID;
-	}
-
-
-
-	public void setOwnerID(String ownerID) {
-		this.MailID = ownerID;
-	}
-
-
-
-	public String getCapacity() {
-		return capacity;
-	}
-
-
-
-	public void setCapacity(String capacity) {
-		this.capacity = capacity;
-	}
-
 }

@@ -9,6 +9,6 @@ import lombok.Data;
 public class Vehicle {
     private int vehicleId;
     private int ownerId;
-    private String name;
+    private String registrationId;
     private int capacity;
 }

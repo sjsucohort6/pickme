@@ -28,7 +28,37 @@ public class SQLConnection implements AutoCloseable {
         colMaps.put("member_id", "memberId");
         colMaps.put("first_name", "firstName");
         colMaps.put("last_name", "lastName");
-        colMaps.put("SHORT_DESC", "shortDescription");
+        colMaps.put("is_driver", "isDriver");
+
+        colMaps.put("pool_id", "poolId");
+        colMaps.put("vehicle_id", "vehicleId");
+        colMaps.put("driver_id", "driverId");
+        colMaps.put("passenger_count", "passengerCount");
+
+        colMaps.put("ride_id", "rideId");
+        colMaps.put("start_time", "startTime");
+
+        colMaps.put("license_number", "licenseNumber");
+        colMaps.put("expiry_date", "expiryDate");
+
+        colMaps.put("location_id", "locationId");
+
+        colMaps.put("notify_id", "notifyId");
+        colMaps.put("notifyuser_id", "notifyuserId");
+
+        colMaps.put("payment_id", "paymentId");
+        colMaps.put("card_number", "cardNumber");
+        colMaps.put("card_type", "cardType");
+        colMaps.put("user_id", "userId");
+        colMaps.put("source_id", "sourceId");
+        colMaps.put("dest_id", "destId");
+        colMaps.put("create_date", "createDate");
+        colMaps.put("start_date", "startDate");
+
+        colMaps.put("location_1", "location1");
+        colMaps.put("location_2", "location2");
+
+        colMaps.put("owner_id", "ownerId");
 
         sql2o.setDefaultColumnMappings(colMaps);
     }

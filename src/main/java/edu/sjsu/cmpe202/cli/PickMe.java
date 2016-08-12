@@ -1,5 +1,8 @@
 package edu.sjsu.cmpe202.cli;
 
+import edu.sjsu.cmpe202.graph.Graph;
+import edu.sjsu.cmpe202.route.RouteMapGraph;
+
 import java.util.Scanner;
 
 /**
@@ -20,6 +23,8 @@ public class PickMe
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
+        Graph routeMapGraph = RouteMapGraph.loadRouteMap();
+        System.out.println(routeMapGraph);
 
         while(true) {
             printMainMenu();
