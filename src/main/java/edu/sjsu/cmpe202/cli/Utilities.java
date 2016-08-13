@@ -10,6 +10,7 @@ import java.util.Scanner;
  */
 public class Utilities {
     private final static String DATE_FORMAT = "yyyy-MM-dd";
+    private final static String
 
     private static boolean isValidDate(String date)
     {
