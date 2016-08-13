@@ -19,7 +19,6 @@ public class Ride {
 	String destid;
 	String createDate;
 	String startDate;
-
 	String pickupTime;
 
 	String status;
@@ -27,8 +26,9 @@ public class Ride {
     public void printReserveRideMenu(){
         System.out.println("\t [1] Reserve Ride ");
         System.out.println("\t [2] Cancel Ride");
-        System.out.println("\t [3] Track Ride");
-        System.out.println("\t [4] Go back to main menu");
+        System.out.println("\t [3] Dispatch Ride(s)");
+        System.out.println("\t [4] Track Ride");
+        System.out.println("\t [5] Go back to main menu");
     }
 
     public void handleRideReservation() {
@@ -76,4 +76,7 @@ public class Ride {
     }
 
 
+    public void handleDispatch() {
+
+    }
 }

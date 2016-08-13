@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class Utilities {
     public final static String DATE_FORMAT = "yyyy-MM-dd";
-    public final static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:MM:SS";
+    public final static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public static boolean isValidDate(String date)
     {
@@ -28,8 +28,7 @@ public class Utilities {
         }
     }
 
-    public static boolean isValidDateTime(String date)
-    {
+    public static boolean isValidDateTime(String date) {
         return isValidDateInternal(date, DATE_TIME_FORMAT);
     }
 

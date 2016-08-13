@@ -21,10 +21,12 @@ import java.util.Scanner;
  */
 public class PickMe
 {
+    public static final Graph routeMapGraph = RouteMapGraph.loadRouteMap();
+
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
-        Graph routeMapGraph = RouteMapGraph.loadRouteMap();
+
         System.out.println(routeMapGraph);
 
         while(true) {
@@ -123,9 +125,12 @@ public class PickMe
                     ride.handleRideCancelation();
                     break;
                 case "3":
-                    ride.handleRideTracking();
+                    ride.handleDispatch();
                     break;
                 case "4":
+                    ride.handleRideTracking();
+                    break;
+                case "5":
                     break loop;
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");

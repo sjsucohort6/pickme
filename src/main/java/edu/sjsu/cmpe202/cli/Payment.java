@@ -7,4 +7,8 @@ import lombok.Data;
  */
 @Data
 public class Payment {
+    private String memberEmailId;
+    private String cardNumber;
+    private String cardType;
+    private String expiryDate;
 }
