@@ -14,7 +14,8 @@ public class Ride {
 	
 
 	String rideid ;
-	String userid;
+	int userid;
+	String emailID;
 	String sourceid;
 	String destid;
 	String createDate;
@@ -33,8 +34,8 @@ public class Ride {
 
     public void handleRideReservation() {
     	Scanner scanner = new Scanner(System.in);
-        System.out.println("\t\t Rider ID: ");
-        userid = scanner.nextLine();
+        System.out.println("\t\t Rider mail ID: ");
+		emailID = scanner.nextLine();
         System.out.println("\t\t Pickup Location: ");
         sourceid = scanner.nextLine();
         System.out.println("\t\t Destination Location: ");
@@ -45,6 +46,7 @@ public class Ride {
         //pickupTime = scanner.nextLine();
         //need code to add Date time.
         status = "Waiting";
+        userid = RideDao.getRiderID(emailID);
         RideDao.addRideRequest(this);
         System.out.println("\t\t We have recieved your Ride Request: " + this);
     }

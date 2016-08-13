@@ -4,6 +4,7 @@ import edu.sjsu.cmpe202.cli.Ride;
 import edu.sjsu.cmpe202.db.SQLConnection;
 import edu.sjsu.cmpe202.db.domain.RideDetails;
 import org.sql2o.Connection;
+import edu.sjsu.cmpe202.db.domain.Member;
 
 import java.util.List;
 
@@ -15,7 +16,6 @@ public class RideDao {
     {
     	String rideRequest = " INSERT into ride_details(user_id,source_id,dest_id,create_date,start_date,status)"
     			+ "VALUES(:user_id,:source_id,:dest_id,:create_date,:start_date,:status)";
-
         try (Connection con = (new SQLConnection()).getConnection()) {
             con.createQuery(rideRequest)
                     .addParameter("user_id",ride.getUserid())
@@ -42,12 +42,24 @@ public class RideDao {
 
     public static RideDetails getRideStatus(String ride_id)
     {
+    	int memberID = getRiderID(ride_id);
     	String rideStatus = "Select * from ride_details where ride_id = :ride_idparam";
         try (Connection con = (new SQLConnection()).getConnection()) {
             List<RideDetails> rides =  con.createQuery(rideStatus)
-                    .addParameter("ride_idparam",ride_id)
+                    .addParameter("ride_idparam",memberID)
                     .executeAndFetch(RideDetails.class);
             return rides == null? null : rides.get(0);
+        }
+    }
+    
+    public static Integer getRiderID(String ride_id)
+    {
+    	String member_idSQL = "Select member_id from member where email = :ride_idparam";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            return con.createQuery(member_idSQL)
+                    .addParameter("ride_idparam",ride_id)
+                    .executeScalar(Integer.class);
+            //return m.getmemberId();
         }
     }
 }

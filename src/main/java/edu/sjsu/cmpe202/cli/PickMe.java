@@ -24,8 +24,8 @@ public class PickMe
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
-        Graph routeMapGraph = RouteMapGraph.loadRouteMap();
-        System.out.println(routeMapGraph);
+        //Graph routeMapGraph = RouteMapGraph.loadRouteMap();
+        //System.out.println(routeMapGraph);
 
         while(true) {
             printMainMenu();

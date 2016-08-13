@@ -12,6 +12,7 @@ public class Utilities {
     private final static String DATE_FORMAT = "yyyy-MM-dd";
     private final static String DATA_TIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
 
+
     private static boolean isValidDate(String date)
     {
         try {
