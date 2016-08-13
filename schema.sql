@@ -225,6 +225,7 @@ CREATE TABLE `ride_details` (
   `create_date` date DEFAULT NULL,
   `start_date` datetime DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
+  `payment_status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ride_id`),
   KEY `user_id_idx` (`user_id`),
   KEY `source_id_idx` (`source_id`),
@@ -234,7 +235,6 @@ CREATE TABLE `ride_details` (
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 --
 -- Dumping data for table `ride_details`
 --
