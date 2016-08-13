@@ -143,7 +143,7 @@ CREATE TABLE `member` (
   `email` varchar(45) DEFAULT NULL,
   `is_driver` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL),(2,'fff','gggg','1984-09-07','fffff',666666,'ckckck@sjsu.com','N');
+INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +227,6 @@ CREATE TABLE `parking_details` (
   `parking_id` int(11) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`parking_details_id`),
   KEY `parking_id_idx` (`parking_id`),
   KEY `parker_id` (`parker_id`),
   CONSTRAINT `parker_id` FOREIGN KEY (`parker_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -372,8 +371,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-13 15:53:53
-
+-- Dump completed on 2016-08-13 15:16:26
 
 --
 -- DML statements for location and route_map
