@@ -141,9 +141,9 @@ CREATE TABLE `member` (
   `address` varchar(45) DEFAULT NULL,
   `contact` int(11) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `is_driver` VARCHAR(45) NULL DEFAULT 'N' COMMENT '',
+  `is_driver` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,6 +152,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
+INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +171,7 @@ CREATE TABLE `notification` (
   PRIMARY KEY (`notify_id`),
   KEY `notifyuser_id_idx` (`notifyuser_id`),
   CONSTRAINT `notifyuser_id` FOREIGN KEY (`notifyuser_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +180,66 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+INSERT INTO `notification` VALUES (1,1,'2016-08-04 00:00:00','Ride Booked');
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `parking`
+--
+
+DROP TABLE IF EXISTS `parking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parking` (
+  `parking_id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner_id` int(11) DEFAULT NULL,
+  `capacity` int(11) DEFAULT NULL,
+  `location_id` int(11) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`parking_id`),
+  KEY `own_id_idx` (`owner_id`),
+  KEY `loc_id_idx` (`location_id`),
+  CONSTRAINT `loc_id` FOREIGN KEY (`location_id`) REFERENCES `location` (`location_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `own_id` FOREIGN KEY (`owner_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `parking`
+--
+
+LOCK TABLES `parking` WRITE;
+/*!40000 ALTER TABLE `parking` DISABLE KEYS */;
+/*!40000 ALTER TABLE `parking` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `parking_details`
+--
+
+DROP TABLE IF EXISTS `parking_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parking_details` (
+  `parker_id` int(11) DEFAULT NULL,
+  `parking_id` int(11) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  KEY `parking_id_idx` (`parking_id`),
+  KEY `parker_id` (`parker_id`),
+  CONSTRAINT `parker_id` FOREIGN KEY (`parker_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `parking_id` FOREIGN KEY (`parking_id`) REFERENCES `parking` (`parking_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `parking_details`
+--
+
+LOCK TABLES `parking_details` WRITE;
+/*!40000 ALTER TABLE `parking_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `parking_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -235,6 +295,7 @@ CREATE TABLE `ride_details` (
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
 --
 -- Dumping data for table `ride_details`
 --
@@ -309,6 +370,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+-- Dump completed on 2016-08-13 15:16:26
 
 --
 -- DML statements for location and route_map
