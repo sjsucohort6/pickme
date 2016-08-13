@@ -2,6 +2,8 @@ package edu.sjsu.cmpe202.db.domain;
 
 import lombok.Data;
 
+import java.sql.Date;
+
 /**
  * @author rwatsh on 8/7/16.
  */
@@ -9,5 +11,8 @@ import lombok.Data;
 public class Notification {
     private int notifyId;
     private int notifyUserId;
+    private Date date;
     private String message;
+
+
 }

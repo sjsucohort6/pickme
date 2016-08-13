@@ -330,3 +330,4 @@ INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (4,
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (5,6,9,9);
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (6,1,14,14);
 -- Dump completed on 2016-08-09 22:04:27
+

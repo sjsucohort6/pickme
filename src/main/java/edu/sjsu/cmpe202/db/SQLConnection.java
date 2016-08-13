@@ -44,7 +44,7 @@ public class SQLConnection implements AutoCloseable {
         colMaps.put("location_id", "locationId");
 
         colMaps.put("notify_id", "notifyId");
-        colMaps.put("notifyuser_id", "notifyuserId");
+        colMaps.put("notifyuser_id", "notifyUserId");
 
         colMaps.put("payment_id", "paymentId");
         colMaps.put("card_number", "cardNumber");
