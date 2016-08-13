@@ -141,6 +141,7 @@ CREATE TABLE `member` (
   `address` varchar(45) DEFAULT NULL,
   `contact` int(11) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
+  `is_driver` VARCHAR(45) NULL DEFAULT 'N' COMMENT '',
   PRIMARY KEY (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
