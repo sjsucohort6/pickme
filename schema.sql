@@ -155,13 +155,13 @@ LOCK TABLES `member` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `notifier`
+-- Table structure for table `notification`
 --
 
-DROP TABLE IF EXISTS `notifier`;
+DROP TABLE IF EXISTS `notification`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notifier` (
+CREATE TABLE `notification` (
   `notify_id` int(11) NOT NULL AUTO_INCREMENT,
   `notifyuser_id` int(11) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
@@ -173,12 +173,12 @@ CREATE TABLE `notifier` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `notifier`
+-- Dumping data for table `notification`
 --
 
-LOCK TABLES `notifier` WRITE;
-/*!40000 ALTER TABLE `notifier` DISABLE KEYS */;
-/*!40000 ALTER TABLE `notifier` ENABLE KEYS */;
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -307,4 +307,27 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+
+--
+-- DML statements for location and route_map
+--
+
+INSERT INTO `location` (`location_id`,`name`) VALUES (1,'A');
+INSERT INTO `location` (`location_id`,`name`) VALUES (2,'B');
+INSERT INTO `location` (`location_id`,`name`) VALUES (3,'C');
+INSERT INTO `location` (`location_id`,`name`) VALUES (4,'D');
+INSERT INTO `location` (`location_id`,`name`) VALUES (5,'E');
+INSERT INTO `location` (`location_id`,`name`) VALUES (6,'F');
+
+
+INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (1,2,7,7);
+INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (1,3,9,9);
+INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (2,3,10,10);
+INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (2,4,15,15);
+INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (3,4,11,11);
+INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (3,6,2,2);
+INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (4,5,6,6);
+INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (5,6,9,9);
+INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (6,1,14,14);
 -- Dump completed on 2016-08-09 22:04:27
+

@@ -25,11 +25,11 @@ public class RouteMapDao {
 
     public static List<Location> getAllLocations() {
 
-        String fetchRouteMapSql = "SELECT * FROM location";
+        String fetchLocationSql = "SELECT * FROM location";
 
 
         try (Connection con = (new SQLConnection()).getConnection()) {
-            return con.createQuery(fetchRouteMapSql)
+            return con.createQuery(fetchLocationSql)
                     .executeAndFetch(Location.class);
         }
 
