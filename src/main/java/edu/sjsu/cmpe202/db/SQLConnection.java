@@ -14,8 +14,8 @@ import java.util.Map;
 public class SQLConnection implements AutoCloseable {
 	private final static String url = "jdbc:mysql://localhost:3306/";
 	private final static String DB =  "pickme";
-    private final static String userName = "cmpe202";
-	private final static String password = "cmpe202";
+    private final static String userName = "root";
+	private final static String password = "root";
 	private final static String DB_URL = url+DB;
 	private Connection connection = null;
     private static Sql2o sql2o;
@@ -44,7 +44,7 @@ public class SQLConnection implements AutoCloseable {
         colMaps.put("location_id", "locationId");
 
         colMaps.put("notify_id", "notifyId");
-        colMaps.put("notifyuser_id", "notifyuserId");
+        colMaps.put("notifyuser_id", "notifyUserId");
 
         colMaps.put("payment_id", "paymentId");
         colMaps.put("card_number", "cardNumber");

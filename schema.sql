@@ -155,13 +155,13 @@ LOCK TABLES `member` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `notification`
+-- Table structure for table `notifier`
 --
 
-DROP TABLE IF EXISTS `notification`;
+DROP TABLE IF EXISTS `notifier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notification` (
+CREATE TABLE `notifier` (
   `notify_id` int(11) NOT NULL AUTO_INCREMENT,
   `notifyuser_id` int(11) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
@@ -173,12 +173,12 @@ CREATE TABLE `notification` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `notification`
+-- Dumping data for table `notifier`
 --
 
-LOCK TABLES `notification` WRITE;
-/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+LOCK TABLES `notifier` WRITE;
+/*!40000 ALTER TABLE `notifier` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notifier` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
