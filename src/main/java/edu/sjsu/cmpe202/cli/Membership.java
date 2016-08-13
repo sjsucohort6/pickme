@@ -1,6 +1,6 @@
 package edu.sjsu.cmpe202.cli;
 
-import edu.sjsu.cmpe202.db.DBOperations;
+import edu.sjsu.cmpe202.db.dao.MembershipDao;
 import lombok.Data;
 import java.util.Scanner;
 
@@ -31,7 +31,7 @@ public class Membership {
     public void handleRiderSignup() {
         System.out.println("\t Signing up Rider:");
         handleMemberSignup();
-        DBOperations.createRider(this);
+        MembershipDao.createRider(this);
         System.out.println("Rider created: " + this);
     }
 
@@ -58,7 +58,7 @@ public class Membership {
         System.out.println("\t Signing up Driver:");
         handleMemberSignup();
         handleDriverLicence();
-        DBOperations.createDriver(this);
+        MembershipDao.createDriver(this);
         System.out.println("Driver created: " + this);
     }
 

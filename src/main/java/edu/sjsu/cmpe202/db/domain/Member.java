@@ -16,4 +16,5 @@ public class Member {
     private String address;
     private int contact;
     private String email;
+    private String isDriver;
 }

@@ -1,5 +1,9 @@
 package edu.sjsu.cmpe202.cli;
 
+
+import edu.sjsu.cmpe202.graph.Graph;
+import edu.sjsu.cmpe202.route.RouteMapGraph;
+
 import java.util.Scanner;
 
 /**
@@ -20,6 +24,8 @@ public class PickMe
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
+        Graph routeMapGraph = RouteMapGraph.loadRouteMap();
+        System.out.println(routeMapGraph);
 
         while(true) {
             printMainMenu();
@@ -81,6 +87,22 @@ public class PickMe
     }
 
     private static void handleNotifications() {
+        Scanner scanner = new Scanner(System.in);
+        Notification notification = new Notification();
+
+        loop: while(true) {
+            notification.printNotificationMenu();
+            String menuSelected = scanner.nextLine();
+            switch ((menuSelected.trim())) {
+                case "1":
+                    notification.sendNotification();
+                    break;
+                case "2":
+                    break loop;
+                case "3":
+                    System.out.println("ERROR: Unknown menu option. Please retry.");
+            }
+        }
 
     }
 

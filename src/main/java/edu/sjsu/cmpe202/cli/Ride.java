@@ -1,10 +1,9 @@
 package edu.sjsu.cmpe202.cli;
 
-import edu.sjsu.cmpe202.db.DBOperations;
+import edu.sjsu.cmpe202.db.dao.RideDao;
+import edu.sjsu.cmpe202.db.domain.RideDetails;
 import lombok.Data;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -46,7 +45,7 @@ public class Ride {
         //pickupTime = scanner.nextLine();
         //need code to add Date time.
         status = "Waiting";
-        DBOperations.addRideRequest(this);
+        RideDao.addRideRequest(this);
         System.out.println("\t\t We have recieved your Ride Request: " + this);
     }
 
@@ -55,8 +54,8 @@ public class Ride {
     	System.out.println("\t\t Provide Ride ID: ");
     	rideid = scanner.nextLine();
     	if(rideid != null) {
-    		Ride ride = DBOperations.getRideStatus(rideid);
-    		System.out.println("Status of the your Ride :" + ride.getRideid() +
+    		RideDetails ride = RideDao.getRideStatus(rideid);
+    		System.out.println("Status of the your Ride :" + ride.getRideId() +
     				" is" + ride.getStatus());
     	}
     	else
@@ -69,7 +68,7 @@ public class Ride {
     	System.out.println("\t\t Provide Ride ID: ");
     	rideid = scanner.nextLine();
     	if(rideid != null) {
-    		DBOperations.deleteRequestedRide(rideid);
+    		RideDao.deleteRequestedRide(rideid);
     		System.out.println("Your requested Ride is cancelled");
     	}
     	else
