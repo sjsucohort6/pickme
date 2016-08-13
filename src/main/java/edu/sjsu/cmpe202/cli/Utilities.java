@@ -5,12 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-/**
+/** 
  * @author rwatsh on 8/6/16.
  */
 public class Utilities {
     private final static String DATE_FORMAT = "yyyy-MM-dd";
-    private final static String
 
     private static boolean isValidDate(String date)
     {

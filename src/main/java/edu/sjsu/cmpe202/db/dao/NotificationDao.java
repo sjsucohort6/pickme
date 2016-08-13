@@ -16,10 +16,12 @@ public class NotificationDao {
 
     public static List<Notification> getNotifications() {
         String fetchRouteMapSql = "SELECT * FROM notification";
+        List<Notification> notifyList;
 
         try (Connection con = (new SQLConnection()).getConnection()) {
-            return con.createQuery(fetchRouteMapSql)
+            notifyList = con.createQuery(fetchRouteMapSql)
                     .executeAndFetch(Notification.class);
         }
+        return notifyList;
     }
 }

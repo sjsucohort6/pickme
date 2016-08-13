@@ -13,7 +13,7 @@ public class NotificationTest {
 
     @Test
     public void testNotification() {
-        List<Notification> r = NotificationDao.getNotifications();
-        System.out.println("Test notification result:\n" +r.toString());
+        List<Notification> list = NotificationDao.getNotifications();
+        System.out.println("Test notification result:\n" +list.toString());
     }
 }
