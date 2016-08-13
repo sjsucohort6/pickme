@@ -21,10 +21,9 @@ public class Notifier {
         System.out.println("\t [2] Go back to main menu");
     }
 
-    public List<String> showNotification() {
+    public void showNotification() {
          List<Notification> result = NotificationDao.getNotifications();
-        System.out.println("\t\t Show notifications to the user " + result);
-        return null;
+         System.out.println("\t\t Notification: " +result.get(0).getMessage()+" for user" +result.get(0).getNotifyUserId()+"\n");
     }
 
 }

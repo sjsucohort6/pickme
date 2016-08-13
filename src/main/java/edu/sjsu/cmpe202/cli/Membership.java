@@ -31,8 +31,9 @@ public class Membership {
     public void handleRiderSignup() {
         System.out.println("\t Signing up Rider:");
         handleMemberSignup();
-        MembershipDao.createRider(this);
+        int id = MembershipDao.createRider(this);
         System.out.println("Rider created: " + this);
+        System.out.println("Rider Id: " + id);
     }
 
 
