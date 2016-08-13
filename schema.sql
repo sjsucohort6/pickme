@@ -284,6 +284,7 @@ CREATE TABLE `vehicle` (
   `owner_id` int(11) DEFAULT NULL,
   `registration_id` int(11) DEFAULT NULL,
   `capacity` int(11) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`vehicle_id`),
   KEY `owner_id_idx` (`owner_id`),
   CONSTRAINT `owner_id` FOREIGN KEY (`owner_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
