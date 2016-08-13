@@ -74,7 +74,7 @@ public class DBOperations {
         try (Connection con = (new SQLConnection()).getConnection()) {
             con.createQuery(vehicleinfo)
                     .addParameter("owner_id",vehicle.getOwnerID())
-                    .addParameter("name", vehicle.getRegistration())
+                    .addParameter("name", vehicle.getRegistration_id())
                     .addParameter("capacity", vehicle.getCapacity())
                     .executeUpdate();
         }

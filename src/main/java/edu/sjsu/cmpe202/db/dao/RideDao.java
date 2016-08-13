@@ -40,15 +40,15 @@ public class RideDao {
         }
     }
 
-    public static RideDetails getRideStatus(String ride_id)
+    public static String getRideStatus(String ride_id)
     {
-    	int memberID = getRiderID(ride_id);
-    	String rideStatus = "Select * from ride_details where ride_id = :ride_idparam";
+    	//int memberID = getRiderID(ride_id);
+    	String rideStatus = "Select status from ride_details where ride_id = :ride_idparam";
         try (Connection con = (new SQLConnection()).getConnection()) {
-            List<RideDetails> rides =  con.createQuery(rideStatus)
-                    .addParameter("ride_idparam",memberID)
-                    .executeAndFetch(RideDetails.class);
-            return rides == null? null : rides.get(0);
+            String rides =  con.createQuery(rideStatus)
+                    .addParameter("ride_idparam",ride_id)
+                    .executeScalar(String.class);
+            return rides == null? null : rides;
         }
     }
     

@@ -67,12 +67,9 @@ public class PickMe
                     vehicle.handleVehicleRegistration();
                     break;
                 case "2":
-                    vehicle.handleUpdateVehicleInfo();
+                    vehicle.handleDeleteVehicle();;
                     break;
                 case "3":
-                    vehicle.handleDeleteVehicle();
-                    break;
-                case "4":
                     break loop;
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");
