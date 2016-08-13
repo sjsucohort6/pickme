@@ -9,19 +9,28 @@ import java.util.Scanner;
  * @author rwatsh on 8/6/16.
  */
 public class Utilities {
-    private final static String DATE_FORMAT = "yyyy-MM-dd";
-    private final static String
+    public final static String DATE_FORMAT = "yyyy-MM-dd";
+    public final static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:MM:SS";
 
-    private static boolean isValidDate(String date)
+    public static boolean isValidDate(String date)
     {
+        return isValidDateInternal(date, DATE_FORMAT);
+    }
+
+    private static boolean isValidDateInternal(String date, String dateFormat) {
         try {
-            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            DateFormat df = new SimpleDateFormat(dateFormat);
             df.setLenient(false);
             df.parse(date);
             return true;
         } catch (ParseException e) {
             return false;
         }
+    }
+
+    public static boolean isValidDateTime(String date)
+    {
+        return isValidDateInternal(date, DATE_TIME_FORMAT);
     }
 
     private static boolean isValidInt(String str) {
