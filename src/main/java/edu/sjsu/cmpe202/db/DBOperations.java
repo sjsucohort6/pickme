@@ -13,8 +13,8 @@ import java.util.List;
 public class DBOperations {
     public static void createRider(Membership membership) {
         String sql =
-                "INSERT INTO member (first_name, last_name, dob, address, contact, email, is_driver) " +
-                        "VALUES (:first_name, :last_name, :dob, :address, :contact, :email, :is_driver)";
+                "INSERT INTO member (first_name, last_name, dob, address, contact, email, isDriver) " +
+                        "VALUES (:first_name, :last_name, :dob, :address, :contact, :email, :isDriver)";
 
         try (Connection con = (new SQLConnection()).getConnection()) {
             con.createQuery(sql)
@@ -24,7 +24,7 @@ public class DBOperations {
                     .addParameter("address", membership.getAddress())
                     .addParameter("contact", membership.getPhone())
                     .addParameter("email", membership.getEmail())
-                    .addParameter("is_driver", "N")
+                    .addParameter("isDriver", 'N')
                     .executeUpdate();
         }
         new SQLConnection().getConnection();

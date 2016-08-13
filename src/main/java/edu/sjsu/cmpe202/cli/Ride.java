@@ -34,7 +34,6 @@ public class Ride {
 
     public void handleRideReservation() {
     	Scanner scanner = new Scanner(System.in);
-
         System.out.println("\t\t Rider ID: ");
         userid = scanner.nextLine();
         System.out.println("\t\t Pickup Location: ");
@@ -42,8 +41,9 @@ public class Ride {
         System.out.println("\t\t Destination Location: ");
         destid = scanner.nextLine();
         //createDate = new Date();
-        System.out.println("\t\t Pick up Time(yyyy/MM/dd HH:mm:ss: ");
-        pickupTime = scanner.nextLine();
+        String pickTime = "\t\t Pick up Time(yyyy/MM/dd HH:mm:ss:";
+        pickupTime = Utilities.getDateTimeString(pickTime);
+        //pickupTime = scanner.nextLine();
         //need code to add Date time.
         status = "Waiting";
         DBOperations.addRideRequest(this);

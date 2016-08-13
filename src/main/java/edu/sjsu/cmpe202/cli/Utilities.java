@@ -10,6 +10,7 @@ import java.util.Scanner;
  */
 public class Utilities {
     private final static String DATE_FORMAT = "yyyy-MM-dd";
+    private final static String DATA_TIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
 
     private static boolean isValidDate(String date)
     {
@@ -21,6 +22,19 @@ public class Utilities {
         } catch (ParseException e) {
             return false;
         }
+    }
+    
+    private static boolean isValidDateTime(String dateTime)
+    {
+    	try {
+    		DateFormat df = new SimpleDateFormat(DATA_TIME_FORMAT);
+    		 df.setLenient(false);
+             df.parse(dateTime);
+             return true;
+    	} catch (ParseException e) {
+    		return false;
+    	}
+    	
     }
 
     private static boolean isValidInt(String str) {
@@ -50,6 +64,17 @@ public class Utilities {
         System.out.println(displayMsg);
         String retStr = scanner.nextLine();
         while (!Utilities.isValidDate(retStr)) {
+            System.out.println(displayMsg);
+            retStr = scanner.nextLine();
+        }
+        return retStr;
+    }
+    
+    public static String getDateTimeString(String displayMsg) {
+    	Scanner scanner = new Scanner(System.in);
+    	System.out.println(displayMsg);
+    	String retStr = scanner.nextLine();
+    	while (!Utilities.isValidDateTime(retStr)) {
             System.out.println(displayMsg);
             retStr = scanner.nextLine();
         }

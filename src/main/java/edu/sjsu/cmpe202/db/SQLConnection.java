@@ -12,10 +12,10 @@ import java.util.Map;
  * @author swetha
  */
 public class SQLConnection implements AutoCloseable {
-	private final static String url = "jdbc:mysql://localhost:3306/";
+	private final static String url = "jdbc:mysql://localhost:3307/";
 	private final static String DB =  "pickme";
-    private final static String userName = "cmpe202";
-	private final static String password = "cmpe202";
+    private final static String userName = "root";
+	private final static String password = "root";
 	private final static String DB_URL = url+DB;
 	private Connection connection = null;
     private static Sql2o sql2o;
