@@ -222,6 +222,7 @@ DROP TABLE IF EXISTS `parking_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `parking_details` (
+  `parking_details_id` int(11) NOT NULL AUTO_INCREMENT,
   `parker_id` int(11) DEFAULT NULL,
   `parking_id` int(11) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
