@@ -42,7 +42,7 @@ public class MembershipDao {
                 "VALUES (:member_id, :license_number, :expiry_date)";
 
         try (Connection con = (new SQLConnection()).getConnection()) {
-            con.createQuery(memberSql)
+             con.createQuery(memberSql)
                     .addParameter("first_name", membership.getFirstName())
                     .addParameter("last_name", membership.getLastName())
                     .addParameter("dob", membership.getDob())

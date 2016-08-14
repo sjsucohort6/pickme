@@ -1,10 +1,8 @@
 package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.db.dao.PaymentDao;
-import edu.sjsu.cmpe202.db.dao.VehicleDao;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -16,23 +14,21 @@ public class Payment {
     private String cardNumber;
     private String cardType;
     private String expiryDate;
-    private String memberId;
+
 
     public void printPaymentMenu() {
         // TODO Auto-generated method stub
         System.out.println("\t [1] Add Card");
         System.out.println("\t [2] Ride Payment");
         System.out.println("\t [3] Parking Payment");
-        System.out.println("\t [4] Payment Details");
         System.out.println("\t [4] Go back to main menu");
+
     }
 
     public void handleRidePayment() {
         // TODO Auto-generated method stub
-        System.out.println("Please Confirm Payment");
-        System.out.println("\t [1] confirm");
-        Scanner sc = new Scanner(System.in);
-        String confirm = sc.nextLine();
+        System.out.println("Please Confirm your Payment");
+
     }
 
     public void handleParkingPayment() {
@@ -50,7 +46,7 @@ public class Payment {
     private void handleAddCard() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\t\t Email Id: ");
-        memberEmailId = scanner.nextLine();
+        memberEmailId= scanner.nextLine();
         System.out.println("\t\t Card Number: ");
         cardNumber = scanner.nextLine();
         System.out.println("\t\t Card Type: ");
@@ -59,21 +55,8 @@ public class Payment {
         expiryDate = scanner.nextLine();
     }
 
-    private void showPaymentDetails(List<Payment> paymentDetails) {
-        System.out.println("\t\t MemberId" + " " + "CardNum" + " " + " cardType " + " " + " ExpiryDate ");
-        for (Payment p : paymentDetails) {
-            System.out.println("\t\t " + p.getMemberId() + " " + p.getCardNumber() + " " + p.getCardType() + " " + p.getExpiryDate());
-        }
-    }
-
 
     public void handlePaymentDetails() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("\t Enter email id");
-        memberEmailId = scanner.nextLine();
-        System.out.println("\t Payment Details ");
-        List<Payment> payment = PaymentDao.showPayment(memberEmailId);
-        showPaymentDetails(payment);
+
     }
 }
-

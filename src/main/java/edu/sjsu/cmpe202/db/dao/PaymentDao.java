@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class PaymentDao {
 
+
     public static void addCreditCard(Payment payment) {
 
         String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
@@ -37,22 +38,6 @@ public class PaymentDao {
 
     }
 
-    public static List<Payment> showPayment(String memberEmailId) {
-        String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
-        String paymentHistory = "SELECT  member_id ,card_number, card_type, expiry_date FROM payment_details where member_id = :member_id";
-        try (Connection con = (new SQLConnection()).getConnection()) {
-            List<Member> memberId = con.createQuery(fetchMemberId)
-                    .addParameter("email", memberEmailId)
-                    .executeAndFetch(Member.class);
-            Member m = memberId.get(0);
-            // System.out.println("Member Id"+ memberId);
-            List<Payment> paymentDetails = con.createQuery(paymentHistory)
-                    .addParameter("member_id", m.getMemberId())
-                    .executeAndFetch(Payment.class);
-
-            return paymentDetails;
-        }
-    }
 }
 
 

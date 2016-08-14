@@ -8,24 +8,26 @@ import java.util.Scanner;
 
 /**
  * PickMe is the name of our application for carpooling. It provides a menu based interface.
- * [1] Membership
- * [2] Vehicle Registration
- * [3] Ride
- * [4] Payment
- * [5] Notifications
- * [6] Quit
- * <p>
- * User can register as rider or driver, can reserve, cancel or track a carpool ride,
- * make or receive payments and check notifications sent by application to the user at
- * various stages.
+ [1] Membership
+ [2] Vehicle Registration
+ [3] Ride
+ [4] Payment
+ [5] Notifications
+ [6] Quit
+
+ User can register as rider or driver, can reserve, cancel or track a carpool ride,
+ make or receive payments and check notifications sent by application to the user at
+ various stages.
  */
-public class PickMe {
-    public static void main(String[] args) {
+public class PickMe
+{
+    public static void main( String[] args )
+    {
         Scanner scanner = new Scanner(System.in);
         //Graph routeMapGraph = RouteMapGraph.loadRouteMap();
         //System.out.println(routeMapGraph);
 
-        while (true) {
+        while(true) {
             printMainMenu();
             String menuOptionSelected = scanner.nextLine();
             switch (menuOptionSelected.trim()) {
@@ -54,11 +56,10 @@ public class PickMe {
     }
 
     private static void handleVehicleRegistration() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner= new Scanner(System.in);
         VehicleRegistration vehicle = new VehicleRegistration();
 
-        loop:
-        while (true) {
+        loop: while(true){
             vehicle.printVehicleMenu();
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
@@ -66,8 +67,7 @@ public class PickMe {
                     vehicle.handleVehicleRegistration();
                     break;
                 case "2":
-                    vehicle.handleDeleteVehicle();
-                    ;
+                    vehicle.handleDeleteVehicle();;
                     break;
                 case "3":
                     break loop;
@@ -89,6 +89,7 @@ public class PickMe {
             switch (menuSelected.trim()) {
                 case "1":
                     payment.addCard();
+
                 case "2":
                     payment.handleRidePayment();
                     break;
@@ -111,8 +112,7 @@ public class PickMe {
         Scanner scanner = new Scanner(System.in);
         Notifier notifier = new Notifier();
 
-        loop:
-        while (true) {
+        loop: while(true) {
             notifier.printNotificationMenu();
             String menuSelected = scanner.nextLine();
             switch ((menuSelected.trim())) {
@@ -128,12 +128,15 @@ public class PickMe {
 
     }
 
+
+
+
+
     private static void handleRides() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner= new Scanner(System.in);
         Ride ride = new Ride();
 
-        loop:
-        while (true) {
+        loop: while(true){
             ride.printReserveRideMenu();
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
@@ -158,8 +161,7 @@ public class PickMe {
     private static void handleMembership() {
         Scanner scanner = new Scanner(System.in);
         Membership membership = new Membership();
-        loop:
-        while (true) {
+        loop: while (true) {
             membership.printMembershipMenu();
             String menuSelected = scanner.nextLine();
 
