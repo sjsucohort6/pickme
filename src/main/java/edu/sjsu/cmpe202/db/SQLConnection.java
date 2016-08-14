@@ -12,7 +12,7 @@ import java.util.Map;
  * @author swetha
  */
 public class SQLConnection implements AutoCloseable {
-	private final static String url = "jdbc:mysql://localhost:3307/";
+	private final static String url = "jdbc:mysql://localhost:3306/";
 	private final static String DB =  "pickme";
     private final static String userName = "root";
 	private final static String password = "root";
@@ -59,6 +59,7 @@ public class SQLConnection implements AutoCloseable {
         colMaps.put("location_2", "location2");
 
         colMaps.put("owner_id", "ownerId");
+        colMaps.put("payment_status", "paymentStatus");
 
         sql2o.setDefaultColumnMappings(colMaps);
     }
