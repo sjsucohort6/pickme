@@ -30,6 +30,8 @@ public class Utilities {
             return false;
         }
     }
+    
+
 
     public static boolean isValidDateTime(String date) {
         return isValidDateInternal(date, DATE_TIME_FORMAT);
@@ -62,6 +64,17 @@ public class Utilities {
         System.out.println(displayMsg);
         String retStr = scanner.nextLine();
         while (!Utilities.isValidDate(retStr)) {
+            System.out.println(displayMsg);
+            retStr = scanner.nextLine();
+        }
+        return retStr;
+    }
+    
+    public static String getDateTimeString(String displayMsg) {
+    	Scanner scanner = new Scanner(System.in);
+    	System.out.println(displayMsg);
+    	String retStr = scanner.nextLine();
+    	while (!Utilities.isValidDateTime(retStr)) {
             System.out.println(displayMsg);
             retStr = scanner.nextLine();
         }

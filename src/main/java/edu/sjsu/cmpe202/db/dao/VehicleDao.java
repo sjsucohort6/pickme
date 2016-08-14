@@ -13,13 +13,14 @@ public class VehicleDao {
     public static void createVehicle(VehicleRegistration vehicle) {
 
     	String vehicleinfo =
-    			"INSERT INTO vehicle (owner_id,name,capacity)" +
-    	                   "VALUES(:owner_id, :name, :capacity)";
+    			"INSERT INTO vehicle (owner_id,registration_id,capacity,status)" +
+    	                   "VALUES(:owner_id, :registration_id, :capacity, :status)";
         try (Connection con = (new SQLConnection()).getConnection()) {
             con.createQuery(vehicleinfo)
                     .addParameter("owner_id",vehicle.getOwnerID())
-                    .addParameter("name", vehicle.getRegistration())
+                    .addParameter("registration_id", vehicle.getRegistration_id())
                     .addParameter("capacity", vehicle.getCapacity())
+                    .addParameter("status", vehicle.getStatus())
                     .executeUpdate();
         }
 
@@ -27,7 +28,7 @@ public class VehicleDao {
 
     public static void deleteVehicle(String vehicleID)
     {
-    	String deleteVehicle = " DELETE * from vehicle where vehicle_id = :vehicle_id" ;
+    	String deleteVehicle = "Update vehicle set status = 'NA' where vehicle_id = :vehicle_id" ;
     	try (Connection con = (new SQLConnection()).getConnection()) {
             con.createQuery(deleteVehicle)
                     .addParameter("vehicle_id",vehicleID)
@@ -35,16 +36,16 @@ public class VehicleDao {
         }
     }
 
-    public static List<VehicleRegistration> showVehiclesOfOwner(String OwnerID)
+    public static List<VehicleRegistration> showVehiclesOfOwner(int OwnerID)
     {
-    	String vehicles = "SELECT * FROM vehicle where owner_id = :owner_id";
-    	List<VehicleRegistration> vehiclers;
+    	String vehiclesSql = "SELECT * FROM vehicle where owner_id = :owner_id";
+    	List<VehicleRegistration> vehicles;
     	try (Connection con = (new SQLConnection()).getConnection()) {
-           vehiclers =  con.createQuery(vehicles)
+           vehicles =  con.createQuery(vehiclesSql)
                     .addParameter("owner_id",OwnerID)
                     .executeAndFetch(VehicleRegistration.class);
         }
 
-    	return vehiclers;
+    	return vehicles;
     }
 }

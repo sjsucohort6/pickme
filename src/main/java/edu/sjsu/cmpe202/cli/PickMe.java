@@ -27,8 +27,6 @@ public class PickMe
     {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println(routeMapGraph);
-
         while(true) {
             printMainMenu();
             String menuOptionSelected = scanner.nextLine();
@@ -69,12 +67,9 @@ public class PickMe
                     vehicle.handleVehicleRegistration();
                     break;
                 case "2":
-                    vehicle.handleUpdateVehicleInfo();
+                    vehicle.handleDeleteVehicle();;
                     break;
                 case "3":
-                    vehicle.handleDeleteVehicle();
-                    break;
-                case "4":
                     break loop;
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");
@@ -85,6 +80,31 @@ public class PickMe
 
 
     private static void handlePayment() {
+        Scanner scanner = new Scanner(System.in);
+        Payment payment = new Payment();
+        loop:
+        while (true) {
+            payment.printPaymentMenu();
+            String menuSelected = scanner.nextLine();
+            switch (menuSelected.trim()) {
+                case "1":
+                    payment.addCard();
+
+                case "2":
+                    payment.handleRidePayment();
+                    break;
+                case "3":
+                    payment.handleParkingPayment();
+                    break;
+                case "4":
+                    payment.handlePaymentDetails();
+                case "5":
+                    break loop;
+                default:
+                    System.out.println("ERROR: Unknown menu option. Please retry.");
+                    break;
+            }
+        }
 
     }
 
@@ -107,6 +127,8 @@ public class PickMe
         }
 
     }
+
+
 
 
 
