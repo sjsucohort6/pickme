@@ -13,6 +13,7 @@ import java.util.Scanner;
  [3] Ride
  [4] Payment
  [5] Notifications
+ [6] Parking
  [6] Quit
 
  User can register as rider or driver, can reserve, cancel or track a carpool ride,
@@ -47,6 +48,8 @@ public class PickMe
                     handleNotifications();
                     break;
                 case "6":
+                    handleParking();
+                case "7":
                     System.exit(0);
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");
@@ -68,6 +71,29 @@ public class PickMe
                     break;
                 case "2":
                     vehicle.handleDeleteVehicle();;
+                    break;
+                case "3":
+                    break loop;
+                default:
+                    System.out.println("ERROR: Unknown menu option. Please retry.");
+                    break;
+            }
+        }
+    }
+
+    private static void handleParking() {
+        Scanner scanner = new Scanner(System.in);
+        ParkingDetails pDetails= new ParkingDetails();
+
+        loop:while(true) {
+            pDetails.printReserveParkingMenu();
+            String menuSelected = scanner.nextLine();
+            switch (menuSelected.trim()) {
+                case "1":
+                    pDetails.handleParkingReservation();
+                    break;
+                case "2":
+                    pDetails.handleParkingCancellation();
                     break;
                 case "3":
                     break loop;

@@ -227,6 +227,7 @@ CREATE TABLE `parking_details` (
   `parking_id` int(11) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`parking_details_id`),
   KEY `parking_id_idx` (`parking_id`),
   KEY `parker_id` (`parker_id`),

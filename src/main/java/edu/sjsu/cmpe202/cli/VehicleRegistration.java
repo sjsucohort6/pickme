@@ -57,7 +57,6 @@ public class VehicleRegistration {
     	if(vehicles != null) {
     		System.out.println("\t\t Below are the vehicles of the Owner :" + mailId);
             ShowVehicles(vehicles);
-
             System.out.println("\t\t Enter the vehicle ID");
             vehicleId = scanner.nextLine();
     		VehicleDao.deleteVehicle(vehicleId);
