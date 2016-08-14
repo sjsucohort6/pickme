@@ -227,6 +227,7 @@ CREATE TABLE `parking_details` (
   `parking_id` int(11) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   KEY `parking_id_idx` (`parking_id`),
   KEY `parker_id` (`parker_id`),
   CONSTRAINT `parker_id` FOREIGN KEY (`parker_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE,
