@@ -17,7 +17,7 @@ public class Notifier {
     private String message;
 
     public static void printNotificationMenu(){
-        System.out.println("\t [1] Send Notifier");
+        System.out.println("\t [1] Show Notification");
         System.out.println("\t [2] Go back to main menu");
     }
 

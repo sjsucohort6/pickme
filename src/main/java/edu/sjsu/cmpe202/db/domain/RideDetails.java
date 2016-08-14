@@ -16,4 +16,5 @@ public class RideDetails {
     private Date createDate;
     private Date startDate;
     private String status;
+    private String paymentStatus;
 }

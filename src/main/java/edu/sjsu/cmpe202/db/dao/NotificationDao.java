@@ -10,8 +10,16 @@ import java.util.List;
  * @author rwatsh on 8/12/16.
  */
 public class NotificationDao {
-    public static Notification sendNotification(Notification n) {
-        return null;
+    public static void sendNotifications(Notification n) {
+        String note = "INSERT into notification(notifyuser_id,date,message)" +
+                "VALUES(:notifyuser_id,:date,:message)";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            con.createQuery(note)
+                    .addParameter("notifyuser_id", n.getNotifyUserId())
+                    .addParameter("date", n.getDate())
+                    .addParameter("message", n.getMessage())
+                    .executeUpdate();
+        }
     }
 
     public static List<Notification> getNotifications() {

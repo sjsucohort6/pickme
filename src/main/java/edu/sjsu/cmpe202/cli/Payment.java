@@ -18,7 +18,6 @@ public class Payment {
     private String expiryDate;
     private String memberId;
 
-
     public void printPaymentMenu() {
         // TODO Auto-generated method stub
         System.out.println("\t [1] Add Card");

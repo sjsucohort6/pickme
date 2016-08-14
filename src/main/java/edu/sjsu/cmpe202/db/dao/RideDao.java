@@ -1,10 +1,10 @@
 package edu.sjsu.cmpe202.db.dao;
 
 import edu.sjsu.cmpe202.cli.Ride;
+import edu.sjsu.cmpe202.cli.RideStatus;
 import edu.sjsu.cmpe202.db.SQLConnection;
 import edu.sjsu.cmpe202.db.domain.RideDetails;
 import org.sql2o.Connection;
-import edu.sjsu.cmpe202.db.domain.Member;
 
 import java.util.List;
 
@@ -61,5 +61,15 @@ public class RideDao {
                     .executeScalar(Integer.class);
             //return m.getmemberId();
         }
+    }
+
+    public static List<RideDetails> getPendingRides() {
+        String rideStatus = "SELECT * FROM ride_details WHERE status = '" + RideStatus.PENDING.name() + "'";
+
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            return con.createQuery(rideStatus)
+                    .executeAndFetch(RideDetails.class);
+        }
+
     }
 }
