@@ -11,4 +11,5 @@ public class Vehicle {
     private int ownerId;
     private String registrationId;
     private int capacity;
+    private String status;
 }

@@ -44,7 +44,7 @@ public class Ride {
         System.out.println("\t\t Pick up Time(yyyy/MM/dd HH:mm:ss: ");
         pickupTime = scanner.nextLine();
         //need code to add Date time.
-        status = "Waiting";
+        status = RideStatus.PENDING.name();
         RideDao.addRideRequest(this);
         System.out.println("\t\t We have recieved your Ride Request: " + this);
     }

@@ -14,6 +14,7 @@ public class Utilities {
     public final static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 
+
     public static boolean isValidDate(String date)
     {
         return isValidDateInternal(date, DATE_FORMAT);

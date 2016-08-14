@@ -59,6 +59,7 @@ public class SQLConnection implements AutoCloseable {
         colMaps.put("location_2", "location2");
 
         colMaps.put("owner_id", "ownerId");
+        colMaps.put("payment_status", "paymentStatus");
 
         sql2o.setDefaultColumnMappings(colMaps);
     }
