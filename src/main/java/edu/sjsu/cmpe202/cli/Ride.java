@@ -30,8 +30,9 @@ public class Ride {
     public void printReserveRideMenu(){
         System.out.println("\t [1] Reserve Ride ");
         System.out.println("\t [2] Cancel Ride");
-        System.out.println("\t [3] Track Ride");
-        System.out.println("\t [4] Go back to main menu");
+        System.out.println("\t [3] Dispatch Ride(s)");
+        System.out.println("\t [4] Track Ride");
+        System.out.println("\t [5] Go back to main menu");
     }
 
     public void handleRideReservation() {
@@ -42,10 +43,11 @@ public class Ride {
         sourceid = scanner.nextLine();
         System.out.println("\t\t Destination Location: ");
         destid = scanner.nextLine();
+
         String pickupTime = "\t\t Pick up Time(yyyy/MM/dd HH:mm:ss:";
 		startDate = Utilities.getDateTimeString(pickupTime);
         createDate = dateFormat.format(new Date());
-        status = "Waiting";
+        status = RideStatus.PENDING.name();
         userid = RideDao.getRiderID(emailID);
         RideDao.addRideRequest(this);
         System.out.println("\t\t We have recieved your Ride Request: " + this);
@@ -81,4 +83,7 @@ public class Ride {
         return "RideId" + r.getRideid() + "\t" + "RiderID" + r.getRideid() + "\t" +
     } */
 
+    public void handleDispatch() {
+
+    }
 }

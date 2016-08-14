@@ -33,9 +33,7 @@ public class Utilities {
     
 
 
-    public static boolean isValidDateTime(String date)
-    {
-
+    public static boolean isValidDateTime(String date) {
         return isValidDateInternal(date, DATE_TIME_FORMAT);
     }
 

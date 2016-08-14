@@ -22,11 +22,11 @@ import java.util.Scanner;
  */
 public class PickMe
 {
+    public static final Graph routeMapGraph = RouteMapGraph.loadRouteMap();
+
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
-        //Graph routeMapGraph = RouteMapGraph.loadRouteMap();
-        //System.out.println(routeMapGraph);
 
         while(true) {
             printMainMenu();
@@ -106,6 +106,31 @@ public class PickMe
 
 
     private static void handlePayment() {
+        Scanner scanner = new Scanner(System.in);
+        Payment payment = new Payment();
+        loop:
+        while (true) {
+            payment.printPaymentMenu();
+            String menuSelected = scanner.nextLine();
+            switch (menuSelected.trim()) {
+                case "1":
+                    payment.addCard();
+
+                case "2":
+                    payment.handleRidePayment();
+                    break;
+                case "3":
+                    payment.handleParkingPayment();
+                    break;
+                case "4":
+                    payment.handlePaymentDetails();
+                case "5":
+                    break loop;
+                default:
+                    System.out.println("ERROR: Unknown menu option. Please retry.");
+                    break;
+            }
+        }
 
     }
 
@@ -131,6 +156,8 @@ public class PickMe
 
 
 
+
+
     private static void handleRides() {
         Scanner scanner= new Scanner(System.in);
         Ride ride = new Ride();
@@ -146,9 +173,12 @@ public class PickMe
                     ride.handleRideCancelation();
                     break;
                 case "3":
-                    ride.handleRideTracking();
+                    ride.handleDispatch();
                     break;
                 case "4":
+                    ride.handleRideTracking();
+                    break;
+                case "5":
                     break loop;
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");
