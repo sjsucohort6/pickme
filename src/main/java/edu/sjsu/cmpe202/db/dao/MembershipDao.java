@@ -11,13 +11,14 @@ import java.util.List;
  * @author rwatsh on 8/12/16.
  */
 public class MembershipDao {
-    public static int createRider(Membership membership) {
+
+    public static Integer createRider(Membership membership) {
         String sql =
                 "INSERT INTO member (first_name, last_name, dob, address, contact, email, is_driver) " +
                         "VALUES (:first_name, :last_name, :dob, :address, :contact, :email, :is_driver)";
 
         try (Connection con = (new SQLConnection()).getConnection()) {
-            int id = (int) con.createQuery(sql)
+            return con.createQuery(sql)
                     .addParameter("first_name", membership.getFirstName())
                     .addParameter("last_name", membership.getLastName())
                     .addParameter("dob", membership.getDob())
@@ -25,10 +26,9 @@ public class MembershipDao {
                     .addParameter("contact", membership.getPhone())
                     .addParameter("email", membership.getEmail())
                     .addParameter("is_driver", "N")
-                    .executeUpdate().getKey();
+                    .executeUpdate()
+                    .getKey(Integer.class);
         }
-
-        return id;
     }
 
     public static void createDriver(Membership membership) {
