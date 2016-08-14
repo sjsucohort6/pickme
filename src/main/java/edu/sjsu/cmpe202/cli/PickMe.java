@@ -27,7 +27,6 @@ public class PickMe
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
-
         while(true) {
             printMainMenu();
             String menuOptionSelected = scanner.nextLine();
@@ -115,7 +114,6 @@ public class PickMe
             switch (menuSelected.trim()) {
                 case "1":
                     payment.addCard();
-
                 case "2":
                     payment.handleRidePayment();
                     break;
@@ -153,10 +151,6 @@ public class PickMe
         }
 
     }
-
-
-
-
 
     private static void handleRides() {
         Scanner scanner= new Scanner(System.in);

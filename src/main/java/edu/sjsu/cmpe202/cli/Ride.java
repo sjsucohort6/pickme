@@ -13,8 +13,6 @@ import java.util.Scanner;
  */
 @Data
 public class Ride {
-	
-
 	String rideid ;
 	int userid;
 	String emailID;

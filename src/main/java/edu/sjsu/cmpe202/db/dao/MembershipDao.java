@@ -26,17 +26,9 @@ public class MembershipDao {
                     .addParameter("contact", membership.getPhone())
                     .addParameter("email", membership.getEmail())
                     .addParameter("is_driver", "N")
-<<<<<<< HEAD
                     .executeUpdate()
                     .getKey(Integer.class);
         }
-=======
-                    .executeUpdate().getKey();
-            return id;
-        }
-
-
->>>>>>> 1a067f8c7c24eb9ba1f7f90a9c46e9c6b2a67c7d
     }
 
     public static void createDriver(Membership membership) {
