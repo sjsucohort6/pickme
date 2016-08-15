@@ -2,7 +2,9 @@ package edu.sjsu.cmpe202.scheduler;
 
 import edu.sjsu.cmpe202.cli.CarpoolStatus;
 import edu.sjsu.cmpe202.cli.RideStatus;
+import edu.sjsu.cmpe202.cli.Utilities;
 import edu.sjsu.cmpe202.db.dao.CarpoolDao;
+import edu.sjsu.cmpe202.db.dao.NotificationDao;
 import edu.sjsu.cmpe202.db.dao.RideDao;
 import edu.sjsu.cmpe202.db.domain.*;
 import lombok.Data;
@@ -26,6 +28,8 @@ public class CarpoolGroup {
     private Vehicle vehicle;
     private Member driver;
     private String route;
+
+    private NotificationDao notificationDao = new NotificationDao();
 
     static class CarpoolBuilder {
         private List<RideDetails> rideList;
@@ -96,5 +100,12 @@ public class CarpoolGroup {
         CarpoolDao.createDispatcher(poolId, rideList, pickupTime);
         // Set all rides to scheduled.
         RideDao.updateRideStatus(rideList, RideStatus.SCHEDULED.name());
+        if(this.vehicle.getStatus() == "OUT_OF_ORDER") {
+            int notifyUserId = details.getDriverId();
+            Date d = new Date();
+            String message = "Vehicle Broke Down";
+            Notification n = new Notification(notifyUserId,d,message);
+            notificationDao.sendNotifications(n);
+        }
     }
 }
