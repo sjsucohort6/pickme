@@ -2,14 +2,14 @@ package edu.sjsu.cmpe202.db.dao;
 
 import edu.sjsu.cmpe202.cli.CarpoolStatus;
 import edu.sjsu.cmpe202.cli.RideStatus;
+import edu.sjsu.cmpe202.cli.Utilities;
 import edu.sjsu.cmpe202.cli.VehicleStatus;
 import edu.sjsu.cmpe202.db.SQLConnection;
-import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
-import edu.sjsu.cmpe202.db.domain.Location;
-import edu.sjsu.cmpe202.db.domain.Member;
-import edu.sjsu.cmpe202.db.domain.Vehicle;
+import edu.sjsu.cmpe202.db.domain.*;
 import org.sql2o.Connection;
+import org.sql2o.Query;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,7 +75,7 @@ public class CarpoolDao {
     }
 
     public static List<Integer> findRidesInACarpool(int poolId) {
-        String sql = "SELECT ride_id FROM carpool_details WHERE pool_id = :pool_id";
+        String sql = "SELECT ride_id FROM carpool_details as c, dispatcher as d WHERE c.pool_id = :pool_id AND c.pool_id = d.pool_id";
 
         try (Connection con = (new SQLConnection()).getConnection()) {
             return con.createQuery(sql)
@@ -100,5 +100,25 @@ public class CarpoolDao {
                      .executeUpdate();
         }
 
+    }
+
+    public static void createDispatcher(int poolId, List<RideDetails> rideList, Date pickupTime) {
+        String sql = "INSERT INTO dispatcher (pool_id, ride_id, start_time) " +
+                        "VALUES (:pool_id, :ride_id, :start_time)";
+
+        try (Connection con = SQLConnection.sql2o.beginTransaction()) {
+            Query query = con.createQuery(sql);
+
+            String startTime = Utilities.dateTimeFormat.format(pickupTime);
+
+            for (RideDetails r: rideList){
+                query.addParameter("pool_id", poolId).addParameter("ride_id", r.getRideId())
+                        .addParameter("start_time", startTime)
+                        .addToBatch();
+            }
+
+            query.executeBatch(); // executes entire batch
+            con.commit();         // remember to call commit(), else sql2o will automatically rollback.
+        }
     }
 }

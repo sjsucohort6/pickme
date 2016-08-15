@@ -34,7 +34,7 @@ public class RoutingStrategyTest extends TestCase {
         vertices.add(f);
 
         edges.add(new Edge("E1", a, b, 7, 7));
-        edges.add(new Edge("E2", a, c, 20, 9));
+        edges.add(new Edge("E2", a, c, 20, 19));
         edges.add(new Edge("E3", b, c, 10, 10));
         edges.add(new Edge("E4", b, d, 15, 15));
         edges.add(new Edge("E5", c, d, 11, 11));
@@ -62,6 +62,19 @@ public class RoutingStrategyTest extends TestCase {
     public void testFastestTime() {
         DijkstraAlgorithm algorithm = new DijkstraAlgorithm(graph);
         algorithm.setRoutingStrategy(new FastestTimeStrategy(algorithm));
+        Vertex a = new Vertex("1", "A");
+        Vertex f = new Vertex("6", "F");
+        algorithm.execute(a);
+        LinkedList<Vertex> path = algorithm.getPath(f);
+        System.out.println(path);
+        assertNotNull(path);
+        assertTrue(path.size() > 0);
+    }
+
+    @Test
+    public void testUndirectedShortestPath() {
+        DijkstraAlgorithm algorithm = new DijkstraAlgorithm(new UndirectedGraphDecorator(graph));
+        algorithm.setRoutingStrategy(new ShortestPathStrategy(algorithm));
         Vertex a = new Vertex("1", "A");
         Vertex f = new Vertex("6", "F");
         algorithm.execute(a);

@@ -154,8 +154,7 @@ CREATE TABLE `member` (
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
 INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL),(2,'fff','gggg','1984-09-07','fffff',666666,'ckckck@sjsu.com','N'),(3,'jjj','eee','1976-09-07','jjj',3333,'dkdkd@kk.com','N');
-=======
-INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL);
+
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 

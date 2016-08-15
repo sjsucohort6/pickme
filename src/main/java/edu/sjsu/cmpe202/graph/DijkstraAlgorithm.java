@@ -19,7 +19,7 @@ public class DijkstraAlgorithm {
     protected Map<Vertex, Integer> time;
     protected RoutingStrategy routingStrategy = null;
 
-    public DijkstraAlgorithm(Graph graph) {
+    public DijkstraAlgorithm(GraphInterface graph) {
         // create a copy of the array so that we can operate on this array
         this.nodes = new ArrayList<Vertex>(graph.getVertexes());
         this.edges = new ArrayList<Edge>(graph.getEdges());

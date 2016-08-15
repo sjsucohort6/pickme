@@ -92,7 +92,8 @@ public class CarpoolGroup {
         details.setPassengerCount(rideList.size());
         details.setRoute(route);
         details.setStatus((rideList.size() >= MAX_CARPOOL_SIZE) ? CarpoolStatus.FULL.name() : CarpoolStatus.HAS_VACANCY.name());
-        CarpoolDao.createCarpool(details);
+        int poolId = CarpoolDao.createCarpool(details);
+        CarpoolDao.createDispatcher(poolId, rideList, pickupTime);
         // Set all rides to scheduled.
         RideDao.updateRideStatus(rideList, RideStatus.SCHEDULED.name());
     }

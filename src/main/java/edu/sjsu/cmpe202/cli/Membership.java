@@ -5,8 +5,6 @@ import edu.sjsu.cmpe202.db.dao.NotificationDao;
 import edu.sjsu.cmpe202.db.domain.Notification;
 import lombok.Data;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -29,8 +27,6 @@ public class Membership {
 
     //notification object
     private NotificationDao notificationDao = new NotificationDao();
-    public final static String DATE_FORMAT = "yyyy-MM-dd";
-    public static DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
     public static void printMembershipMenu() {
         System.out.println("\t [1] Sign up as Rider");
@@ -46,7 +42,7 @@ public class Membership {
         System.out.println("Rider created: " + this);
         //System.out.println("Rider Id: " + id);
         Date d = new Date();
-        String date = dateFormat.format(d);
+        String date = Utilities.dateFormat.format(d);
         String message = "Rider Created";
         Notification n = new Notification(notifyUserId,d,message);
         notificationDao.sendNotifications(n);
