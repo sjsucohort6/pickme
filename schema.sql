@@ -143,11 +143,8 @@ CREATE TABLE `member` (
   `email` varchar(45) DEFAULT NULL,
   `is_driver` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`member_id`)
-<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-=======
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
->>>>>>> a2cc3d70653e137ace0e5244d8d708c279cc5a8b
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,11 +153,9 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-<<<<<<< HEAD
 INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL),(2,'fff','gggg','1984-09-07','fffff',666666,'ckckck@sjsu.com','N'),(3,'jjj','eee','1976-09-07','jjj',3333,'dkdkd@kk.com','N');
 =======
 INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL);
->>>>>>> a2cc3d70653e137ace0e5244d8d708c279cc5a8b
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,10 +231,7 @@ CREATE TABLE `parking_details` (
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-<<<<<<< HEAD
   PRIMARY KEY (`parking_details_id`),
-=======
->>>>>>> a2cc3d70653e137ace0e5244d8d708c279cc5a8b
   KEY `parking_id_idx` (`parking_id`),
   KEY `parker_id` (`parker_id`),
   CONSTRAINT `parker_id` FOREIGN KEY (`parker_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -257,7 +249,6 @@ LOCK TABLES `parking_details` WRITE;
 UNLOCK TABLES;
 
 --
-<<<<<<< HEAD
 -- Table structure for table `payment`
 --
 
@@ -288,8 +279,6 @@ LOCK TABLES `payment` WRITE;
 UNLOCK TABLES;
 
 --
-=======
->>>>>>> a2cc3d70653e137ace0e5244d8d708c279cc5a8b
 -- Table structure for table `payment_details`
 --
 
@@ -332,10 +321,7 @@ CREATE TABLE `ride_details` (
   `create_date` date DEFAULT NULL,
   `start_date` datetime DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-<<<<<<< HEAD
-=======
   `payment_status` varchar(45) DEFAULT NULL,
->>>>>>> a2cc3d70653e137ace0e5244d8d708c279cc5a8b
   PRIMARY KEY (`ride_id`),
   KEY `user_id_idx` (`user_id`),
   KEY `source_id_idx` (`source_id`),
@@ -420,12 +406,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD
--- Dump completed on 2016-08-14 19:15:16
-
-=======
--- Dump completed on 2016-08-13 15:16:26
->>>>>>> a2cc3d70653e137ace0e5244d8d708c279cc5a8b
 
 --
 -- DML statements for location and route_map
@@ -448,7 +428,5 @@ INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (3,
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (4,5,6,6);
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (5,6,9,9);
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (6,1,14,14);
-<<<<<<< HEAD
-=======
+
 -- Dump completed on 2016-08-09 22:04:27
->>>>>>> a2cc3d70653e137ace0e5244d8d708c279cc5a8b
