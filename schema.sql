@@ -30,7 +30,7 @@ CREATE TABLE `carpool_details` (
   `driver_id` int(11) DEFAULT NULL,
   `passenger_count` int(11) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `route` varchar(45) DEFAULT NULL,
+  `route` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`pool_id`),
   KEY `vehicle_id_idx` (`vehicle_id`),
   KEY `driver_id_idx` (`driver_id`),
