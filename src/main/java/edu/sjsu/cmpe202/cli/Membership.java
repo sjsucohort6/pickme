@@ -52,8 +52,6 @@ public class Membership {
 
     }
 
-
-
     private void handleMemberSignup() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\t\t First Name: ");
