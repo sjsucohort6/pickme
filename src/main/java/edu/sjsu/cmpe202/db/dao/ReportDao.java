@@ -11,10 +11,11 @@ import java.util.List;
  */
 public class ReportDao {
     public static List<RidesByMember> getRidesByMember(int memberId) {
-        String rideStatus = "SELECT * FROM rides_by_member_view";
+        String rideStatus = "SELECT * FROM rides_by_member_view where member_id = :member_id";
 
         try (Connection con = (new SQLConnection()).getConnection()) {
             return con.createQuery(rideStatus)
+                    .addParameter("member_id", memberId)
                     .executeAndFetch(RidesByMember.class);
         }
     }

@@ -465,6 +465,7 @@ INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (6,
 
 CREATE VIEW `rides_by_member_view` AS
   SELECT
+    m.member_id,
     m.first_name as 'First Name',
     m.last_name as 'Last Name',
     m.email as 'Email',

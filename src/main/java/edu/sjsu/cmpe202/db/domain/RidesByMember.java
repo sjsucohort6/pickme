@@ -9,6 +9,7 @@ import java.util.Date;
  */
 @Data
 public class RidesByMember {
+    private int memberId;
     private String firstName;
     private String lastName;
     private String email;
