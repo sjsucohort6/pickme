@@ -15,7 +15,6 @@ import java.util.Scanner;
  [5] Notifications
  [6] Parking
  [6] Quit
-
  User can register as rider or driver, can reserve, cancel or track a carpool ride,
  make or receive payments and check notifications sent by application to the user at
  various stages.
@@ -211,7 +210,8 @@ public class PickMe
         System.out.println("[3] Ride");
         System.out.println("[4] Payment");
         System.out.println("[5] Notifications");
-        System.out.println("[6] Quit");
+        System.out.println("[6] Parking");
+        System.out.println("[7] Quit");
         System.out.println();
         System.out.println("Enter your choice: ");
     }
