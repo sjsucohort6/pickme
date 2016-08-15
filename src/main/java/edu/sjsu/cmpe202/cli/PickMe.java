@@ -1,7 +1,9 @@
 package edu.sjsu.cmpe202.cli;
 
 
+import edu.sjsu.cmpe202.graph.DijkstraAlgorithm;
 import edu.sjsu.cmpe202.graph.Graph;
+import edu.sjsu.cmpe202.graph.UndirectedGraphDecorator;
 import edu.sjsu.cmpe202.route.RouteMapGraph;
 
 import java.util.Scanner;
@@ -21,7 +23,8 @@ import java.util.Scanner;
  */
 public class PickMe
 {
-    public static final Graph routeMapGraph = RouteMapGraph.loadRouteMap();
+    private static final Graph routeMapGraph = RouteMapGraph.loadRouteMap();
+    public static final DijkstraAlgorithm algorithm = new DijkstraAlgorithm(new UndirectedGraphDecorator(routeMapGraph));
 
     public static void main( String[] args )
     {

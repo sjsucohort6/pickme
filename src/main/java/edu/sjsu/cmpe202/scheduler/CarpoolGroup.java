@@ -1,15 +1,19 @@
 package edu.sjsu.cmpe202.scheduler;
 
 import edu.sjsu.cmpe202.cli.CarpoolStatus;
+import edu.sjsu.cmpe202.cli.PickMe;
 import edu.sjsu.cmpe202.cli.RideStatus;
-import edu.sjsu.cmpe202.cli.Utilities;
+import edu.sjsu.cmpe202.cli.VehicleStatus;
 import edu.sjsu.cmpe202.db.dao.CarpoolDao;
 import edu.sjsu.cmpe202.db.dao.NotificationDao;
 import edu.sjsu.cmpe202.db.dao.RideDao;
+import edu.sjsu.cmpe202.db.dao.RouteMapDao;
 import edu.sjsu.cmpe202.db.domain.*;
+import edu.sjsu.cmpe202.graph.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -100,12 +104,47 @@ public class CarpoolGroup {
         CarpoolDao.createDispatcher(poolId, rideList, pickupTime);
         // Set all rides to scheduled.
         RideDao.updateRideStatus(rideList, RideStatus.SCHEDULED.name());
-        if(this.vehicle.getStatus() == "OUT_OF_ORDER") {
+
+
+
+        if(this.vehicle.getStatus() == VehicleStatus.OUT_OF_ORDER.name()) {
             int notifyUserId = details.getDriverId();
             Date d = new Date();
             String message = "Vehicle Broke Down";
             Notification n = new Notification(notifyUserId,d,message);
             notificationDao.sendNotifications(n);
         }
+    }
+
+    /**
+     * Computes all shortest path route.
+     *
+     * @param rideList
+     * @param routingStrategy
+     * @return
+     */
+    public static String computeRoute(List<RideDetails> rideList, RoutingStrategy routingStrategy) {
+        StringBuilder route = new StringBuilder();
+
+        for (RideDetails ride: rideList) {
+            PickMe.algorithm.setRoutingStrategy(routingStrategy);
+            Location sourceLocation = RouteMapDao.getLocationById(ride.getSourceId());
+            Location destLocation = RouteMapDao.getLocationById(ride.getDestId());
+            Vertex src = new Vertex(sourceLocation.getLocationId() + "", sourceLocation.getName());
+            Vertex dest = new Vertex(destLocation.getLocationId() + "", destLocation.getName());
+            PickMe.algorithm.execute(src);
+            LinkedList<Vertex> path = PickMe.algorithm.getPath(dest);
+            int i = 0;
+            for (Vertex v: path) {
+                if (i >= path.size() - 1) {
+                    route.append(v.getName());
+                } else {
+                    route.append(v.getName()).append("->");
+                }
+                i++;
+            }
+            route.append("\n");
+        }
+        return route.toString();
     }
 }

@@ -9,6 +9,7 @@ import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
 import edu.sjsu.cmpe202.db.domain.Member;
 import edu.sjsu.cmpe202.db.domain.RideDetails;
 import edu.sjsu.cmpe202.db.domain.Vehicle;
+import edu.sjsu.cmpe202.graph.RoutingStrategy;
 import org.apache.commons.collections4.ListUtils;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public enum Scheduler {
 
     private RideDetails rideDetails;
 
-    public void scheduleRides() {
+    public void scheduleRides(RoutingStrategy routingStrategy) {
         Map<CarpoolKey,List<RideDetails>> carpoolMap = new HashMap<>();
 
         // Look up ride table for rides that are in pending state
@@ -70,13 +71,20 @@ public enum Scheduler {
                         }*/
                         // Assuming the owner of vehicle is the driver also.
                         Member driver = MembershipDao.getMemberById(vehicle.getOwnerId());
+                        // Compute the route for this carpool
+                        String route = CarpoolGroup.computeRoute(rideList, routingStrategy);
+
+                        // Build the carpool group
                         CarpoolGroup carpoolGroup = new CarpoolGroup.CarpoolBuilder(carpoolRideList)
                                 .capacity(CarpoolGroup.MAX_CARPOOL_SIZE)
                                 .driver(driver)
                                 .location(CarpoolDao.getLocation(key.getLocationId()))
                                 .pickupTime(key.getPickupTime())
                                 .vehicle(vehicle)
+                                .route(route)
                                 .build();
+
+                        // Schedule the carpool
                         carpoolGroup.createCarpool();
 
                     } else {
