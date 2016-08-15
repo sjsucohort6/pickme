@@ -3,6 +3,7 @@ package edu.sjsu.cmpe202.scheduler;
 import edu.sjsu.cmpe202.cli.CarpoolStatus;
 import edu.sjsu.cmpe202.cli.RideStatus;
 import edu.sjsu.cmpe202.db.dao.CarpoolDao;
+import edu.sjsu.cmpe202.db.dao.MembershipDao;
 import edu.sjsu.cmpe202.db.dao.RideDao;
 import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
 import edu.sjsu.cmpe202.db.domain.Member;
@@ -63,10 +64,12 @@ public enum Scheduler {
                     Vehicle vehicle = CarpoolDao.findFirstAvailableVehicle();
                     if (vehicle != null) {
                         // Find the driver for the vehicle
-                        Member driver = CarpoolDao.findDriverForVehicle(vehicle.getVehicleId());
+                        /*Member driver = CarpoolDao.findDriverForVehicle(vehicle.getVehicleId());
                         if (driver == null) {
                             throw new IllegalStateException("No driver for carpool. Please associate a driver for all vehicles in available state.");
-                        }
+                        }*/
+                        // Assuming the owner of vehicle is the driver also.
+                        Member driver = MembershipDao.getMemberById(vehicle.getOwnerId());
                         CarpoolGroup carpoolGroup = new CarpoolGroup.CarpoolBuilder(carpoolRideList)
                                 .capacity(CarpoolGroup.MAX_CARPOOL_SIZE)
                                 .driver(driver)

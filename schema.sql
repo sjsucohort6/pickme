@@ -462,4 +462,25 @@ INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (4,
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (5,6,9,9);
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (6,1,14,14);
 
+
+CREATE VIEW `rides_by_member_view` AS
+  SELECT
+    m.first_name as 'First Name',
+    m.last_name as 'Last Name',
+    m.email as 'Email',
+    l.name as 'Source Location',
+    r.create_date as 'Create Date',
+    r.start_date as 'Start Date',
+    r.status as 'Status',
+    r.payment_status as 'Payment Status'
+  FROM
+    member AS m,
+    ride_details AS r,
+    location AS l
+  WHERE
+    m.member_id = r.user_id
+    AND r.source_id = l.location_id
+  GROUP BY m.member_id
+  ORDER BY m.first_name ASC;
+
 -- Dump completed on 2016-08-09 22:04:27
