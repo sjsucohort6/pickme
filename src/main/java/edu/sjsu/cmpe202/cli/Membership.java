@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
+import edu.sjsu.cmpe202.db.dao.NotificationDao;
 import edu.sjsu.cmpe202.db.domain.Notification;
 import lombok.Data;
 
@@ -8,7 +9,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-import edu.sjsu.cmpe202.db.dao.NotificationDao;
 
 /**
  * @author rwatsh on 8/6/16.
@@ -45,9 +45,10 @@ public class Membership {
         int notifyUserId = MembershipDao.createRider(this);
         System.out.println("Rider created: " + this);
         //System.out.println("Rider Id: " + id);
-        String date = dateFormat.format(new Date());
+        Date d = new Date();
+        String date = dateFormat.format(d);
         String message = "Rider Created";
-        Notification n = new Notification(notifyUserId,date,message);
+        Notification n = new Notification(notifyUserId,d,message);
         notificationDao.sendNotifications(n);
 
     }

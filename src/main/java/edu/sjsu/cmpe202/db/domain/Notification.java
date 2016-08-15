@@ -15,4 +15,9 @@ public class Notification {
     private String message;
 
 
+    public Notification(int notifyUserId, Date date, String message) {
+        this.notifyUserId = notifyUserId;
+        this.date = date;
+        this.message = message;
+    }
 }
