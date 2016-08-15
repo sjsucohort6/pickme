@@ -143,7 +143,8 @@ CREATE TABLE `member` (
   `email` varchar(45) DEFAULT NULL,
   `is_driver` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,6 +153,8 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
+INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL),(2,'fff','gggg','1984-09-07','fffff',666666,'ckckck@sjsu.com','N'),(3,'jjj','eee','1976-09-07','jjj',3333,'dkdkd@kk.com','N');
+=======
 INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -243,6 +246,36 @@ CREATE TABLE `parking_details` (
 LOCK TABLES `parking_details` WRITE;
 /*!40000 ALTER TABLE `parking_details` DISABLE KEYS */;
 /*!40000 ALTER TABLE `parking_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `payment` (
+  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) DEFAULT NULL,
+  `carpool_id` int(11) DEFAULT NULL,
+  `amount` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`payment_id`),
+  KEY `memb_id_idx` (`member_id`),
+  KEY `carp_id_idx` (`carpool_id`),
+  CONSTRAINT `carpo_id` FOREIGN KEY (`carpool_id`) REFERENCES `carpool_details` (`pool_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `membe_id` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -407,7 +440,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-13 15:16:26
 
 --
 -- DML statements for location and route_map
@@ -430,5 +462,5 @@ INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (3,
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (4,5,6,6);
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (5,6,9,9);
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (6,1,14,14);
--- Dump completed on 2016-08-09 22:04:27
 
+-- Dump completed on 2016-08-09 22:04:27

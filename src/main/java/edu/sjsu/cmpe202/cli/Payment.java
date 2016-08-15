@@ -3,6 +3,7 @@ package edu.sjsu.cmpe202.cli;
 import edu.sjsu.cmpe202.db.dao.PaymentDao;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,6 +15,7 @@ public class Payment {
     private String cardNumber;
     private String cardType;
     private String expiryDate;
+    private String memberId;
 
 
     public void printPaymentMenu() {
@@ -54,9 +56,22 @@ public class Payment {
         System.out.println("\t\t Expiry Date: ");
         expiryDate = scanner.nextLine();
     }
+    private void showPaymentDetails(List<Payment> paymentDetails) {
+        System.out.println("\t\t MemberId" + " " + "CardNum" + " " + " cardType " + " " + " ExpiryDate ");
+        for (Payment p : paymentDetails) {
+            System.out.println("\t\t " + p.getMemberId() + " " + p.getCardNumber() + " " + p.getCardType() + " " + p.getExpiryDate());
+        }
+    }
 
 
     public void handlePaymentDetails() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\t Enter email id");
+        memberEmailId = scanner.nextLine();
+        System.out.println("\t Payment Details ");
+        List<Payment> payment = PaymentDao.showPayment(memberEmailId);
+        showPaymentDetails(payment);
+
 
     }
 }

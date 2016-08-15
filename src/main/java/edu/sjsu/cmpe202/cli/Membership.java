@@ -1,8 +1,14 @@
 package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
+import edu.sjsu.cmpe202.db.domain.Notification;
 import lombok.Data;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
+import edu.sjsu.cmpe202.db.dao.NotificationDao;
 
 /**
  * @author rwatsh on 8/6/16.
@@ -21,6 +27,11 @@ public class Membership {
     private String driverLicence;
     private String expiration;
 
+    //notification object
+    private NotificationDao notificationDao = new NotificationDao();
+    public final static String DATE_FORMAT = "yyyy-MM-dd";
+    public static DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+
     public static void printMembershipMenu() {
         System.out.println("\t [1] Sign up as Rider");
         System.out.println("\t [2] Sign up as Driver");
@@ -31,12 +42,15 @@ public class Membership {
     public void handleRiderSignup() {
         System.out.println("\t Signing up Rider:");
         handleMemberSignup();
-        int id = MembershipDao.createRider(this);
+        int notifyUserId = MembershipDao.createRider(this);
         System.out.println("Rider created: " + this);
-        System.out.println("Rider Id: " + id);
+        //System.out.println("Rider Id: " + id);
+        String date = dateFormat.format(new Date());
+        String message = "Rider Created";
+        Notification n = new Notification(notifyUserId,date,message);
+        notificationDao.sendNotifications(n);
+
     }
-
-
 
     private void handleMemberSignup() {
         Scanner scanner = new Scanner(System.in);
