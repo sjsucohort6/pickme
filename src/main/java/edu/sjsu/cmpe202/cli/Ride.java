@@ -1,11 +1,11 @@
 package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.db.dao.RideDao;
-import edu.sjsu.cmpe202.db.domain.RideDetails;
 import lombok.Data;
-import java.util.*;
-import java.text.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -30,6 +30,7 @@ public class Ride {
     public void printReserveRideMenu(){
         System.out.println("\t [1] Reserve Ride ");
         System.out.println("\t [2] Cancel Ride");
+        System.out.println("\t [3] Schedule Carpool Ride");
         System.out.println("\t [3] Dispatch Ride(s)");
         System.out.println("\t [4] Track Ride");
         System.out.println("\t [5] Go back to main menu");

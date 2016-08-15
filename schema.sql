@@ -228,6 +228,7 @@ CREATE TABLE `parking_details` (
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`parking_details_id`),
   KEY `parking_id_idx` (`parking_id`),
   KEY `parker_id` (`parker_id`),
   CONSTRAINT `parker_id` FOREIGN KEY (`parker_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -361,6 +362,40 @@ CREATE TABLE `vehicle` (
 LOCK TABLES `vehicle` WRITE;
 /*!40000 ALTER TABLE `vehicle` DISABLE KEYS */;
 /*!40000 ALTER TABLE `vehicle` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+DROP TABLE IF EXISTS `driver_vehicle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+
+CREATE TABLE `driver_vehicle` (
+  `vehicle_id` INT(11) NOT NULL COMMENT '',
+  `member_id` INT(11) NOT NULL COMMENT '',
+  `is_current` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '',
+  INDEX `fk_driver_vehicle_vehicle1_idx` (`vehicle_id` ASC)  COMMENT '',
+  INDEX `fk_driver_vehicle_member1_idx` (`member_id` ASC)  COMMENT '',
+  PRIMARY KEY (`vehicle_id`, `member_id`)  COMMENT '',
+  CONSTRAINT `fk_driver_vehicle_vehicle1`
+  FOREIGN KEY (`vehicle_id`)
+  REFERENCES `vehicle` (`vehicle_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_driver_vehicle_member1`
+  FOREIGN KEY (`member_id`)
+  REFERENCES `member` (`member_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+  ENGINE = InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vehicle`
+--
+
+LOCK TABLES `driver_vehicle` WRITE;
+/*!40000 ALTER TABLE `driver_vehicle` DISABLE KEYS */;
+/*!40000 ALTER TABLE `driver_vehicle` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
