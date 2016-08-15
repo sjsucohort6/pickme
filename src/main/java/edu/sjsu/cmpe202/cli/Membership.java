@@ -3,6 +3,9 @@ package edu.sjsu.cmpe202.cli;
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
 import edu.sjsu.cmpe202.db.dao.NotificationDao;
 import edu.sjsu.cmpe202.db.domain.Notification;
+import edu.sjsu.cmpe202.notification.NotificationMessage;
+import edu.sjsu.cmpe202.notification.Observer;
+import edu.sjsu.cmpe202.notification.Subject;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +15,7 @@ import java.util.Scanner;
  * @author rwatsh on 8/6/16.
  */
 @Data
-public class Membership {
+public class Membership implements Observer {
 
     private String firstName;
     private String lastName;
@@ -45,8 +48,7 @@ public class Membership {
         String date = Utilities.dateFormat.format(d);
         String message = "Rider Created";
         Notification n = new Notification(notifyUserId,d,message);
-        notificationDao.sendNotifications(n);
-
+        NotificationMessage.getInstance().sendNotification(n);
     }
 
     private void handleMemberSignup() {
@@ -82,4 +84,14 @@ public class Membership {
         expiration = Utilities.getDateStr(expirationMsg);
     }
 
+    @Override
+    public void update() {
+        Object msg = NotificationMessage.getInstance().getUpdate();
+        System.out.println(msg.toString());
+    }
+
+    @Override
+    public void setSubject(Subject subject) {
+
+    }
 }

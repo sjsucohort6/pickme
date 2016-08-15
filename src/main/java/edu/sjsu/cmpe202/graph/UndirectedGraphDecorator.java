@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Decorator for undirected graph.
+ *
  * @author rwatsh on 8/14/16.
  */
 public class UndirectedGraphDecorator extends GraphDecorator {

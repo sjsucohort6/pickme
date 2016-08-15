@@ -21,10 +21,13 @@ import java.util.Map;
  * The logic currently is simply to put the rides with same origin location and same pickup time in one carpool
  * with a max carpool group size of 4.
  *
+ * A singleton enum.
+ *
  * @author rwatsh on 8/13/16.
  */
-public class Scheduler {
+public enum Scheduler {
 
+    INSTANCE;
 
     private RideDetails rideDetails;
 

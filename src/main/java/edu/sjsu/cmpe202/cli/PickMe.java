@@ -166,12 +166,14 @@ public class PickMe
                     ride.handleRideCancelation();
                     break;
                 case "3":
-                    ride.handleDispatch();
+                    ride.handleSchedule();
                     break;
                 case "4":
+                    ride.handleDispatch();
+                case "5":
                     ride.handleRideTracking();
                     break;
-                case "5":
+                case "6":
                     break loop;
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");
