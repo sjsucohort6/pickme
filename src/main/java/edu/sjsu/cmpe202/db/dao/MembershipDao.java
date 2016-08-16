@@ -2,10 +2,9 @@ package edu.sjsu.cmpe202.db.dao;
 
 import edu.sjsu.cmpe202.cli.Membership;
 import edu.sjsu.cmpe202.db.SQLConnection;
+import edu.sjsu.cmpe202.db.domain.DriverDetails;
 import edu.sjsu.cmpe202.db.domain.Member;
 import org.sql2o.Connection;
-
-import java.util.List;
 
 /**
  * @author rwatsh on 8/12/16.
@@ -42,7 +41,7 @@ public class MembershipDao {
                 "VALUES (:member_id, :license_number, :expiry_date)";
 
         try (Connection con = (new SQLConnection()).getConnection()) {
-             con.createQuery(memberSql)
+             int driverId = con.createQuery(memberSql)
                     .addParameter("first_name", membership.getFirstName())
                     .addParameter("last_name", membership.getLastName())
                     .addParameter("dob", membership.getDob())
@@ -50,21 +49,25 @@ public class MembershipDao {
                     .addParameter("contact", membership.getPhone())
                     .addParameter("email", membership.getEmail())
                     .addParameter("is_driver", "Y")
-                    .executeUpdate();
+                    .executeUpdate().getKey(Integer.class);
 
-            List<Member> members = con.createQuery(fetchMemberSql)
-                    .addParameter("email", membership.getEmail())
-                    .executeAndFetch(Member.class);
-
-            Member m = members.get(0);
-
-            return con.createQuery(driverSql)
-                    .addParameter("member_id", m.getMemberId())
+             con.createQuery(driverSql)
+                    .addParameter("member_id", driverId)
                     .addParameter("license_number", membership.getDriverLicence())
                     .addParameter("expiry_date", membership.getExpiration())
-                    .executeUpdate().getKey(Integer.class);
+                    .executeUpdate();
+            return driverId;
         }
 
+    }
+
+    public static DriverDetails getDriverDetailsFromMemberId(int memberId) {
+        String fetchMemberSql = "SELECT * FROM driver_details WHERE member_id = :member_id";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            return con.createQuery(fetchMemberSql)
+                    .addParameter("member_id", memberId)
+                    .executeAndFetchFirst(DriverDetails.class);
+        }
     }
 
     public static Member getMemberById(int id) {

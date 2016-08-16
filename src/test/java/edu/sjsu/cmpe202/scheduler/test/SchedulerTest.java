@@ -25,6 +25,7 @@ public class SchedulerTest {
     public static void setupTest() {
         Membership rider = createMember();
 
+
         Membership driver = createDriver();
 
         createVehicle(driver);

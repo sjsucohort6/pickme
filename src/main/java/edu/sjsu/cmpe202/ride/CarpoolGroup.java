@@ -4,10 +4,7 @@ import edu.sjsu.cmpe202.cli.CarpoolStatus;
 import edu.sjsu.cmpe202.cli.PickMe;
 import edu.sjsu.cmpe202.cli.RideStatus;
 import edu.sjsu.cmpe202.cli.VehicleStatus;
-import edu.sjsu.cmpe202.db.dao.CarpoolDao;
-import edu.sjsu.cmpe202.db.dao.NotificationDao;
-import edu.sjsu.cmpe202.db.dao.RideDao;
-import edu.sjsu.cmpe202.db.dao.RouteMapDao;
+import edu.sjsu.cmpe202.db.dao.*;
 import edu.sjsu.cmpe202.db.domain.*;
 import edu.sjsu.cmpe202.graph.*;
 import lombok.Data;
@@ -97,7 +94,8 @@ public class CarpoolGroup {
 
     public void createCarpool() {
         CarpoolDetails details = new CarpoolDetails();
-        details.setDriverId(driver.getMemberId());
+        DriverDetails driverDetailsId = MembershipDao.getDriverDetailsFromMemberId(driver.getMemberId());
+        details.setDriverId(driverDetailsId.getId());
         details.setPassengerCount(rideList.size());
         details.setVehicleId(vehicle.getVehicleId());
         details.setRoute(route);

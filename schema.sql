@@ -153,7 +153,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL),(2,'fff','gggg','1984-09-07','fffff',666666,'ckckck@sjsu.com','N'),(3,'jjj','eee','1976-09-07','jjj',3333,'dkdkd@kk.com','N');
+-- INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL),(2,'fff','gggg','1984-09-07','fffff',666666,'ckckck@sjsu.com','N'),(3,'jjj','eee','1976-09-07','jjj',3333,'dkdkd@kk.com','N');
 
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -473,7 +473,8 @@ CREATE VIEW `rides_by_member_view` AS
     r.create_date as 'Create Date',
     r.start_date as 'Start Date',
     r.status as 'Status',
-    r.payment_status as 'Payment Status'
+    r.payment_status as 'Payment Status',
+    count(*) as 'Total Rides'
   FROM
     member AS m,
     ride_details AS r,
@@ -481,7 +482,7 @@ CREATE VIEW `rides_by_member_view` AS
   WHERE
     m.member_id = r.user_id
     AND r.source_id = l.location_id
-  GROUP BY m.member_id
+  GROUP BY m.member_id, l.name, r.start_date, m.email, m.first_name, m.last_name, r.create_date, r.status, r.payment_status
   ORDER BY m.first_name ASC;
 
 -- Dump completed on 2016-08-09 22:04:27
