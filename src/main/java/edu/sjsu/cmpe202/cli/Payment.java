@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.db.dao.PaymentDao;
+import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
 import lombok.Data;
 
 import java.util.List;
@@ -16,6 +17,10 @@ public class Payment {
     private String cardType;
     private String expiryDate;
     private String memberId;
+    private String carpoolId;
+    private int amount;
+    private String status;
+    public static final int RideAmount = 14;
 
 
     public void printPaymentMenu() {
@@ -28,9 +33,38 @@ public class Payment {
     }
 
     public void handleRidePayment() {
-        // TODO Auto-generated method stub
-        System.out.println("Please Confirm your Payment");
+        System.out.println("Pay for Ride");
+        System.out.println("Email ID :");
+        Scanner scanner = new Scanner(System.in);
+        memberEmailId = scanner.nextLine();
+        System.out.println("Pool ID  :");
+        carpoolId = scanner.nextLine();
+        amount = calculateAmount(RideAmount);
+        if (validCard()) {
+            PaymentDao.initiatePayment(this);
+            System.out.println(" Received Payment of $ " + amount);
+        } else {
+            System.out.println("Please Add card First");
+        }
 
+    }
+
+    private int calculateAmount(int rideAmount) {
+        int count = showNoPassenger();
+        System.out.println("count"+ count);
+        int amount = rideAmount / count;
+            System.out.println("Amount"+ amount);
+        return amount;
+    }
+
+
+    private Boolean validCard() {
+        List<Payment> card = PaymentDao.checkCard(memberEmailId);
+        if(!card.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void handleParkingPayment() {
@@ -48,7 +82,7 @@ public class Payment {
     private void handleAddCard() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\t\t Email Id: ");
-        memberEmailId= scanner.nextLine();
+        memberEmailId = scanner.nextLine();
         System.out.println("\t\t Card Number: ");
         cardNumber = scanner.nextLine();
         System.out.println("\t\t Card Type: ");
@@ -56,6 +90,7 @@ public class Payment {
         System.out.println("\t\t Expiry Date: ");
         expiryDate = scanner.nextLine();
     }
+
     private void showPaymentDetails(List<Payment> paymentDetails) {
         System.out.println("\t\t MemberId" + " " + "CardNum" + " " + " cardType " + " " + " ExpiryDate ");
         for (Payment p : paymentDetails) {
@@ -63,6 +98,12 @@ public class Payment {
         }
     }
 
+    public int showNoPassenger() {
+        List<CarpoolDetails> count = PaymentDao.getCount(memberEmailId,carpoolId);
+        CarpoolDetails cd = count.get(0);
+        int countPassenger = cd.getPassengerCount();
+        return countPassenger;
+    }
 
     public void handlePaymentDetails() {
         Scanner scanner = new Scanner(System.in);

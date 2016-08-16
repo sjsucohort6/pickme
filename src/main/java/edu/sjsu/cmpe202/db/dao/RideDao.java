@@ -9,7 +9,6 @@ import org.sql2o.Query;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * @author rwatsh on 8/12/16.
  */
