@@ -66,4 +66,13 @@ public class MembershipDao {
         }
 
     }
+
+    public static Member getMemberById(int id) {
+        String fetchMemberSql = "SELECT member_id FROM member WHERE member_id = :member_id";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            return con.createQuery(fetchMemberSql)
+                    .addParameter("member_id", id)
+                    .executeAndFetchFirst(Member.class);
+        }
+    }
 }

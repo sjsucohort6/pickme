@@ -10,9 +10,10 @@ import java.util.Scanner;
  */
 public class Utilities {
 
-    public final static String DATE_FORMAT = "yyyy-MM-dd";
     public final static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
+    public final static String DATE_FORMAT = "yyyy-MM-dd";
+    public static DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+    public static DateFormat dateTimeFormat = new SimpleDateFormat(DATE_TIME_FORMAT);
 
 
     public static boolean isValidDate(String date)

@@ -18,7 +18,7 @@ public class SQLConnection implements AutoCloseable {
 	private final static String password = "root";
 	private final static String DB_URL = url+DB;
 	private Connection connection = null;
-    private static Sql2o sql2o;
+    public static Sql2o sql2o;
 
 	static {
         sql2o = new Sql2o(DB_URL, userName, password);

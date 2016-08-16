@@ -1,11 +1,15 @@
 package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.db.dao.RideDao;
-import edu.sjsu.cmpe202.db.domain.RideDetails;
+import edu.sjsu.cmpe202.graph.FastestTimeStrategy;
+import edu.sjsu.cmpe202.graph.RoutingStrategy;
+import edu.sjsu.cmpe202.graph.ShortestPathStrategy;
+import edu.sjsu.cmpe202.scheduler.Scheduler;
 import lombok.Data;
-import java.util.*;
-import java.text.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -28,9 +32,10 @@ public class Ride {
     public void printReserveRideMenu(){
         System.out.println("\t [1] Reserve Ride ");
         System.out.println("\t [2] Cancel Ride");
-        System.out.println("\t [3] Dispatch Ride(s)");
-        System.out.println("\t [4] Track Ride");
-        System.out.println("\t [5] Go back to main menu");
+        System.out.println("\t [3] Schedule Carpool Ride");
+        System.out.println("\t [4] Dispatch Ride(s)");
+        System.out.println("\t [5] Track Ride");
+        System.out.println("\t [6] Go back to main menu");
     }
 
     public void handleRideReservation() {
@@ -82,6 +87,38 @@ public class Ride {
     } */
 
     public void handleDispatch() {
+        Scheduler.INSTANCE.dispatchCarpools();
+    }
 
+    public void handleSchedule() {
+        Scanner scanner = new Scanner(System.in);
+        RoutingStrategy strategy = null;
+
+        loop:while(true) {
+            printRouteSelectionMenu();
+            String menuSelected = scanner.nextLine();
+            switch (menuSelected.trim()) {
+                case "1":
+                    strategy = new ShortestPathStrategy(PickMe.algorithm);
+                    break;
+                case "2":
+                    strategy = new FastestTimeStrategy(PickMe.algorithm);
+                    break;
+                case "3":
+                    break loop;
+                default:
+                    System.out.println("ERROR: Unknown menu option. Please retry.");
+                    break;
+            }
+        }
+
+        Scheduler.INSTANCE.scheduleRides(strategy);
+    }
+
+    private void printRouteSelectionMenu() {
+        System.out.println("\t\t Select Routing Strategy: ");
+        System.out.println("\t\t [1] Shortest Path Route");
+        System.out.println("\t\t [2] Fastest Time Route");
+        System.out.println("\t\t [3] Go back to previous menu");
     }
 }

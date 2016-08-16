@@ -1,100 +1,107 @@
 package edu.sjsu.cmpe202.scheduler;
 
+import edu.sjsu.cmpe202.cli.CarpoolStatus;
+import edu.sjsu.cmpe202.cli.RideStatus;
+import edu.sjsu.cmpe202.db.dao.CarpoolDao;
+import edu.sjsu.cmpe202.db.dao.MembershipDao;
 import edu.sjsu.cmpe202.db.dao.RideDao;
+import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
+import edu.sjsu.cmpe202.db.domain.Member;
 import edu.sjsu.cmpe202.db.domain.RideDetails;
+import edu.sjsu.cmpe202.db.domain.Vehicle;
+import edu.sjsu.cmpe202.graph.RoutingStrategy;
+import org.apache.commons.collections4.ListUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
+ * Scheduler schedules the rides to carpools.
+ *
+ * The logic currently is simply to put the rides with same origin location and same pickup time in one carpool
+ * with a max carpool group size of 4.
+ *
+ * A singleton enum.
+ *
  * @author rwatsh on 8/13/16.
  */
-public class Scheduler {
+public enum Scheduler {
+
+    INSTANCE;
 
     private RideDetails rideDetails;
 
-    public void scheduleRides() {
-        Map<Integer,List<Integer>> srcLocationToRideMap = new HashMap<>();
-        Map<Date, List<Integer>> pickupTimeToRideMap = new HashMap<>();
+    public void scheduleRides(RoutingStrategy routingStrategy) {
+        Map<CarpoolKey,List<RideDetails>> carpoolMap = new HashMap<>();
 
         // Look up ride table for rides that are in pending state
         // and check the pickup time and src location
-        List<RideDetails> rideDetailsList = RideDao.getPendingRides();
+        List<RideDetails> rideDetailsList = RideDao.getRidesByStatus(RideStatus.PENDING.name());
 
+        /*
+         * For rides that start at the same time and from same location
+         * put them in carpool with a max of 4 people in one carpool group.
+         */
         for (RideDetails ride: rideDetailsList) {
-            List<Integer> ridesListForSameLocation = srcLocationToRideMap.get(ride.getSourceId());
-            if (ridesListForSameLocation == null) {
-                ridesListForSameLocation = new ArrayList<>();
+            List<RideDetails> ridesList = carpoolMap.get(new CarpoolKey(ride.getSourceId(), ride.getStartDate()));
+            if (ridesList == null) {
+                ridesList = new ArrayList<>();
             }
-            ridesListForSameLocation.add(ride.getRideId());
-
-            List<Integer> ridesListForSamePickupTime = pickupTimeToRideMap.get(ride.getStartDate());
-            if (ridesListForSamePickupTime == null) {
-                ridesListForSamePickupTime = new ArrayList<>();
-            }
-            ridesListForSamePickupTime.add(ride.getRideId());
-
-            // determine if carpool possible for 2 rides?
-            for (Map.Entry<Integer, List<Integer>> entry : srcLocationToRideMap.entrySet()) {
-                // if src location is same
-                int srcLocationId = entry.getKey();
-                List<Integer> rideIdList = entry.getValue();
-
-                // Sort by pickup times
-                Set<Date> dates = pickupTimeToRideMap.keySet();
-                List<Date> datesList = new ArrayList<>();
-                datesList.addAll(dates);
-
-                Collections.sort(datesList, new Comparator<Date>() {
-                    @Override
-                    public int compare(Date lhs, Date rhs) {
-                        if (lhs.getTime() < rhs.getTime())
-                            return -1;
-                        else if (lhs.getTime() == rhs.getTime())
-                            return 0;
-                        else
-                            return 1;
-                    }
-                });
-
-                // create carpools
-                // if pickup times is within 30 mins
-                // and size of carpool is not more than 4 riders
-                int maxRidersCount = 4;
-                int ridersCount = 1;
-                Date previousPickupTime = null;
-                CarpoolGroup carpoolGroup = null;
-
-                for (Date pickupTime: datesList) {
-                    List<Integer> ridesWithSamePickupTime = pickupTimeToRideMap.get(pickupTime);
-
-                    // TBD - also get rides with pickup times within 30 mins boundary
-
-                    long diff = pickupTime.getTime() - ((previousPickupTime != null) ? previousPickupTime.getTime(): 0);
-                    long diffMinutes = diff / (60 * 1000) % 60;
-
-                    for (Integer id: ridesWithSamePickupTime) {
-                        if ((ridersCount > maxRidersCount) || (previousPickupTime == null) || (diffMinutes > 30)) {
-                            ridersCount = 1;
-                            carpoolGroup = new CarpoolGroup(maxRidersCount, pickupTime);
-                            previousPickupTime = pickupTime;
-                        } else {
-                            carpoolGroup.addRide(id);
-                            ridersCount++;
-                            previousPickupTime = pickupTime;
-                        }
-                    }
-
-
-
-                }
-
-
-
-
-            }
-
+            ridesList.add(ride);
         }
 
+        for (Map.Entry<CarpoolKey, List<RideDetails>> entry : carpoolMap.entrySet()) {
+            CarpoolKey key = entry.getKey();
+            List<RideDetails> rideList = entry.getValue();
+
+            if (rideList != null && !rideList.isEmpty()) {
+                // Divide the riders in groups of max 4 for carpool
+                List<List<RideDetails>> carpoolWiseRidesList = ListUtils.partition(rideList, CarpoolGroup.MAX_CARPOOL_SIZE);
+
+                for (List<RideDetails> carpoolRideList: carpoolWiseRidesList) {
+                    // Find available vehicle
+                    Vehicle vehicle = CarpoolDao.findFirstAvailableVehicle();
+                    if (vehicle != null) {
+                        // Find the driver for the vehicle
+                        /*Member driver = CarpoolDao.findDriverForVehicle(vehicle.getVehicleId());
+                        if (driver == null) {
+                            throw new IllegalStateException("No driver for carpool. Please associate a driver for all vehicles in available state.");
+                        }*/
+                        // Assuming the owner of vehicle is the driver also.
+                        Member driver = MembershipDao.getMemberById(vehicle.getOwnerId());
+                        // Compute the route for this carpool
+                        String route = CarpoolGroup.computeRoute(rideList, routingStrategy);
+
+                        // Build the carpool group
+                        CarpoolGroup carpoolGroup = new CarpoolGroup.CarpoolBuilder(carpoolRideList)
+                                .capacity(CarpoolGroup.MAX_CARPOOL_SIZE)
+                                .driver(driver)
+                                .location(CarpoolDao.getLocation(key.getLocationId()))
+                                .pickupTime(key.getPickupTime())
+                                .vehicle(vehicle)
+                                .route(route)
+                                .build();
+
+                        // Schedule the carpool
+                        carpoolGroup.createCarpool();
+
+                    } else {
+                        throw new IllegalStateException("No available vehicle for carpool. Please register more vehicles.");
+                    }
+                }
+            }
+        }
     }
 
+    public void dispatchCarpools() {
+        // Get all carpools that are scheduled and dispatch them.
+        List<CarpoolDetails> carpoolDetailsList = CarpoolDao.findCarpoolsByStatus(CarpoolStatus.SCHEDULED.name());
+
+        // dispatch the carpools
+        for (CarpoolDetails carpoolDetails: carpoolDetailsList) {
+            CarpoolDao.dispatchCarpool(carpoolDetails);
+        }
+    }
 }

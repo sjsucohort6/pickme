@@ -1,21 +1,21 @@
 package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
+import edu.sjsu.cmpe202.db.dao.NotificationDao;
 import edu.sjsu.cmpe202.db.domain.Notification;
+import edu.sjsu.cmpe202.notification.NotificationMessage;
+import edu.sjsu.cmpe202.notification.Observer;
+import edu.sjsu.cmpe202.notification.Subject;
 import lombok.Data;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-
-import edu.sjsu.cmpe202.db.dao.NotificationDao;
 
 /**
  * @author rwatsh on 8/6/16.
  */
 @Data
-public class Membership {
+public class Membership implements Observer {
 
     private String firstName;
     private String lastName;
@@ -30,8 +30,6 @@ public class Membership {
 
     //notification object
     private NotificationDao notificationDao = new NotificationDao();
-    public final static String DATE_FORMAT = "yyyy-MM-dd";
-    public static DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
     public static void printMembershipMenu() {
         System.out.println("\t [1] Sign up as Rider");
@@ -46,12 +44,12 @@ public class Membership {
         int notifyUserId = MembershipDao.createRider(this);
         System.out.println("Rider created: " + this);
         //System.out.println("Rider Id: " + id);
-        String date = dateFormat.format(new Date());
+        Date d = new Date();
+        String date = Utilities.dateFormat.format(d);
         String message = "Rider Created";
-        Notification n = new Notification(notifyUserId, date, message);
-        notificationDao.sendNotifications(n);
 
-    }
+        Notification n = new Notification(notifyUserId,d,message);
+        NotificationMessage.getInstance().sendNotification(n);
 
     private void handleMemberSignup() {
         Scanner scanner = new Scanner(System.in);
@@ -86,4 +84,14 @@ public class Membership {
         expiration = Utilities.getDateStr(expirationMsg);
     }
 
+    @Override
+    public void update() {
+        Object msg = NotificationMessage.getInstance().getUpdate();
+        System.out.println(msg.toString());
+    }
+
+    @Override
+    public void setSubject(Subject subject) {
+
+    }
 }

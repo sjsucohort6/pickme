@@ -34,4 +34,15 @@ public class RouteMapDao {
         }
 
     }
+
+    public static Location getLocationById(int id) {
+        String fetchLocationSql = "SELECT * FROM location WHERE location_id = :location_id";
+
+
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            return con.createQuery(fetchLocationSql)
+                    .addParameter("location_id", id)
+                    .executeAndFetchFirst(Location.class);
+        }
+    }
 }

@@ -30,7 +30,7 @@ CREATE TABLE `carpool_details` (
   `driver_id` int(11) DEFAULT NULL,
   `passenger_count` int(11) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `route` varchar(45) DEFAULT NULL,
+  `route` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`pool_id`),
   KEY `vehicle_id_idx` (`vehicle_id`),
   KEY `driver_id_idx` (`driver_id`),
@@ -143,7 +143,8 @@ CREATE TABLE `member` (
   `email` varchar(45) DEFAULT NULL,
   `is_driver` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +153,8 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL);
+INSERT INTO `member` VALUES (1,'chetan','punekar','0000-00-00','San Jose',2147483647,'chetan.punekar@sjsu.edu',NULL),(2,'fff','gggg','1984-09-07','fffff',666666,'ckckck@sjsu.com','N'),(3,'jjj','eee','1976-09-07','jjj',3333,'dkdkd@kk.com','N');
+
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,6 +230,7 @@ CREATE TABLE `parking_details` (
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`parking_details_id`),
   KEY `parking_id_idx` (`parking_id`),
   KEY `parker_id` (`parker_id`),
   CONSTRAINT `parker_id` FOREIGN KEY (`parker_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -242,6 +245,36 @@ CREATE TABLE `parking_details` (
 LOCK TABLES `parking_details` WRITE;
 /*!40000 ALTER TABLE `parking_details` DISABLE KEYS */;
 /*!40000 ALTER TABLE `parking_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `payment` (
+  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) DEFAULT NULL,
+  `carpool_id` int(11) DEFAULT NULL,
+  `amount` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`payment_id`),
+  KEY `memb_id_idx` (`member_id`),
+  KEY `carp_id_idx` (`carpool_id`),
+  CONSTRAINT `carpo_id` FOREIGN KEY (`carpool_id`) REFERENCES `carpool_details` (`pool_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `membe_id` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -362,6 +395,40 @@ LOCK TABLES `vehicle` WRITE;
 /*!40000 ALTER TABLE `vehicle` DISABLE KEYS */;
 /*!40000 ALTER TABLE `vehicle` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+DROP TABLE IF EXISTS `driver_vehicle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+
+CREATE TABLE `driver_vehicle` (
+  `vehicle_id` INT(11) NOT NULL COMMENT '',
+  `member_id` INT(11) NOT NULL COMMENT '',
+  `is_current` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '',
+  INDEX `fk_driver_vehicle_vehicle1_idx` (`vehicle_id` ASC)  COMMENT '',
+  INDEX `fk_driver_vehicle_member1_idx` (`member_id` ASC)  COMMENT '',
+  PRIMARY KEY (`vehicle_id`, `member_id`)  COMMENT '',
+  CONSTRAINT `fk_driver_vehicle_vehicle1`
+  FOREIGN KEY (`vehicle_id`)
+  REFERENCES `vehicle` (`vehicle_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_driver_vehicle_member1`
+  FOREIGN KEY (`member_id`)
+  REFERENCES `member` (`member_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+  ENGINE = InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vehicle`
+--
+
+LOCK TABLES `driver_vehicle` WRITE;
+/*!40000 ALTER TABLE `driver_vehicle` DISABLE KEYS */;
+/*!40000 ALTER TABLE `driver_vehicle` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -372,7 +439,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-13 15:16:26
 
 --
 -- DML statements for location and route_map
@@ -395,4 +461,27 @@ INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (3,
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (4,5,6,6);
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (5,6,9,9);
 INSERT INTO `route_map` (`location_1`,`location_2`,`distance`,`time`) VALUES (6,1,14,14);
+
+
+CREATE VIEW `rides_by_member_view` AS
+  SELECT
+    m.member_id,
+    m.first_name as 'First Name',
+    m.last_name as 'Last Name',
+    m.email as 'Email',
+    l.name as 'Source Location',
+    r.create_date as 'Create Date',
+    r.start_date as 'Start Date',
+    r.status as 'Status',
+    r.payment_status as 'Payment Status'
+  FROM
+    member AS m,
+    ride_details AS r,
+    location AS l
+  WHERE
+    m.member_id = r.user_id
+    AND r.source_id = l.location_id
+  GROUP BY m.member_id
+  ORDER BY m.first_name ASC;
+
 -- Dump completed on 2016-08-09 22:04:27

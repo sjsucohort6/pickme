@@ -5,7 +5,9 @@ import edu.sjsu.cmpe202.cli.RideStatus;
 import edu.sjsu.cmpe202.db.SQLConnection;
 import edu.sjsu.cmpe202.db.domain.RideDetails;
 import org.sql2o.Connection;
+import org.sql2o.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +37,7 @@ public class RideDao {
         try (Connection con = (new SQLConnection()).getConnection()) {
             con.createQuery(cancelRide)
                     .addParameter("ride_idparam",ride_id)
-                    .addParameter("status", "Cancelled")
+                    .addParameter("status", RideStatus.CANCELED.name())
                     .executeUpdate();
         }
     }
@@ -63,13 +65,39 @@ public class RideDao {
         }
     }
 
-    public static List<RideDetails> getPendingRides() {
-        String rideStatus = "SELECT * FROM ride_details WHERE status = '" + RideStatus.PENDING.name() + "'";
+    public static List<RideDetails> getRidesByStatus(String status) {
+        String rideStatus = "SELECT * FROM ride_details WHERE status = '" + status + "'";
 
         try (Connection con = (new SQLConnection()).getConnection()) {
             return con.createQuery(rideStatus)
                     .executeAndFetch(RideDetails.class);
         }
+    }
 
+    public static void updateRideStatus(List<RideDetails> rideList, String status) {
+
+        List<Integer> rideIdList = new ArrayList<>();
+        for (RideDetails r: rideList) {
+            rideIdList.add(r.getRideId());
+        }
+
+        updateRideStatus(status, rideIdList);
+    }
+
+    public static void updateRideStatus( String status, List<Integer> rideIdList) {
+        final String sql = "UPDATE ride_details set status = :status where ride_id = :ride_idparam";
+
+        try (Connection con = SQLConnection.sql2o.beginTransaction()) {
+            Query query = con.createQuery(sql);
+
+            for (Integer rideId: rideIdList) {
+                query.addParameter("ride_idparam", rideId)
+                        .addParameter("status", status)
+                        .addToBatch();
+            }
+
+            query.executeBatch(); // executes entire batch
+            con.commit();         // remember to call commit(), else sql2o will automatically rollback.
+        }
     }
 }
