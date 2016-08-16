@@ -1,4 +1,4 @@
-package edu.sjsu.cmpe202.scheduler;
+package edu.sjsu.cmpe202.ride;
 
 import lombok.Data;
 

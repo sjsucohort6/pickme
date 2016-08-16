@@ -68,10 +68,19 @@ public class MembershipDao {
     }
 
     public static Member getMemberById(int id) {
-        String fetchMemberSql = "SELECT member_id FROM member WHERE member_id = :member_id";
+        String fetchMemberSql = "SELECT * FROM member WHERE member_id = :member_id";
         try (Connection con = (new SQLConnection()).getConnection()) {
             return con.createQuery(fetchMemberSql)
                     .addParameter("member_id", id)
+                    .executeAndFetchFirst(Member.class);
+        }
+    }
+
+    public static Member getMemberByEmail(String email) {
+        String fetchMemberSql = "SELECT * FROM member WHERE email = :email";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            return con.createQuery(fetchMemberSql)
+                    .addParameter("email", email)
                     .executeAndFetchFirst(Member.class);
         }
     }

@@ -51,12 +51,35 @@ public class PickMe
                 case "6":
                     handleParking();
                 case "7":
+                    handleReports();
+                case "8":
                     System.exit(0);
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");
                     break;
             }
         }
+    }
+
+    private static void handleReports() {
+        Scanner scanner= new Scanner(System.in);
+        ReportGeneration reportGeneration = new ReportGeneration();
+
+        loop: while(true){
+            ReportGeneration.printReportMenu();
+            String menuSelected = scanner.nextLine();
+            switch (menuSelected.trim()) {
+                case "1":
+                    reportGeneration.handleRidesByMemberReport();
+                    break;
+                case "2":
+                    break loop;
+                default:
+                    System.out.println("ERROR: Unknown menu option. Please retry.");
+                    break;
+            }
+        }
+
     }
 
     private static void handleVehicleRegistration() {
@@ -216,7 +239,8 @@ public class PickMe
         System.out.println("[4] Payment");
         System.out.println("[5] Notifications");
         System.out.println("[6] Parking");
-        System.out.println("[7] Quit");
+        System.out.println("[7] Reports");
+        System.out.println("[8] Quit");
         System.out.println();
         System.out.println("Enter your choice: ");
     }
