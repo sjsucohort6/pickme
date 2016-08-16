@@ -1,11 +1,10 @@
 package edu.sjsu.cmpe202.cli;
 
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
-import edu.sjsu.cmpe202.db.dao.ReportDao;
 import edu.sjsu.cmpe202.db.domain.Member;
-import edu.sjsu.cmpe202.db.domain.RidesByMember;
+import edu.sjsu.cmpe202.report.CompositeReport;
+import edu.sjsu.cmpe202.report.RidesByMemberReport;
 
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -31,10 +30,8 @@ public class ReportGeneration {
             }
         }
 
-        List<RidesByMember> ridesByMemberList = ReportDao.getRidesByMember(member.getMemberId());
-
-        for (RidesByMember ridesByMember : ridesByMemberList) {
-            System.out.println(ridesByMember);
-        }
+        CompositeReport r = new CompositeReport();
+        r.addReport(new RidesByMemberReport(member.getMemberId()));
+        r.showReport();
     }
 }

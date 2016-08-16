@@ -50,8 +50,10 @@ public class PickMe
                     break;
                 case "6":
                     handleParking();
+                    break;
                 case "7":
                     handleReports();
+                    break;
                 case "8":
                     System.exit(0);
                 default:
