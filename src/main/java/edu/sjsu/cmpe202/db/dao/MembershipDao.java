@@ -31,7 +31,7 @@ public class MembershipDao {
         }
     }
 
-    public static void createDriver(Membership membership) {
+    public static Integer createDriver(Membership membership) {
         String memberSql =
                 "INSERT INTO member (first_name, last_name, dob, address, contact, email, is_driver) " +
                         "VALUES (:first_name, :last_name, :dob, :address, :contact, :email, :is_driver)";
@@ -58,11 +58,11 @@ public class MembershipDao {
 
             Member m = members.get(0);
 
-            con.createQuery(driverSql)
+            return con.createQuery(driverSql)
                     .addParameter("member_id", m.getMemberId())
                     .addParameter("license_number", membership.getDriverLicence())
                     .addParameter("expiry_date", membership.getExpiration())
-                    .executeUpdate();
+                    .executeUpdate().getKey(Integer.class);
         }
 
     }

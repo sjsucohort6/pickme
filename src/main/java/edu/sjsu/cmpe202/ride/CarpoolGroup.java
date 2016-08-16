@@ -99,12 +99,14 @@ public class CarpoolGroup {
         CarpoolDetails details = new CarpoolDetails();
         details.setDriverId(driver.getMemberId());
         details.setPassengerCount(rideList.size());
+        details.setVehicleId(vehicle.getVehicleId());
         details.setRoute(route);
         details.setStatus((rideList.size() >= MAX_CARPOOL_SIZE) ? CarpoolStatus.FULL.name() : CarpoolStatus.HAS_VACANCY.name());
         int poolId = CarpoolDao.createCarpool(details);
         CarpoolDao.createDispatcher(poolId, rideList, pickupTime);
         // Set all rides to scheduled.
         RideDao.updateRideStatus(rideList, RideStatus.SCHEDULED.name());
+        CarpoolDao.updateCarpoolStatus(poolId, CarpoolStatus.SCHEDULED.name());
         stateContext.setState(new RideScheduledState(rideList));
         stateContext.handleInput();
 

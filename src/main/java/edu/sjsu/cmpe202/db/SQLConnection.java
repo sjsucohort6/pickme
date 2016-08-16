@@ -40,6 +40,7 @@ public class SQLConnection implements AutoCloseable {
 
         colMaps.put("license_number", "licenseNumber");
         colMaps.put("expiry_date", "expiryDate");
+        colMaps.put("registration_id", "registrationId");
 
         colMaps.put("location_id", "locationId");
 

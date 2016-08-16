@@ -6,9 +6,12 @@ import edu.sjsu.cmpe202.cli.Utilities;
 import edu.sjsu.cmpe202.cli.VehicleStatus;
 import edu.sjsu.cmpe202.db.SQLConnection;
 import edu.sjsu.cmpe202.db.domain.*;
+import edu.sjsu.cmpe202.ride.RideInProgressState;
+import edu.sjsu.cmpe202.ride.RideStateContext;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +30,7 @@ public class CarpoolDao {
                     .addParameter("driver_id", details.getDriverId())
                     .addParameter("passenger_count", details.getPassengerCount())
                     .addParameter("status", details.getStatus())
-                    .addParameter("route", details.getStatus())
+                    .addParameter("route", details.getRoute())
                     .executeUpdate().getKey(Integer.class);
             return poolId;
         }
@@ -88,6 +91,14 @@ public class CarpoolDao {
         List<Integer> ridesList = findRidesInACarpool(carpoolDetails.getPoolId());
         RideDao.updateRideStatus(RideStatus.IN_PROGRESS.name(), ridesList);
         updateCarpoolStatus(carpoolDetails.getPoolId(), CarpoolStatus.DISPATCHED.name());
+
+        List<RideDetails> rideDetailsList = new ArrayList<>();
+        for (Integer ride: ridesList) {
+            rideDetailsList.add(RideDao.getRideById(ride));
+        }
+        RideStateContext context = new RideStateContext();
+        context.setState(new RideInProgressState(rideDetailsList));
+        context.handleInput();
     }
 
     public static void updateCarpoolStatus(int poolId, String status) {

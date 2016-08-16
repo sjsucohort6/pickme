@@ -14,19 +14,24 @@ import java.util.List;
  * @author rwatsh on 8/12/16.
  */
 public class RideDao {
-    public static void addRideRequest(Ride ride)
+    public static RideDetails addRideRequest(Ride ride)
     {
     	String rideRequest = " INSERT into ride_details(user_id,source_id,dest_id,create_date,start_date,status)"
     			+ "VALUES(:user_id,:source_id,:dest_id,:create_date,:start_date,:status)";
         try (Connection con = (new SQLConnection()).getConnection()) {
-            con.createQuery(rideRequest)
+            Integer rideId = con.createQuery(rideRequest)
                     .addParameter("user_id",ride.getUserid())
                     .addParameter("source_id", ride.getSourceid())
                     .addParameter("dest_id",ride.getDestid())
                     .addParameter("create_date", ride.getCreateDate())
                     .addParameter("start_date", ride.getStartDate())
                     .addParameter("status", ride.getStatus())
-                    .executeUpdate();
+                    .executeUpdate().getKey(Integer.class);
+
+            String sql = "SELECT * from ride_details where ride_id = :ride_id";
+            return con.createQuery(sql)
+                    .addParameter("ride_id",rideId)
+                    .executeAndFetchFirst(RideDetails.class);
         }
 
     }
@@ -99,5 +104,16 @@ public class RideDao {
             query.executeBatch(); // executes entire batch
             con.commit();         // remember to call commit(), else sql2o will automatically rollback.
         }
+    }
+
+    public static RideDetails getRideById(Integer ride) {
+        String rideStatus = "SELECT * FROM ride_details WHERE ride_id = :ride_id";
+
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            return con.createQuery(rideStatus)
+                    .addParameter("ride_id", ride)
+                    .executeAndFetchFirst(RideDetails.class);
+        }
+
     }
 }
