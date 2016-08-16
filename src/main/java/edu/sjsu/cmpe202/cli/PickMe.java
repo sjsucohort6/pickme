@@ -109,19 +109,25 @@ public class PickMe
 
     private static void handleParking() {
         Scanner scanner = new Scanner(System.in);
-        ParkingDetails pDetails= new ParkingDetails();
+        ParkingHandler pDetails= new ParkingHandler();
 
         loop:while(true) {
             pDetails.printReserveParkingMenu();
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
                 case "1":
-                    pDetails.handleParkingReservation();
+                    pDetails.handleAddParking();
                     break;
                 case "2":
-                    pDetails.handleParkingCancellation();
+                    pDetails.handleListParking();
                     break;
                 case "3":
+                    pDetails.handleParkingReservation();
+                    break;
+                case "4":
+                    pDetails.handleParkingCancellation();
+                    break;
+                case "5":
                     break loop;
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");
@@ -141,6 +147,7 @@ public class PickMe
             switch (menuSelected.trim()) {
                 case "1":
                     payment.addCard();
+                    break;
                 case "2":
                     payment.handleRidePayment();
                     break;
@@ -149,6 +156,7 @@ public class PickMe
                     break;
                 case "4":
                     payment.handlePaymentDetails();
+                    break;
                 case "5":
                     break loop;
                 default:

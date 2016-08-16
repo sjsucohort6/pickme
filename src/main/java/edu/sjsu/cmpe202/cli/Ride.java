@@ -99,10 +99,12 @@ public class Ride {
             switch (menuSelected.trim()) {
                 case "1":
                     strategy = new ShortestPathStrategy(PickMe.algorithm);
-                    break;
+                    CarpoolScheduler.getInstance().scheduleRides(strategy);
+                    break loop;
                 case "2":
                     strategy = new FastestTimeStrategy(PickMe.algorithm);
-                    break;
+                    CarpoolScheduler.getInstance().scheduleRides(strategy);
+                    break loop;
                 case "3":
                     break loop;
                 default:
@@ -110,8 +112,6 @@ public class Ride {
                     break;
             }
         }
-
-        CarpoolScheduler.getInstance().scheduleRides(strategy);
     }
 
     private void printRouteSelectionMenu() {
