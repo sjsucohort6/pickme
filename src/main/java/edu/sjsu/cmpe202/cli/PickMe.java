@@ -11,7 +11,7 @@ import java.util.Scanner;
 /**
  * PickMe is the name of our application for carpooling. It provides a menu based interface.
  [1] Membership
- [2] Vehicle Registration
+ [2] Vehicle Registrations
  [3] Ride
  [4] Payment
  [5] Notifications
