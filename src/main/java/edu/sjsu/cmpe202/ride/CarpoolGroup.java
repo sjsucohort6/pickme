@@ -1,4 +1,4 @@
-package edu.sjsu.cmpe202.scheduler;
+package edu.sjsu.cmpe202.ride;
 
 import edu.sjsu.cmpe202.cli.CarpoolStatus;
 import edu.sjsu.cmpe202.cli.PickMe;
@@ -32,10 +32,11 @@ public class CarpoolGroup {
     private Vehicle vehicle;
     private Member driver;
     private String route;
+    private RideStateContext stateContext = new RideStateContext();
 
     private NotificationDao notificationDao = new NotificationDao();
 
-    static class CarpoolBuilder {
+    public static class CarpoolBuilder {
         private List<RideDetails> rideList;
         private int capacity;
         private Date pickupTime;
@@ -104,8 +105,8 @@ public class CarpoolGroup {
         CarpoolDao.createDispatcher(poolId, rideList, pickupTime);
         // Set all rides to scheduled.
         RideDao.updateRideStatus(rideList, RideStatus.SCHEDULED.name());
-
-
+        stateContext.setState(new RideScheduledState(rideList));
+        stateContext.handleInput();
 
         if(this.vehicle.getStatus() == VehicleStatus.OUT_OF_ORDER.name()) {
             int notifyUserId = details.getDriverId();
