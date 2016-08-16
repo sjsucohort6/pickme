@@ -28,8 +28,7 @@ public class Payment {
     }
 
     public void handleRidePayment() {
-        // TODO Auto-generated method stub
-        System.out.println("Please Confirm your Payment");
+
 
     }
 

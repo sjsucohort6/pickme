@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+
 import edu.sjsu.cmpe202.db.dao.NotificationDao;
 
 /**
@@ -47,7 +48,7 @@ public class Membership {
         //System.out.println("Rider Id: " + id);
         String date = dateFormat.format(new Date());
         String message = "Rider Created";
-        Notification n = new Notification(notifyUserId,date,message);
+        Notification n = new Notification(notifyUserId, date, message);
         notificationDao.sendNotifications(n);
 
     }
