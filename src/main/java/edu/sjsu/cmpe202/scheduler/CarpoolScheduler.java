@@ -10,6 +10,8 @@ import edu.sjsu.cmpe202.db.domain.Member;
 import edu.sjsu.cmpe202.db.domain.RideDetails;
 import edu.sjsu.cmpe202.db.domain.Vehicle;
 import edu.sjsu.cmpe202.graph.RoutingStrategy;
+import edu.sjsu.cmpe202.payment.CreditCardPaymentProcessor;
+import edu.sjsu.cmpe202.payment.PaymentProcessor;
 import edu.sjsu.cmpe202.ride.*;
 import org.apache.commons.collections4.ListUtils;
 
@@ -30,9 +32,9 @@ import java.util.Map;
  */
 public class CarpoolScheduler extends Scheduler {
 
-    private static final CarpoolScheduler INSTANCE = new CarpoolScheduler();
+    private static final CarpoolScheduler INSTANCE = new CarpoolScheduler(new CreditCardPaymentProcessor());
 
-    private CarpoolScheduler() {}
+    private CarpoolScheduler(PaymentProcessor pp) {super(pp);}
 
     public static CarpoolScheduler getInstance() {
         return INSTANCE;
@@ -143,5 +145,10 @@ public class CarpoolScheduler extends Scheduler {
             context.setState(new RideCompletedState(rideDetailsList));
             context.handleInput();
         }
+    }
+
+    @Override
+    public void acceptPaymentForRide() {
+        paymentProcessor.processPayment();
     }
 }
