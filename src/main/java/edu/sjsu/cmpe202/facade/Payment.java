@@ -2,6 +2,8 @@ package edu.sjsu.cmpe202.facade;
 
 import edu.sjsu.cmpe202.db.dao.PaymentDao;
 import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
+import edu.sjsu.cmpe202.db.domain.ParkingDetails;
+import edu.sjsu.cmpe202.db.domain.PaymentDetails;
 import lombok.Data;
 
 import java.util.Date;
@@ -64,24 +66,6 @@ public class Payment {
         return amount;
     }
 
-    private long getMin() {
-        List<Payment> info = PaymentDao.getInfo(memberEmailId);
-        Payment p = info.get(0);
-        int parkingId = p.getParkingId();
-        Date start = p.getStartTime();
-        Date end = p.getEndTime();
-        long diff = end.getTime()- start.getTime();
-        long diffMinutes = diff / (60 * 1000) % 60;
-        long amount = getAmount(diffMinutes);
-        return (int) amount;
-    }
-
-    private long getAmount(long diffMinutes) {
-        int parkingAmount = (int) (ParkingAmount * diffMinutes);
-        return diffMinutes;
-    }
-
-
     private Boolean validCard() {
         List<Payment> card = PaymentDao.checkCard(memberEmailId);
         if (!card.isEmpty()) {
@@ -97,7 +81,7 @@ public class Payment {
         System.out.println("Email ID :");
         Scanner scanner = new Scanner(System.in);
         memberEmailId = scanner.nextLine();
-        amount = (int) getMin();
+        amount = ParkingAmount;
         PaymentDao.parkingPayment(this);
         System.out.println(" Received Parking Payment of $ " + amount);
 

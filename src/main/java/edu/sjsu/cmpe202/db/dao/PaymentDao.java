@@ -8,14 +8,14 @@ import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
 import edu.sjsu.cmpe202.db.domain.Member;
 import org.sql2o.Connection;
 
-import java.util.Date;
 import java.util.List;
+
+import static java.sql.Types.NULL;
 
 /**
  * Created by Ashutosh on 8/13/2016.
  */
 public class PaymentDao {
-
 
     public static void addCreditCard(Payment payment) {
 
@@ -47,7 +47,6 @@ public class PaymentDao {
                     .addParameter("member_id", m.getMemberId())
                     .executeAndFetch(Payment.class);
 
-
             return paymentDetails;
         }
     }
@@ -75,7 +74,7 @@ public class PaymentDao {
             con.createQuery(paymentInit)
                     .addParameter("member_id", m.getMemberId())
                     .addParameter("carpool_id", payment.getCarpoolId())
-                    .addParameter("parking_id", "null")
+                    .addParameter("parking_id", NULL)
                     .addParameter("amount", payment.getAmount())
                     .addParameter("status", "PAID")
                     .executeUpdate();
@@ -110,28 +109,22 @@ public class PaymentDao {
         }
     }
 
-    public static List<Payment> getInfo(String memberEmailId) {
-        //String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
-        String fetchParkingDetails = "select parking_id from parking_details where parker_id = :parker_id";
-        try (Connection con = (new SQLConnection()).getConnection()) {
-            Member m = MembershipDao.getMemberByEmail(memberEmailId);
-            List<Payment> parkingInfo = con.createQuery(fetchParkingDetails)
-                    .addParameter("parker_id", m.getMemberId())
-                    .executeAndFetch(Payment.class);
-            return parkingInfo;
-        }
-    }
 
     public static void parkingPayment(Payment payment) {
-        String parkingPayment = "INSERT INTO payment(member_id, carpool_id,parking_id amount, status) " +
-                "VALUES (:member_id, :carpool_id,parking_id :amount, :status)";
+        String fetchParkingDetails = "select parking_id from parking_details where parker_id = :parker_id";
+        String parkingPayment = " INSERT INTO payment(member_id, carpool_id,parking_id,amount,status) " +
+                "VALUES (:member_id, :carpool_id,:parking_id ,:amount, :status)";
         try (Connection con = (new SQLConnection()).getConnection()) {
             Member m = MembershipDao.getMemberByEmail(payment.getMemberEmailId());
+            List<ParkingDetails> parkingInfo = con.createQuery(fetchParkingDetails)
+                    .addParameter("parker_id", m.getMemberId())
+                    .executeAndFetch(ParkingDetails.class);
+            ParkingDetails  p = parkingInfo.get(0);
 
             con.createQuery(parkingPayment)
                     .addParameter("member_id", m.getMemberId())
-                    .addParameter("carpool_id", "")
-                    .addParameter("parking_id", payment.getParkingId())
+                    .addParameter("carpool_id", NULL)
+                    .addParameter("parking_id", p.getParkingId())
                     .addParameter("amount", payment.getAmount())
                     .addParameter("status", "PAID")
                     .executeUpdate();
