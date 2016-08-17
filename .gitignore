@@ -65,3 +65,4 @@ target/
 *.iml
 
 /src/main/java/edu/sjsu/cmpe202/db/SQLConnection.java
+classDiagram/

@@ -1,6 +1,6 @@
 package edu.sjsu.cmpe202.db.dao;
 
-import edu.sjsu.cmpe202.cli.Membership;
+import edu.sjsu.cmpe202.facade.Membership;
 import edu.sjsu.cmpe202.db.SQLConnection;
 import edu.sjsu.cmpe202.db.domain.DriverDetails;
 import edu.sjsu.cmpe202.db.domain.Member;

@@ -1,4 +1,4 @@
-package edu.sjsu.cmpe202.cli;
+package edu.sjsu.cmpe202.facade;
 
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
 import edu.sjsu.cmpe202.db.domain.Member;

@@ -1,7 +1,7 @@
 package edu.sjsu.cmpe202.db.dao;
 
-import edu.sjsu.cmpe202.cli.Payment;
-import edu.sjsu.cmpe202.cli.PaymentStatus;
+import edu.sjsu.cmpe202.facade.Payment;
+import edu.sjsu.cmpe202.facade.PaymentStatus;
 import edu.sjsu.cmpe202.db.SQLConnection;
 import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
 import edu.sjsu.cmpe202.db.domain.Member;

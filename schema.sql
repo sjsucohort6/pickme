@@ -258,12 +258,15 @@ CREATE TABLE `payment` (
   `payment_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_id` int(11) DEFAULT NULL,
   `carpool_id` int(11) DEFAULT NULL,
+  `parking_id` int(11) DEFAULT NULL,
   `amount` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`payment_id`),
   KEY `memb_id_idx` (`member_id`),
   KEY `carp_id_idx` (`carpool_id`),
+  KEY `park_id_idx` (`parking_id`),
   CONSTRAINT `carpo_id` FOREIGN KEY (`carpool_id`) REFERENCES `carpool_details` (`pool_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `parkin_id` FOREIGN KEY (`parking_id`) REFERENCES `parking` (`parking_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `membe_id` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

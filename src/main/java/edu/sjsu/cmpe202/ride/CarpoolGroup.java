@@ -1,9 +1,9 @@
 package edu.sjsu.cmpe202.ride;
 
-import edu.sjsu.cmpe202.cli.CarpoolStatus;
-import edu.sjsu.cmpe202.cli.PickMe;
-import edu.sjsu.cmpe202.cli.RideStatus;
-import edu.sjsu.cmpe202.cli.VehicleStatus;
+import edu.sjsu.cmpe202.facade.CarpoolStatus;
+import edu.sjsu.cmpe202.client.PickMe;
+import edu.sjsu.cmpe202.facade.RideStatus;
+import edu.sjsu.cmpe202.facade.VehicleStatus;
 import edu.sjsu.cmpe202.db.dao.*;
 import edu.sjsu.cmpe202.db.domain.*;
 import edu.sjsu.cmpe202.graph.*;

@@ -1,9 +1,10 @@
-package edu.sjsu.cmpe202.cli;
+package edu.sjsu.cmpe202.facade;
 
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
 import edu.sjsu.cmpe202.db.dao.NotificationDao;
 import edu.sjsu.cmpe202.db.domain.Notification;
 import edu.sjsu.cmpe202.notification.NotificationSystem;
+
 import lombok.Data;
 
 import java.util.Date;

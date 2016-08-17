@@ -1,6 +1,6 @@
 package edu.sjsu.cmpe202.db.dao;
 
-import edu.sjsu.cmpe202.cli.ParkingHandler;
+import edu.sjsu.cmpe202.facade.ParkingHandler;
 import edu.sjsu.cmpe202.db.SQLConnection;
 import edu.sjsu.cmpe202.db.domain.Parking;
 import org.sql2o.Connection;
