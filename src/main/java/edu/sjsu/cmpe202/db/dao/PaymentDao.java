@@ -24,11 +24,8 @@ public class PaymentDao {
 
 
         try (Connection con = (new SQLConnection()).getConnection()) {
-            List<Member> memberId = con.createQuery(fetchMemberId)
-                    .addParameter("email", payment.getMemberEmailId())
-                    .executeAndFetch(Member.class);
 
-            Member m = memberId.get(0);
+            Member m = MembershipDao.getMemberByEmail(payment.getMemberEmailId());
             con.createQuery(sql)
                     .addParameter("member_id", m.getMemberId())
                     .addParameter("card_number", payment.getCardNumber())
@@ -42,14 +39,9 @@ public class PaymentDao {
 
 
     public static List<Payment> showPayment(String memberEmailId) {
-        String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
         String paymentHistory = "SELECT  member_id ,card_number, card_type, expiry_date FROM payment_details where member_id = :member_id";
         try (Connection con = (new SQLConnection()).getConnection()) {
-            List<Member> memberId = con.createQuery(fetchMemberId)
-                    .addParameter("email", memberEmailId)
-                    .executeAndFetch(Member.class);
-            Member m = memberId.get(0);
-            // System.out.println("Member Id"+ memberId);
+            Member m = MembershipDao.getMemberByEmail(memberEmailId);
             List<Payment> paymentDetails = con.createQuery(paymentHistory)
                     .addParameter("member_id", m.getMemberId())
                     .executeAndFetch(Payment.class);
@@ -64,10 +56,7 @@ public class PaymentDao {
         String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
         String paymentCheck = "SELECT card_number, card_type, expiry_date FROM payment_details where member_id = :member_id";
         try (Connection con = (new SQLConnection()).getConnection()) {
-            List<Member> memberId = con.createQuery(fetchMemberId)
-                    .addParameter("email", memberEmailId)
-                    .executeAndFetch(Member.class);
-            Member m = memberId.get(0);
+            Member m = MembershipDao.getMemberByEmail(memberEmailId);
             List<Payment> cardCheck = con.createQuery(paymentCheck)
                     .addParameter("member_id", m.getMemberId())
                     .executeAndFetch(Payment.class);
@@ -81,13 +70,11 @@ public class PaymentDao {
 
     public static void initiatePayment(Payment payment) {
         String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
-        String paymentInit = "INSERT INTO payment(member_id, carpool_id, amount, status)\" +\n" +
-                " \"VALUES (:member_id, :carpool_id, :amount, :status)";
+
+        String paymentInit = "INSERT INTO payment(member_id, carpool_id, amount, status) " +
+                "VALUES (:member_id, :carpool_id, :amount, :status)";
         try (Connection con = (new SQLConnection()).getConnection()) {
-            List<Member> memberId = con.createQuery(fetchMemberId)
-                    .addParameter("email", payment.getMemberEmailId())
-                    .executeAndFetch(Member.class);
-            Member m = memberId.get(0);
+            Member m = MembershipDao.getMemberByEmail(payment.getMemberEmailId());
 
             con.createQuery(paymentInit)
                     .addParameter("member_id", m.getMemberId())
@@ -101,7 +88,7 @@ public class PaymentDao {
 
     public static List<CarpoolDetails> getCount(String memberEmailId, String carpoolId) {
         String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
-        String getCount = "SELECT passenger_count from carpool_details WHERE pool_id = :pool_id ";
+        String getCount = "SELECT * from carpool_details WHERE pool_id = :pool_id ";
         try (Connection con = (new SQLConnection()).getConnection()) {
             List<Member> memberId = con.createQuery(fetchMemberId)
                     .addParameter("email", memberEmailId)
@@ -112,7 +99,7 @@ public class PaymentDao {
                     .addParameter("pool_id", carpoolId)
                     .executeAndFetch(CarpoolDetails.class);
 
-            System.out.println("Details" + carpoolInfo);
+            //System.out.println("Details" + carpoolInfo);
 
             return carpoolInfo;
         }

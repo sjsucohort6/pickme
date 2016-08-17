@@ -111,6 +111,15 @@ public class CarpoolScheduler extends Scheduler {
         // dispatch the carpools
         for (CarpoolDetails carpoolDetails: carpoolDetailsList) {
             CarpoolDao.dispatchCarpool(carpoolDetails);
+            List<Integer> ridesInACarpool = CarpoolDao.findRidesInACarpool(carpoolDetails.getPoolId());
+            List<RideDetails> rideDetailsList = new ArrayList<>();
+            for (Integer ride: ridesInACarpool) {
+                rideDetailsList.add(RideDao.getRideById(ride));
+            }
+
+            RideStateContext context = new RideStateContext();
+            context.setState(new RideCompletedState(rideDetailsList));
+            context.handleInput();
         }
     }
 

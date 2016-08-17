@@ -13,9 +13,10 @@ public class RidesByMember {
     private String firstName;
     private String lastName;
     private String email;
-    private String name; //source location
+    private String location; //source location
     private Date createDate;
     private Date startDate;
     private String status; // ride status
     private String paymentStatus;
+    private String totalRides;
 }

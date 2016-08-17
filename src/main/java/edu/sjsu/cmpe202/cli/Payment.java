@@ -28,7 +28,8 @@ public class Payment {
         System.out.println("\t [1] Add Card");
         System.out.println("\t [2] Ride Payment");
         System.out.println("\t [3] Parking Payment");
-        System.out.println("\t [4] Go back to main menu");
+        System.out.println("\t [4] Show Payment Details");
+        System.out.println("\t [5] Go back to main menu");
 
     }
 

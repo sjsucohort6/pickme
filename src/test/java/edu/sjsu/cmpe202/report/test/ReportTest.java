@@ -12,7 +12,7 @@ import org.junit.Test;
 public class ReportTest {
     @Test
     public void testReports() {
-        String email = "abc@gmail.com";
+        String email = "rushil@live.com";
         Member member = MembershipDao.getMemberByEmail(email);
         CompositeReport r = new CompositeReport();
         r.addReport(new RidesByMemberReport(member.getMemberId()));
