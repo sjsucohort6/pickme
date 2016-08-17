@@ -12,7 +12,7 @@ public class Member {
     private int memberId;
     private String firstName;
     private String lastName;
-    private Date date;
+    private Date dob;
     private String address;
     private int contact;
     private String email;

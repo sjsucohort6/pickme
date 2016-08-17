@@ -11,7 +11,7 @@ import java.util.Scanner;
 /**
  * PickMe is the name of our application for carpooling. It provides a menu based interface.
  [1] Membership
- [2] Vehicle Registration
+ [2] Vehicle Registrations
  [3] Ride
  [4] Payment
  [5] Notifications
@@ -65,9 +65,10 @@ public class PickMe
 
     private static void handleReports() {
         Scanner scanner= new Scanner(System.in);
-        ReportGeneration reportGeneration = new ReportGeneration();
+
 
         loop: while(true){
+            ReportGeneration reportGeneration = new ReportGeneration();
             ReportGeneration.printReportMenu();
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
@@ -86,9 +87,10 @@ public class PickMe
 
     private static void handleVehicleRegistration() {
         Scanner scanner= new Scanner(System.in);
-        VehicleRegistration vehicle = new VehicleRegistration();
+
 
         loop: while(true){
+            VehicleRegistration vehicle = new VehicleRegistration();
             vehicle.printVehicleMenu();
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
@@ -109,19 +111,26 @@ public class PickMe
 
     private static void handleParking() {
         Scanner scanner = new Scanner(System.in);
-        ParkingDetails pDetails= new ParkingDetails();
+
 
         loop:while(true) {
+            ParkingHandler pDetails= new ParkingHandler();
             pDetails.printReserveParkingMenu();
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
                 case "1":
-                    pDetails.handleParkingReservation();
+                    pDetails.handleAddParking();
                     break;
                 case "2":
-                    pDetails.handleParkingCancellation();
+                    pDetails.handleListParking();
                     break;
                 case "3":
+                    pDetails.handleParkingReservation();
+                    break;
+                case "4":
+                    pDetails.handleParkingCancellation();
+                    break;
+                case "5":
                     break loop;
                 default:
                     System.out.println("ERROR: Unknown menu option. Please retry.");
@@ -133,14 +142,16 @@ public class PickMe
 
     private static void handlePayment() {
         Scanner scanner = new Scanner(System.in);
-        Payment payment = new Payment();
+
         loop:
         while (true) {
+            Payment payment = new Payment();
             payment.printPaymentMenu();
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
                 case "1":
                     payment.addCard();
+                    break;
                 case "2":
                     payment.handleRidePayment();
                     break;
@@ -149,6 +160,7 @@ public class PickMe
                     break;
                 case "4":
                     payment.handlePaymentDetails();
+                    break;
                 case "5":
                     break loop;
                 default:
@@ -161,9 +173,10 @@ public class PickMe
 
     private static void handleNotifications() {
         Scanner scanner = new Scanner(System.in);
-        Notifier notifier = new Notifier();
+
 
         loop: while(true) {
+            Notifier notifier = new Notifier();
             notifier.printNotificationMenu();
             String menuSelected = scanner.nextLine();
             switch ((menuSelected.trim())) {
@@ -181,9 +194,10 @@ public class PickMe
 
     private static void handleRides() {
         Scanner scanner= new Scanner(System.in);
-        Ride ride = new Ride();
+
 
         loop: while(true){
+            Ride ride = new Ride();
             ride.printReserveRideMenu();
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
@@ -198,6 +212,7 @@ public class PickMe
                     break;
                 case "4":
                     ride.handleDispatch();
+                    break;
                 case "5":
                     ride.handleRideTracking();
                     break;
@@ -212,8 +227,9 @@ public class PickMe
 
     private static void handleMembership() {
         Scanner scanner = new Scanner(System.in);
-        Membership membership = new Membership();
+
         loop: while (true) {
+            Membership membership = new Membership();
             membership.printMembershipMenu();
             String menuSelected = scanner.nextLine();
 

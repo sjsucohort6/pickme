@@ -40,6 +40,7 @@ public class SQLConnection implements AutoCloseable {
 
         colMaps.put("license_number", "licenseNumber");
         colMaps.put("expiry_date", "expiryDate");
+        colMaps.put("registration_id", "registrationId");
 
         colMaps.put("location_id", "locationId");
 
@@ -49,6 +50,7 @@ public class SQLConnection implements AutoCloseable {
         colMaps.put("payment_id", "paymentId");
         colMaps.put("card_number", "cardNumber");
         colMaps.put("card_type", "cardType");
+        colMaps.put("expiry_date", "expiryDate");
         colMaps.put("user_id", "userId");
         colMaps.put("source_id", "sourceId");
         colMaps.put("dest_id", "destId");
@@ -60,6 +62,21 @@ public class SQLConnection implements AutoCloseable {
 
         colMaps.put("owner_id", "ownerId");
         colMaps.put("payment_status", "paymentStatus");
+
+        colMaps.put("parking_id", "parkingId");
+
+        colMaps.put("First Name", "firstName");
+        colMaps.put("Last Name", "lastName");
+        colMaps.put("Email", "email");
+        colMaps.put("Source Location", "location");
+
+        colMaps.put("Create Date", "createDate");
+        colMaps.put("Start Date", "startDate");
+        colMaps.put("Status", "status");
+        colMaps.put("Payment Status", "paymentStatus");
+        colMaps.put("Total Rides", "totalRides");
+
+
 
         sql2o.setDefaultColumnMappings(colMaps);
     }

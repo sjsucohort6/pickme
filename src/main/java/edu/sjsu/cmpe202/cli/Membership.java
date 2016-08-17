@@ -47,9 +47,9 @@ public class Membership implements Observer {
         Date d = new Date();
         String date = Utilities.dateFormat.format(d);
         String message = "Rider Created";
-        Notification n = new Notification(notifyUserId,d,message);
-        NotificationMessage.getInstance().sendNotification(n);
     }
+//        Notification n = new Notification(notifyUserId, d, message);
+//        NotificationMessage.getInstance().sendNotification(n);
 
     private void handleMemberSignup() {
         Scanner scanner = new Scanner(System.in);

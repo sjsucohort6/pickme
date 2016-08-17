@@ -14,7 +14,7 @@ public class RideInProgressState extends RideState {
 
     @Override
     public void handleInput(RideStateContext context) {
-        System.out.println("Ride In Progress...");
+        System.out.println("Ride In Progress for rides: " + ridesList);
         context.setState(new RideCompletedState(ridesList));
     }
 }

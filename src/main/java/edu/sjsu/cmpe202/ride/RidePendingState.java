@@ -14,7 +14,7 @@ public class RidePendingState extends RideState {
 
     @Override
     public void handleInput(RideStateContext context) {
-        System.out.println("Ride is pending");
+        System.out.println("Ride is pending for rides: " + ridesList);
         context.setState(new RideScheduledState(ridesList));
     }
 }

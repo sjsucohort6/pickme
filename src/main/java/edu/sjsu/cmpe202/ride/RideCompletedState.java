@@ -14,6 +14,6 @@ public class RideCompletedState extends RideState {
 
     @Override
     public void handleInput(RideStateContext context) {
-        System.out.println("Ride Completed");
+        System.out.println("Ride Completed for rides: " + ridesList);
     }
 }

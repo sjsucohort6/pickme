@@ -14,7 +14,7 @@ public class RideScheduledState extends RideState {
 
     @Override
     public void handleInput(RideStateContext context) {
-        System.out.println("Ride scheduled");
+        System.out.println("Ride scheduled for rides: " + ridesList);
         context.setState(new RideInProgressState(ridesList));
     }
 }

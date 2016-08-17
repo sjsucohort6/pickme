@@ -4,7 +4,7 @@ import edu.sjsu.cmpe202.db.dao.RideDao;
 import edu.sjsu.cmpe202.graph.FastestTimeStrategy;
 import edu.sjsu.cmpe202.graph.RoutingStrategy;
 import edu.sjsu.cmpe202.graph.ShortestPathStrategy;
-import edu.sjsu.cmpe202.scheduler.Scheduler;
+import edu.sjsu.cmpe202.scheduler.CarpoolScheduler;
 import lombok.Data;
 
 import java.text.DateFormat;
@@ -24,7 +24,6 @@ public class Ride {
 	String destid;
 	String createDate;
 	String startDate;
-	String pickupTime;
 	String status;
     public final static String DATE_FORMAT = "yyyy-MM-dd";
     public static DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
@@ -47,7 +46,7 @@ public class Ride {
         System.out.println("\t\t Destination Location: ");
         destid = scanner.nextLine();
 
-        String pickupTime = "\t\t Pick up Time(yyyy/MM/dd HH:mm:ss:";
+        String pickupTime = "\t\t Pick up Time(yyyy-MM-dd HH:mm:ss:";
 		startDate = Utilities.getDateTimeString(pickupTime);
         createDate = dateFormat.format(new Date());
         status = RideStatus.PENDING.name();
@@ -87,7 +86,7 @@ public class Ride {
     } */
 
     public void handleDispatch() {
-        Scheduler.INSTANCE.dispatchCarpools();
+        CarpoolScheduler.getInstance().dispatchCarpools();
     }
 
     public void handleSchedule() {
@@ -100,10 +99,12 @@ public class Ride {
             switch (menuSelected.trim()) {
                 case "1":
                     strategy = new ShortestPathStrategy(PickMe.algorithm);
-                    break;
+                    CarpoolScheduler.getInstance().scheduleRides(strategy);
+                    break loop;
                 case "2":
                     strategy = new FastestTimeStrategy(PickMe.algorithm);
-                    break;
+                    CarpoolScheduler.getInstance().scheduleRides(strategy);
+                    break loop;
                 case "3":
                     break loop;
                 default:
@@ -111,8 +112,6 @@ public class Ride {
                     break;
             }
         }
-
-        Scheduler.INSTANCE.scheduleRides(strategy);
     }
 
     private void printRouteSelectionMenu() {
@@ -122,3 +121,4 @@ public class Ride {
         System.out.println("\t\t [3] Go back to previous menu");
     }
 }
+
