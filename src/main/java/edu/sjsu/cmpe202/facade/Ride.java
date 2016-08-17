@@ -1,6 +1,5 @@
 package edu.sjsu.cmpe202.facade;
 
-import edu.sjsu.cmpe202.client.PickMe;
 import edu.sjsu.cmpe202.db.dao.RideDao;
 import edu.sjsu.cmpe202.graph.FastestTimeStrategy;
 import edu.sjsu.cmpe202.graph.RoutingStrategy;
@@ -99,11 +98,11 @@ public class Ride {
             String menuSelected = scanner.nextLine();
             switch (menuSelected.trim()) {
                 case "1":
-                    strategy = new ShortestPathStrategy(PickMe.algorithm);
+                    strategy = new ShortestPathStrategy(PickMeFacade.algorithm);
                     CarpoolScheduler.getInstance().scheduleRides(strategy);
                     break loop;
                 case "2":
-                    strategy = new FastestTimeStrategy(PickMe.algorithm);
+                    strategy = new FastestTimeStrategy(PickMeFacade.algorithm);
                     CarpoolScheduler.getInstance().scheduleRides(strategy);
                     break loop;
                 case "3":
