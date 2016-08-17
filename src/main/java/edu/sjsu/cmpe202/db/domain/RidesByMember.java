@@ -14,6 +14,7 @@ public class RidesByMember {
     private String lastName;
     private String email;
     private String location; //source location
+    private String destLocation;
     private Date createDate;
     private Date startDate;
     private String status; // ride status

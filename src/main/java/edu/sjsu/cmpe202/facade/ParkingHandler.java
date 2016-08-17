@@ -43,7 +43,7 @@ public class ParkingHandler {
         startTime = Utilities.getDateTimeString(startTimeStr);
         String endTimeStr = "\t\t Parking End Time(yyyy-MM-dd HH:mm:ss):";
         endTime = Utilities.getDateTimeString(endTimeStr);
-        status = "Waiting";
+        status = ParkingStatus.AVAILABLE.name();
         ParkingDetailsDao.addParkingRequest(this);
         System.out.println("\t\t We have recieved your Parking Request: " + this);
     }

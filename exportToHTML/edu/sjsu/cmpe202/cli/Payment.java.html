@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>Payment.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+.s4 { color: rgb(0,0,255); }
+.s5 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Payment.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">edu.sjsu.cmpe202.cli; 
+<a name="l2"><span class="ln">2    </span></a> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">import <a href="../../../../edu/sjsu/cmpe202/db/dao/PaymentDao.java.html">edu.sjsu.cmpe202.db.dao.PaymentDao</a></span><span class="s1">; 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">import <a href="../../../../edu/sjsu/cmpe202/db/domain/CarpoolDetails.java.html">edu.sjsu.cmpe202.db.domain.CarpoolDetails</a></span><span class="s1">; 
+<a name="l5"><span class="ln">5    </span></a></span><span class="s0">import </span><span class="s1">lombok.Data; 
+<a name="l6"><span class="ln">6    </span></a> 
+<a name="l7"><span class="ln">7    </span></a></span><span class="s0">import </span><span class="s1">java.util.List; 
+<a name="l8"><span class="ln">8    </span></a></span><span class="s0">import </span><span class="s1">java.util.Scanner; 
+<a name="l9"><span class="ln">9    </span></a> 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s2">/** 
+<a name="l11"><span class="ln">11   </span></a> * </span><span class="s3">@author </span><span class="s2">rwatsh on 8/6/16. 
+<a name="l12"><span class="ln">12   </span></a> */</span><span class="s1"> 
+<a name="l13"><span class="ln">13   </span></a>@Data 
+<a name="l14"><span class="ln">14   </span></a></span><span class="s0">public class </span><span class="s1">Payment { 
+<a name="l15"><span class="ln">15   </span></a>    </span><span class="s0">private </span><span class="s1">String memberEmailId; 
+<a name="l16"><span class="ln">16   </span></a>    </span><span class="s0">private </span><span class="s1">String cardNumber; 
+<a name="l17"><span class="ln">17   </span></a>    </span><span class="s0">private </span><span class="s1">String cardType; 
+<a name="l18"><span class="ln">18   </span></a>    </span><span class="s0">private </span><span class="s1">String expiryDate; 
+<a name="l19"><span class="ln">19   </span></a>    </span><span class="s0">private </span><span class="s1">String memberId; 
+<a name="l20"><span class="ln">20   </span></a>    </span><span class="s0">private </span><span class="s1">String carpoolId; 
+<a name="l21"><span class="ln">21   </span></a>    </span><span class="s0">private int </span><span class="s1">amount; 
+<a name="l22"><span class="ln">22   </span></a>    </span><span class="s0">private </span><span class="s1">String status; 
+<a name="l23"><span class="ln">23   </span></a>    </span><span class="s0">public static final int </span><span class="s1">RideAmount = </span><span class="s4">14</span><span class="s1">; 
+<a name="l24"><span class="ln">24   </span></a> 
+<a name="l25"><span class="ln">25   </span></a> 
+<a name="l26"><span class="ln">26   </span></a>    </span><span class="s0">public void </span><span class="s1">printPaymentMenu() { 
+<a name="l27"><span class="ln">27   </span></a>        </span><span class="s2">// TODO Auto-generated method stub</span><span class="s1"> 
+<a name="l28"><span class="ln">28   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t</span><span class="s5"> [1] Add Card&quot;</span><span class="s1">); 
+<a name="l29"><span class="ln">29   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t</span><span class="s5"> [2] Ride Payment&quot;</span><span class="s1">); 
+<a name="l30"><span class="ln">30   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t</span><span class="s5"> [3] Parking Payment&quot;</span><span class="s1">); 
+<a name="l31"><span class="ln">31   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t</span><span class="s5"> [4] Show Payment Details&quot;</span><span class="s1">); 
+<a name="l32"><span class="ln">32   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t</span><span class="s5"> [5] Go back to main menu&quot;</span><span class="s1">); 
+<a name="l33"><span class="ln">33   </span></a> 
+<a name="l34"><span class="ln">34   </span></a>    } 
+<a name="l35"><span class="ln">35   </span></a> 
+<a name="l36"><span class="ln">36   </span></a>    </span><span class="s0">public void </span><span class="s1">handleRidePayment() { 
+<a name="l37"><span class="ln">37   </span></a>        System.out.println(</span><span class="s5">&quot;Pay for Ride&quot;</span><span class="s1">); 
+<a name="l38"><span class="ln">38   </span></a>        System.out.println(</span><span class="s5">&quot;Email ID :&quot;</span><span class="s1">); 
+<a name="l39"><span class="ln">39   </span></a>        Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in); 
+<a name="l40"><span class="ln">40   </span></a>        memberEmailId = scanner.nextLine(); 
+<a name="l41"><span class="ln">41   </span></a>        System.out.println(</span><span class="s5">&quot;Pool ID  :&quot;</span><span class="s1">); 
+<a name="l42"><span class="ln">42   </span></a>        carpoolId = scanner.nextLine(); 
+<a name="l43"><span class="ln">43   </span></a>        amount = calculateAmount(RideAmount); 
+<a name="l44"><span class="ln">44   </span></a>        </span><span class="s0">if </span><span class="s1">(validCard()) { 
+<a name="l45"><span class="ln">45   </span></a>            <a href="../../../../edu/sjsu/cmpe202/db/dao/PaymentDao.java.html">PaymentDao</a>.initiatePayment(</span><span class="s0">this</span><span class="s1">); 
+<a name="l46"><span class="ln">46   </span></a>            System.out.println(</span><span class="s5">&quot; Received Payment of $ &quot; </span><span class="s1">+ amount); 
+<a name="l47"><span class="ln">47   </span></a>        } </span><span class="s0">else </span><span class="s1">{ 
+<a name="l48"><span class="ln">48   </span></a>            System.out.println(</span><span class="s5">&quot;Please Add card First&quot;</span><span class="s1">); 
+<a name="l49"><span class="ln">49   </span></a>        } 
+<a name="l50"><span class="ln">50   </span></a> 
+<a name="l51"><span class="ln">51   </span></a>    } 
+<a name="l52"><span class="ln">52   </span></a> 
+<a name="l53"><span class="ln">53   </span></a>    </span><span class="s0">private int </span><span class="s1">calculateAmount(</span><span class="s0">int </span><span class="s1">rideAmount) { 
+<a name="l54"><span class="ln">54   </span></a>        </span><span class="s0">int </span><span class="s1">count = showNoPassenger(); 
+<a name="l55"><span class="ln">55   </span></a>        System.out.println(</span><span class="s5">&quot;count&quot;</span><span class="s1">+ count); 
+<a name="l56"><span class="ln">56   </span></a>        </span><span class="s0">int </span><span class="s1">amount = rideAmount / count; 
+<a name="l57"><span class="ln">57   </span></a>            System.out.println(</span><span class="s5">&quot;Amount&quot;</span><span class="s1">+ amount); 
+<a name="l58"><span class="ln">58   </span></a>        </span><span class="s0">return </span><span class="s1">amount; 
+<a name="l59"><span class="ln">59   </span></a>    } 
+<a name="l60"><span class="ln">60   </span></a> 
+<a name="l61"><span class="ln">61   </span></a> 
+<a name="l62"><span class="ln">62   </span></a>    </span><span class="s0">private </span><span class="s1">Boolean validCard() { 
+<a name="l63"><span class="ln">63   </span></a>        List&lt;Payment&gt; card = <a href="../../../../edu/sjsu/cmpe202/db/dao/PaymentDao.java.html">PaymentDao</a>.checkCard(memberEmailId); 
+<a name="l64"><span class="ln">64   </span></a>        </span><span class="s0">if</span><span class="s1">(!card.isEmpty()) { 
+<a name="l65"><span class="ln">65   </span></a>            </span><span class="s0">return true</span><span class="s1">; 
+<a name="l66"><span class="ln">66   </span></a>        } </span><span class="s0">else </span><span class="s1">{ 
+<a name="l67"><span class="ln">67   </span></a>            </span><span class="s0">return false</span><span class="s1">; 
+<a name="l68"><span class="ln">68   </span></a>        } 
+<a name="l69"><span class="ln">69   </span></a>    } 
+<a name="l70"><span class="ln">70   </span></a> 
+<a name="l71"><span class="ln">71   </span></a>    </span><span class="s0">public void </span><span class="s1">handleParkingPayment() { 
+<a name="l72"><span class="ln">72   </span></a>        </span><span class="s2">// TODO Auto-generated method stub</span><span class="s1"> 
+<a name="l73"><span class="ln">73   </span></a> 
+<a name="l74"><span class="ln">74   </span></a>    } 
+<a name="l75"><span class="ln">75   </span></a> 
+<a name="l76"><span class="ln">76   </span></a>    </span><span class="s0">public void </span><span class="s1">addCard() { 
+<a name="l77"><span class="ln">77   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t</span><span class="s5"> Add  Credit Card  Details&quot;</span><span class="s1">); 
+<a name="l78"><span class="ln">78   </span></a>        handleAddCard(); 
+<a name="l79"><span class="ln">79   </span></a>        <a href="../../../../edu/sjsu/cmpe202/db/dao/PaymentDao.java.html">PaymentDao</a>.addCreditCard(</span><span class="s0">this</span><span class="s1">); 
+<a name="l80"><span class="ln">80   </span></a>        System.out.println(</span><span class="s5">&quot;Card Added&quot;</span><span class="s1">); 
+<a name="l81"><span class="ln">81   </span></a>    } 
+<a name="l82"><span class="ln">82   </span></a> 
+<a name="l83"><span class="ln">83   </span></a>    </span><span class="s0">private void </span><span class="s1">handleAddCard() { 
+<a name="l84"><span class="ln">84   </span></a>        Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in); 
+<a name="l85"><span class="ln">85   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t\t</span><span class="s5"> Email Id: &quot;</span><span class="s1">); 
+<a name="l86"><span class="ln">86   </span></a>        memberEmailId = scanner.nextLine(); 
+<a name="l87"><span class="ln">87   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t\t</span><span class="s5"> Card Number: &quot;</span><span class="s1">); 
+<a name="l88"><span class="ln">88   </span></a>        cardNumber = scanner.nextLine(); 
+<a name="l89"><span class="ln">89   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t\t</span><span class="s5"> Card Type: &quot;</span><span class="s1">); 
+<a name="l90"><span class="ln">90   </span></a>        cardType = scanner.nextLine(); 
+<a name="l91"><span class="ln">91   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t\t</span><span class="s5"> Expiry Date: &quot;</span><span class="s1">); 
+<a name="l92"><span class="ln">92   </span></a>        expiryDate = scanner.nextLine(); 
+<a name="l93"><span class="ln">93   </span></a>    } 
+<a name="l94"><span class="ln">94   </span></a> 
+<a name="l95"><span class="ln">95   </span></a>    </span><span class="s0">private void </span><span class="s1">showPaymentDetails(List&lt;Payment&gt; paymentDetails) { 
+<a name="l96"><span class="ln">96   </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t\t</span><span class="s5"> MemberId&quot; </span><span class="s1">+ </span><span class="s5">&quot; &quot; </span><span class="s1">+ </span><span class="s5">&quot;CardNum&quot; </span><span class="s1">+ </span><span class="s5">&quot; &quot; </span><span class="s1">+ </span><span class="s5">&quot; cardType &quot; </span><span class="s1">+ </span><span class="s5">&quot; &quot; </span><span class="s1">+ </span><span class="s5">&quot; ExpiryDate &quot;</span><span class="s1">); 
+<a name="l97"><span class="ln">97   </span></a>        </span><span class="s0">for </span><span class="s1">(Payment p : paymentDetails) { 
+<a name="l98"><span class="ln">98   </span></a>            System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t\t</span><span class="s5"> &quot; </span><span class="s1">+ p.getMemberId() + </span><span class="s5">&quot; &quot; </span><span class="s1">+ p.getCardNumber() + </span><span class="s5">&quot; &quot; </span><span class="s1">+ p.getCardType() + </span><span class="s5">&quot; &quot; </span><span class="s1">+ p.getExpiryDate()); 
+<a name="l99"><span class="ln">99   </span></a>        } 
+<a name="l100"><span class="ln">100  </span></a>    } 
+<a name="l101"><span class="ln">101  </span></a> 
+<a name="l102"><span class="ln">102  </span></a>    </span><span class="s0">public int </span><span class="s1">showNoPassenger() { 
+<a name="l103"><span class="ln">103  </span></a>        List&lt;CarpoolDetails&gt; count = <a href="../../../../edu/sjsu/cmpe202/db/dao/PaymentDao.java.html">PaymentDao</a>.getCount(memberEmailId,carpoolId); 
+<a name="l104"><span class="ln">104  </span></a>        <a href="../../../../edu/sjsu/cmpe202/db/domain/CarpoolDetails.java.html">CarpoolDetails</a> cd = count.get(</span><span class="s4">0</span><span class="s1">); 
+<a name="l105"><span class="ln">105  </span></a>        </span><span class="s0">int </span><span class="s1">countPassenger = cd.getPassengerCount(); 
+<a name="l106"><span class="ln">106  </span></a>        </span><span class="s0">return </span><span class="s1">countPassenger; 
+<a name="l107"><span class="ln">107  </span></a>    } 
+<a name="l108"><span class="ln">108  </span></a> 
+<a name="l109"><span class="ln">109  </span></a>    </span><span class="s0">public void </span><span class="s1">handlePaymentDetails() { 
+<a name="l110"><span class="ln">110  </span></a>        Scanner scanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in); 
+<a name="l111"><span class="ln">111  </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t</span><span class="s5"> Enter email id&quot;</span><span class="s1">); 
+<a name="l112"><span class="ln">112  </span></a>        memberEmailId = scanner.nextLine(); 
+<a name="l113"><span class="ln">113  </span></a>        System.out.println(</span><span class="s5">&quot;</span><span class="s0">\t</span><span class="s5"> Payment Details &quot;</span><span class="s1">); 
+<a name="l114"><span class="ln">114  </span></a>        List&lt;Payment&gt; payment = <a href="../../../../edu/sjsu/cmpe202/db/dao/PaymentDao.java.html">PaymentDao</a>.showPayment(memberEmailId); 
+<a name="l115"><span class="ln">115  </span></a>        showPaymentDetails(payment); 
+<a name="l116"><span class="ln">116  </span></a> 
+<a name="l117"><span class="ln">117  </span></a> 
+<a name="l118"><span class="ln">118  </span></a>    } 
+<a name="l119"><span class="ln">119  </span></a>} 
+<a name="l120"><span class="ln">120  </span></a></span></pre>
+</body>
+</html>

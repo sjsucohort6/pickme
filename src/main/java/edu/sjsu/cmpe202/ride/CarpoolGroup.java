@@ -114,7 +114,7 @@ public class CarpoolGroup {
             Date d = new Date();
             String message = "Vehicle Broke Down";
             Notification n = new Notification(notifyUserId,d,message);
-            notificationDao.sendNotifications(n);
+            NotificationDao.sendNotifications(n);
         }
     }
 
