@@ -1,5 +1,6 @@
 package edu.sjsu.cmpe202.db.dao;
 
+import edu.sjsu.cmpe202.db.domain.ParkingDetails;
 import edu.sjsu.cmpe202.facade.Payment;
 import edu.sjsu.cmpe202.facade.PaymentStatus;
 import edu.sjsu.cmpe202.db.SQLConnection;
@@ -7,6 +8,7 @@ import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
 import edu.sjsu.cmpe202.db.domain.Member;
 import org.sql2o.Connection;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +39,6 @@ public class PaymentDao {
 
     }
 
-
     public static List<Payment> showPayment(String memberEmailId) {
         String paymentHistory = "SELECT  member_id ,card_number, card_type, expiry_date FROM payment_details where member_id = :member_id";
         try (Connection con = (new SQLConnection()).getConnection()) {
@@ -61,24 +62,20 @@ public class PaymentDao {
                     .addParameter("member_id", m.getMemberId())
                     .executeAndFetch(Payment.class);
 
-
             return cardCheck;
         }
-
 
     }
 
     public static void initiatePayment(Payment payment) {
-        String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
-
-        String paymentInit = "INSERT INTO payment(member_id, carpool_id, amount, status) " +
-                "VALUES (:member_id, :carpool_id, :amount, :status)";
+        String paymentInit = "INSERT INTO payment(member_id, carpool_id,parking_id amount, status) " +
+                "VALUES (:member_id, :carpool_id,parking_id :amount, :status)";
         try (Connection con = (new SQLConnection()).getConnection()) {
             Member m = MembershipDao.getMemberByEmail(payment.getMemberEmailId());
-
             con.createQuery(paymentInit)
                     .addParameter("member_id", m.getMemberId())
                     .addParameter("carpool_id", payment.getCarpoolId())
+                    .addParameter("parking_id", "null")
                     .addParameter("amount", payment.getAmount())
                     .addParameter("status", "PAID")
                     .executeUpdate();
@@ -94,13 +91,10 @@ public class PaymentDao {
                     .addParameter("email", memberEmailId)
                     .executeAndFetch(Member.class);
             Member m = memberId.get(0);
-
             List<CarpoolDetails> carpoolInfo = con.createQuery(getCount)
                     .addParameter("pool_id", carpoolId)
                     .executeAndFetch(CarpoolDetails.class);
-
             //System.out.println("Details" + carpoolInfo);
-
             return carpoolInfo;
         }
     }
@@ -115,4 +109,33 @@ public class PaymentDao {
                     .executeUpdate();
         }
     }
+
+    public static List<Payment> getInfo(String memberEmailId) {
+        //String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
+        String fetchParkingDetails = "select parking_id from parking_details where parker_id = :parker_id";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            Member m = MembershipDao.getMemberByEmail(memberEmailId);
+            List<Payment> parkingInfo = con.createQuery(fetchParkingDetails)
+                    .addParameter("parker_id", m.getMemberId())
+                    .executeAndFetch(Payment.class);
+            return parkingInfo;
+        }
+    }
+
+    public static void parkingPayment(Payment payment) {
+        String parkingPayment = "INSERT INTO payment(member_id, carpool_id,parking_id amount, status) " +
+                "VALUES (:member_id, :carpool_id,parking_id :amount, :status)";
+        try (Connection con = (new SQLConnection()).getConnection()) {
+            Member m = MembershipDao.getMemberByEmail(payment.getMemberEmailId());
+
+            con.createQuery(parkingPayment)
+                    .addParameter("member_id", m.getMemberId())
+                    .addParameter("carpool_id", "")
+                    .addParameter("parking_id", payment.getParkingId())
+                    .addParameter("amount", payment.getAmount())
+                    .addParameter("status", "PAID")
+                    .executeUpdate();
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ import edu.sjsu.cmpe202.db.dao.PaymentDao;
 import edu.sjsu.cmpe202.db.domain.CarpoolDetails;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,8 +21,13 @@ public class Payment {
     private String carpoolId;
     private int amount;
     private String status;
-    public static final int RideAmount = 14;
+    private int parkerId;
+    private int parkingId;
+    private Date startTime;
+    private Date endTime;
 
+    public static final int RideAmount = 16;
+    public static final int ParkingAmount = 1;
 
     public void printPaymentMenu() {
         // TODO Auto-generated method stub
@@ -52,16 +58,33 @@ public class Payment {
 
     private int calculateAmount(int rideAmount) {
         int count = showNoPassenger();
-        System.out.println("count"+ count);
+        System.out.println("count" + count);
         int amount = rideAmount / count;
-            System.out.println("Amount"+ amount);
+        System.out.println("Amount" + amount);
         return amount;
+    }
+
+    private long getMin() {
+        List<Payment> info = PaymentDao.getInfo(memberEmailId);
+        Payment p = info.get(0);
+        int parkingId = p.getParkingId();
+        Date start = p.getStartTime();
+        Date end = p.getEndTime();
+        long diff = end.getTime()- start.getTime();
+        long diffMinutes = diff / (60 * 1000) % 60;
+        long amount = getAmount(diffMinutes);
+        return (int) amount;
+    }
+
+    private long getAmount(long diffMinutes) {
+        int parkingAmount = (int) (ParkingAmount * diffMinutes);
+        return diffMinutes;
     }
 
 
     private Boolean validCard() {
         List<Payment> card = PaymentDao.checkCard(memberEmailId);
-        if(!card.isEmpty()) {
+        if (!card.isEmpty()) {
             return true;
         } else {
             return false;
@@ -70,6 +93,13 @@ public class Payment {
 
     public void handleParkingPayment() {
         // TODO Auto-generated method stub
+        System.out.println("Pay for Parking");
+        System.out.println("Email ID :");
+        Scanner scanner = new Scanner(System.in);
+        memberEmailId = scanner.nextLine();
+        amount = (int) getMin();
+        PaymentDao.parkingPayment(this);
+        System.out.println(" Received Parking Payment of $ " + amount);
 
     }
 
@@ -100,7 +130,7 @@ public class Payment {
     }
 
     public int showNoPassenger() {
-        List<CarpoolDetails> count = PaymentDao.getCount(memberEmailId,carpoolId);
+        List<CarpoolDetails> count = PaymentDao.getCount(memberEmailId, carpoolId);
         CarpoolDetails cd = count.get(0);
         int countPassenger = cd.getPassengerCount();
         return countPassenger;
@@ -114,6 +144,6 @@ public class Payment {
         List<Payment> payment = PaymentDao.showPayment(memberEmailId);
         showPaymentDetails(payment);
 
-
     }
 }
+

@@ -2,6 +2,7 @@ package edu.sjsu.cmpe202.ride;
 
 import edu.sjsu.cmpe202.facade.CarpoolStatus;
 import edu.sjsu.cmpe202.client.PickMe;
+import edu.sjsu.cmpe202.facade.PickMeFacade;
 import edu.sjsu.cmpe202.facade.RideStatus;
 import edu.sjsu.cmpe202.facade.VehicleStatus;
 import edu.sjsu.cmpe202.db.dao.*;
@@ -128,13 +129,13 @@ public class CarpoolGroup {
         StringBuilder route = new StringBuilder();
 
         for (RideDetails ride: rideList) {
-            PickMe.algorithm.setRoutingStrategy(routingStrategy);
+            PickMeFacade.algorithm.setRoutingStrategy(routingStrategy);
             Location sourceLocation = RouteMapDao.getLocationById(ride.getSourceId());
             Location destLocation = RouteMapDao.getLocationById(ride.getDestId());
             Vertex src = new Vertex(sourceLocation.getLocationId() + "", sourceLocation.getName());
             Vertex dest = new Vertex(destLocation.getLocationId() + "", destLocation.getName());
-            PickMe.algorithm.execute(src);
-            LinkedList<Vertex> path = PickMe.algorithm.getPath(dest);
+            PickMeFacade.algorithm.execute(src);
+            LinkedList<Vertex> path = PickMeFacade.algorithm.getPath(dest);
             int i = 0;
             for (Vertex v: path) {
                 if (i >= path.size() - 1) {
