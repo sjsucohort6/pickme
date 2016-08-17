@@ -1,5 +1,6 @@
-package edu.sjsu.cmpe202.cli;
+package edu.sjsu.cmpe202.facade;
 
+import edu.sjsu.cmpe202.client.PickMe;
 import edu.sjsu.cmpe202.db.dao.RideDao;
 import edu.sjsu.cmpe202.graph.FastestTimeStrategy;
 import edu.sjsu.cmpe202.graph.RoutingStrategy;

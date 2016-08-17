@@ -1,7 +1,7 @@
 package edu.sjsu.cmpe202.scheduler;
 
-import edu.sjsu.cmpe202.cli.CarpoolStatus;
-import edu.sjsu.cmpe202.cli.RideStatus;
+import edu.sjsu.cmpe202.facade.CarpoolStatus;
+import edu.sjsu.cmpe202.facade.RideStatus;
 import edu.sjsu.cmpe202.db.dao.CarpoolDao;
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
 import edu.sjsu.cmpe202.db.dao.RideDao;

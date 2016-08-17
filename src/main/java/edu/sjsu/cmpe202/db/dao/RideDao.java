@@ -1,7 +1,7 @@
 package edu.sjsu.cmpe202.db.dao;
 
-import edu.sjsu.cmpe202.cli.Ride;
-import edu.sjsu.cmpe202.cli.RideStatus;
+import edu.sjsu.cmpe202.facade.Ride;
+import edu.sjsu.cmpe202.facade.RideStatus;
 import edu.sjsu.cmpe202.db.SQLConnection;
 import edu.sjsu.cmpe202.db.domain.RideDetails;
 import org.sql2o.Connection;

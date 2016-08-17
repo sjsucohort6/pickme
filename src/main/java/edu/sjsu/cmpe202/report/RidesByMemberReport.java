@@ -1,6 +1,6 @@
 package edu.sjsu.cmpe202.report;
 
-import edu.sjsu.cmpe202.cli.TableBuilder;
+import edu.sjsu.cmpe202.facade.TableBuilder;
 import edu.sjsu.cmpe202.db.dao.ReportDao;
 import edu.sjsu.cmpe202.db.domain.RidesByMember;
 

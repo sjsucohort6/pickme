@@ -1,5 +1,4 @@
-package edu.sjsu.cmpe202.cli;
-
+package edu.sjsu.cmpe202.facade;
 
 import edu.sjsu.cmpe202.graph.DijkstraAlgorithm;
 import edu.sjsu.cmpe202.graph.Graph;
@@ -9,64 +8,15 @@ import edu.sjsu.cmpe202.route.RouteMapGraph;
 import java.util.Scanner;
 
 /**
- * PickMe is the name of our application for carpooling. It provides a menu based interface.
- [1] Membership
- [2] Vehicle Registrations
- [3] Ride
- [4] Payment
- [5] Notifications
- [6] Parking
- [6] Quit
- User can register as rider or driver, can reserve, cancel or track a carpool ride,
- make or receive payments and check notifications sent by application to the user at
- various stages.
+ * Created by cpunekar on 16-Aug-16.
  */
-public class PickMe
-{
+public class PickMeFacade {
+
     private static final Graph routeMapGraph = RouteMapGraph.loadRouteMap();
     public static final DijkstraAlgorithm algorithm = new DijkstraAlgorithm(new UndirectedGraphDecorator(routeMapGraph));
 
-    public static void main( String[] args )
-    {
-        Scanner scanner = new Scanner(System.in);
-        while(true) {
-            printMainMenu();
-            String menuOptionSelected = scanner.nextLine();
-            switch (menuOptionSelected.trim()) {
-                case "1":
-                    handleMembership();
-                    break;
-                case "2":
-                    handleVehicleRegistration();
-                    break;
-                case "3":
-                    handleRides();
-                    break;
-                case "4":
-                    handlePayment();
-                    break;
-                case "5":
-                    handleNotifications();
-                    break;
-                case "6":
-                    handleParking();
-                    break;
-                case "7":
-                    handleReports();
-                    break;
-                case "8":
-                    System.exit(0);
-                default:
-                    System.out.println("ERROR: Unknown menu option. Please retry.");
-                    break;
-            }
-        }
-    }
-
-    private static void handleReports() {
+    public static void handleReports() {
         Scanner scanner= new Scanner(System.in);
-
-
         loop: while(true){
             ReportGeneration reportGeneration = new ReportGeneration();
             ReportGeneration.printReportMenu();
@@ -85,10 +35,8 @@ public class PickMe
 
     }
 
-    private static void handleVehicleRegistration() {
+    public static void handleVehicleRegistration() {
         Scanner scanner= new Scanner(System.in);
-
-
         loop: while(true){
             VehicleRegistration vehicle = new VehicleRegistration();
             vehicle.printVehicleMenu();
@@ -109,10 +57,8 @@ public class PickMe
         }
     }
 
-    private static void handleParking() {
+    public static void handleParking() {
         Scanner scanner = new Scanner(System.in);
-
-
         loop:while(true) {
             ParkingHandler pDetails= new ParkingHandler();
             pDetails.printReserveParkingMenu();
@@ -140,9 +86,8 @@ public class PickMe
     }
 
 
-    private static void handlePayment() {
+    public static void handlePayment() {
         Scanner scanner = new Scanner(System.in);
-
         loop:
         while (true) {
             Payment payment = new Payment();
@@ -171,7 +116,7 @@ public class PickMe
 
     }
 
-    private static void handleNotifications() {
+    public static void handleNotifications() {
         Scanner scanner = new Scanner(System.in);
 
 
@@ -192,10 +137,8 @@ public class PickMe
 
     }
 
-    private static void handleRides() {
+    public static void handleRides() {
         Scanner scanner= new Scanner(System.in);
-
-
         loop: while(true){
             Ride ride = new Ride();
             ride.printReserveRideMenu();
@@ -225,7 +168,7 @@ public class PickMe
         }
     }
 
-    private static void handleMembership() {
+    public static void handleMembership() {
         Scanner scanner = new Scanner(System.in);
 
         loop: while (true) {
@@ -250,7 +193,7 @@ public class PickMe
 
     }
 
-    private static void printMainMenu() {
+    public static void printMainMenu() {
         System.out.println("[1] Membership");
         System.out.println("[2] Vehicle Registration");
         System.out.println("[3] Ride");

@@ -1,4 +1,4 @@
-package edu.sjsu.cmpe202.cli;
+package edu.sjsu.cmpe202.facade;
 
 import java.text.DateFormat;
 import java.text.ParseException;

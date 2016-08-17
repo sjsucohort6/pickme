@@ -1,6 +1,6 @@
 package edu.sjsu.cmpe202.db.dao;
 
-import edu.sjsu.cmpe202.cli.VehicleRegistration;
+import edu.sjsu.cmpe202.facade.VehicleRegistration;
 import edu.sjsu.cmpe202.db.SQLConnection;
 import edu.sjsu.cmpe202.db.domain.Vehicle;
 import org.sql2o.Connection;

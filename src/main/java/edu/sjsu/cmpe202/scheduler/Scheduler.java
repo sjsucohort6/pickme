@@ -1,6 +1,6 @@
 package edu.sjsu.cmpe202.scheduler;
 
-import edu.sjsu.cmpe202.cli.PickMe;
+import edu.sjsu.cmpe202.client.PickMe;
 import edu.sjsu.cmpe202.db.domain.RideDetails;
 import edu.sjsu.cmpe202.graph.RoutingStrategy;
 import edu.sjsu.cmpe202.graph.ShortestPathStrategy;

@@ -1,6 +1,6 @@
 package edu.sjsu.cmpe202.scheduler.test;
 
-import edu.sjsu.cmpe202.cli.*;
+import edu.sjsu.cmpe202.facade.*;
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
 import edu.sjsu.cmpe202.db.dao.RideDao;
 import edu.sjsu.cmpe202.db.dao.VehicleDao;
