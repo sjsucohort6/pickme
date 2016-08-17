@@ -67,14 +67,13 @@ public class PaymentDao {
     }
 
     public static void initiatePayment(Payment payment) {
-        String paymentInit = "INSERT INTO payment(member_id, carpool_id,parking_id amount, status) " +
-                "VALUES (:member_id, :carpool_id,parking_id :amount, :status)";
+        String paymentInit = "INSERT INTO payment(member_id, carpool_id,amount, status) " +
+                "VALUES (:member_id, :carpool_id,:amount, :status)";
         try (Connection con = (new SQLConnection()).getConnection()) {
             Member m = MembershipDao.getMemberByEmail(payment.getMemberEmailId());
             con.createQuery(paymentInit)
                     .addParameter("member_id", m.getMemberId())
                     .addParameter("carpool_id", payment.getCarpoolId())
-                    .addParameter("parking_id", NULL)
                     .addParameter("amount", payment.getAmount())
                     .addParameter("status", "PAID")
                     .executeUpdate();
@@ -82,7 +81,7 @@ public class PaymentDao {
         }
     }
 
-    public static List<CarpoolDetails> getCount(String memberEmailId, String carpoolId) {
+    public static List<CarpoolDetails> getCount(String memberEmailId, int carpoolId) {
         String fetchMemberId = "SELECT member_id from member WHERE email = :email ";
         String getCount = "SELECT * from carpool_details WHERE pool_id = :pool_id ";
         try (Connection con = (new SQLConnection()).getConnection()) {
@@ -112,8 +111,8 @@ public class PaymentDao {
 
     public static void parkingPayment(Payment payment) {
         String fetchParkingDetails = "select parking_id from parking_details where parker_id = :parker_id";
-        String parkingPayment = " INSERT INTO payment(member_id, carpool_id,parking_id,amount,status) " +
-                "VALUES (:member_id, :carpool_id,:parking_id ,:amount, :status)";
+        String parkingPayment = " INSERT INTO payment(member_id,parking_id,amount,status) " +
+                "VALUES (:member_id,:parking_id ,:amount, :status)";
         try (Connection con = (new SQLConnection()).getConnection()) {
             Member m = MembershipDao.getMemberByEmail(payment.getMemberEmailId());
             List<ParkingDetails> parkingInfo = con.createQuery(fetchParkingDetails)
@@ -123,7 +122,6 @@ public class PaymentDao {
 
             con.createQuery(parkingPayment)
                     .addParameter("member_id", m.getMemberId())
-                    .addParameter("carpool_id", NULL)
                     .addParameter("parking_id", p.getParkingId())
                     .addParameter("amount", payment.getAmount())
                     .addParameter("status", "PAID")

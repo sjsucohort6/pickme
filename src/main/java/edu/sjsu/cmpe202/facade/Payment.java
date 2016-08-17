@@ -20,7 +20,7 @@ public class Payment {
     private String cardType;
     private String expiryDate;
     private String memberId;
-    private String carpoolId;
+    private int carpoolId;
     private int amount;
     private String status;
     private int parkerId;
@@ -29,7 +29,7 @@ public class Payment {
     private Date endTime;
 
     public static final int RideAmount = 16;
-    public static final int ParkingAmount = 1;
+    public static final int ParkingAmount = 3;
 
     public void printPaymentMenu() {
         // TODO Auto-generated method stub
@@ -47,7 +47,7 @@ public class Payment {
         Scanner scanner = new Scanner(System.in);
         memberEmailId = scanner.nextLine();
         System.out.println("Pool ID  :");
-        carpoolId = scanner.nextLine();
+        carpoolId = Integer.parseInt(scanner.nextLine());
         amount = calculateAmount(RideAmount);
         if (validCard()) {
             PaymentDao.initiatePayment(this);
@@ -60,9 +60,8 @@ public class Payment {
 
     private int calculateAmount(int rideAmount) {
         int count = showNoPassenger();
-        System.out.println("count" + count);
         int amount = rideAmount / count;
-        System.out.println("Amount" + amount);
+      //  System.out.println("Amount" +   amount);
         return amount;
     }
 
