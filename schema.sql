@@ -470,6 +470,7 @@ CREATE VIEW `rides_by_member_view` AS
     m.last_name as 'Last Name',
     m.email as 'Email',
     l.name as 'Source Location',
+    l2.name as 'Destination Location',
     r.create_date as 'Create Date',
     r.start_date as 'Start Date',
     r.status as 'Status',
@@ -478,11 +479,13 @@ CREATE VIEW `rides_by_member_view` AS
   FROM
     member AS m,
     ride_details AS r,
-    location AS l
+    location AS l,
+    location AS l2
   WHERE
     m.member_id = r.user_id
     AND r.source_id = l.location_id
-  GROUP BY m.member_id, l.name, r.start_date, m.email, m.first_name, m.last_name, r.create_date, r.status, r.payment_status
+    AND r.dest_id = l2.location_id
+  GROUP BY m.member_id, l.name, r.start_date, m.email, m.first_name, m.last_name, r.create_date, r.status, r.payment_status, l2.name
   ORDER BY m.first_name ASC;
 
 -- Dump completed on 2016-08-09 22:04:27

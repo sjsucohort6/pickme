@@ -1,9 +1,12 @@
 package edu.sjsu.cmpe202.cli;
 
 
+import edu.sjsu.cmpe202.notification.FileLogger;
 import edu.sjsu.cmpe202.graph.DijkstraAlgorithm;
 import edu.sjsu.cmpe202.graph.Graph;
 import edu.sjsu.cmpe202.graph.UndirectedGraphDecorator;
+import edu.sjsu.cmpe202.notification.NotificationSystem;
+import edu.sjsu.cmpe202.notification.Observer;
 import edu.sjsu.cmpe202.route.RouteMapGraph;
 
 import java.util.Scanner;
@@ -25,6 +28,11 @@ public class PickMe
 {
     private static final Graph routeMapGraph = RouteMapGraph.loadRouteMap();
     public static final DijkstraAlgorithm algorithm = new DijkstraAlgorithm(new UndirectedGraphDecorator(routeMapGraph));
+    static {
+        // Initialize the application
+        Observer logger = new FileLogger();
+        NotificationSystem.getInstance().registerObserver(logger);
+    }
 
     public static void main( String[] args )
     {

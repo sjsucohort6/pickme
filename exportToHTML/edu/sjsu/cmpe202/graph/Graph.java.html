@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>Graph.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Graph.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">edu.sjsu.cmpe202.graph; 
+<a name="l2"><span class="ln">2    </span></a> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s2">/** 
+<a name="l4"><span class="ln">4    </span></a> * Directed graph implementation. 
+<a name="l5"><span class="ln">5    </span></a> * 
+<a name="l6"><span class="ln">6    </span></a> * </span><span class="s3">@author </span><span class="s2">rwatsh on 8/12/16. 
+<a name="l7"><span class="ln">7    </span></a> */</span><span class="s1"> 
+<a name="l8"><span class="ln">8    </span></a></span><span class="s0">import </span><span class="s1">lombok.Data; 
+<a name="l9"><span class="ln">9    </span></a> 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s0">import </span><span class="s1">java.util.List; 
+<a name="l11"><span class="ln">11   </span></a> 
+<a name="l12"><span class="ln">12   </span></a>@Data 
+<a name="l13"><span class="ln">13   </span></a></span><span class="s0">public class </span><span class="s1">Graph </span><span class="s0">implements <a href="GraphInterface.java.html">GraphInterface</a> </span><span class="s1">{ 
+<a name="l14"><span class="ln">14   </span></a>    </span><span class="s0">private final </span><span class="s1">List&lt;Vertex&gt; vertexes; 
+<a name="l15"><span class="ln">15   </span></a>    </span><span class="s0">private final </span><span class="s1">List&lt;Edge&gt; edges; 
+<a name="l16"><span class="ln">16   </span></a> 
+<a name="l17"><span class="ln">17   </span></a>    </span><span class="s0">public </span><span class="s1">Graph(List&lt;Vertex&gt; vertexes, List&lt;Edge&gt; edges) { 
+<a name="l18"><span class="ln">18   </span></a>        </span><span class="s0">this</span><span class="s1">.vertexes = vertexes; 
+<a name="l19"><span class="ln">19   </span></a>        </span><span class="s0">this</span><span class="s1">.edges = edges; 
+<a name="l20"><span class="ln">20   </span></a>    } 
+<a name="l21"><span class="ln">21   </span></a> 
+<a name="l22"><span class="ln">22   </span></a>    @Override 
+<a name="l23"><span class="ln">23   </span></a>    </span><span class="s0">public </span><span class="s1">List&lt;Vertex&gt; getVertexes() { 
+<a name="l24"><span class="ln">24   </span></a>        </span><span class="s0">return </span><span class="s1">vertexes; 
+<a name="l25"><span class="ln">25   </span></a>    } 
+<a name="l26"><span class="ln">26   </span></a> 
+<a name="l27"><span class="ln">27   </span></a>    @Override 
+<a name="l28"><span class="ln">28   </span></a>    </span><span class="s0">public </span><span class="s1">List&lt;Edge&gt; getEdges() { 
+<a name="l29"><span class="ln">29   </span></a>        </span><span class="s0">return </span><span class="s1">edges; 
+<a name="l30"><span class="ln">30   </span></a>    } 
+<a name="l31"><span class="ln">31   </span></a>} 
+<a name="l32"><span class="ln">32   </span></a></span></pre>
+</body>
+</html>

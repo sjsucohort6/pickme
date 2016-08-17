@@ -75,6 +75,7 @@ public class SQLConnection implements AutoCloseable {
         colMaps.put("Status", "status");
         colMaps.put("Payment Status", "paymentStatus");
         colMaps.put("Total Rides", "totalRides");
+        colMaps.put("Destination Location", "destLocation");
 
 
 

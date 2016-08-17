@@ -3,9 +3,7 @@ package edu.sjsu.cmpe202.cli;
 import edu.sjsu.cmpe202.db.dao.MembershipDao;
 import edu.sjsu.cmpe202.db.dao.NotificationDao;
 import edu.sjsu.cmpe202.db.domain.Notification;
-import edu.sjsu.cmpe202.notification.NotificationMessage;
-import edu.sjsu.cmpe202.notification.Observer;
-import edu.sjsu.cmpe202.notification.Subject;
+import edu.sjsu.cmpe202.notification.NotificationSystem;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,7 +13,7 @@ import java.util.Scanner;
  * @author rwatsh on 8/6/16.
  */
 @Data
-public class Membership implements Observer {
+public class Membership {
 
     private String firstName;
     private String lastName;
@@ -47,9 +45,11 @@ public class Membership implements Observer {
         Date d = new Date();
         String date = Utilities.dateFormat.format(d);
         String message = "Rider Created";
+
+        Notification n = new Notification(notifyUserId, d, message);
+        NotificationSystem.getInstance().sendNotification(n);
     }
-//        Notification n = new Notification(notifyUserId, d, message);
-//        NotificationMessage.getInstance().sendNotification(n);
+
 
     private void handleMemberSignup() {
         Scanner scanner = new Scanner(System.in);
@@ -72,8 +72,11 @@ public class Membership implements Observer {
         System.out.println("\t Signing up Driver:");
         handleMemberSignup();
         handleDriverLicence();
-        MembershipDao.createDriver(this);
-        System.out.println("Driver created: " + this);
+        Integer driverId = MembershipDao.createDriver(this);
+        String message = "Driver created: " + this;
+        System.out.println(message);
+        Notification n = new Notification(driverId, new Date(), message);
+        NotificationSystem.getInstance().sendNotification(n);
     }
 
     private void handleDriverLicence() {
@@ -82,16 +85,5 @@ public class Membership implements Observer {
         driverLicence = scanner.nextLine();
         String expirationMsg = "\t\t Expiration (YYYY-MM-DD): ";
         expiration = Utilities.getDateStr(expirationMsg);
-    }
-
-    @Override
-    public void update() {
-        Object msg = NotificationMessage.getInstance().getUpdate();
-        System.out.println(msg.toString());
-    }
-
-    @Override
-    public void setSubject(Subject subject) {
-
     }
 }
